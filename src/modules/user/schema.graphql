@@ -1,0 +1,4 @@
+extend type Query {
+  user(id: String!): User @authenticated
+  users: [User] @authenticated
+}

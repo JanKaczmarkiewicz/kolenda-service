@@ -1,0 +1,18 @@
+schema: "src/**/*.graphql"
+require:
+  - ts-node/register
+generates:
+  src/types/types.ts:
+    plugins:
+      - add: "// THIS IS A GENERATED FILE, DO NOT MODIFY"
+      - add: "// tslint:disable"
+      - add: "import { Context } from './util';"
+      - typescript-mongodb
+      - typescript
+      - typescript-resolvers
+    config:
+      contextType: Context
+      enumsAsString: false
+      noSchemaStitching: true
+    namingConvention:
+      enumValues: allCapitals#allCapitals
