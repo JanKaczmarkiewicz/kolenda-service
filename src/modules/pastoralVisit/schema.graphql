@@ -1,0 +1,8 @@
+type PastoralVist @entity {
+  _id: String! @id
+  priest: Priest! @column
+  acolytes: [Acolyte]! @column
+  visitTime: Time!
+  reeceTime: Time!
+  season: Season!
+}

@@ -1,0 +1,4 @@
+type Season @entity {
+  _id: String! @id
+  name: String! @column
+}

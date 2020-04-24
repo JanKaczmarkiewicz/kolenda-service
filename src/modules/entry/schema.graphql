@@ -1,0 +1,15 @@
+type Entry @entity {
+  _id: String! @id
+  house: House! @column
+  visitState: RecordState! @column
+  reeceState: RecordState! @column
+  comment: String! @column
+  pastoralVisit: PastoralVisit! @column
+}
+
+enum RecordState {
+  UNKNOWN
+  ACCEPTED
+  REJECTED
+  UNCERTAIN
+}

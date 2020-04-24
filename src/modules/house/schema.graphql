@@ -1,0 +1,5 @@
+type House @entity {
+  _id: String! @id
+  number: String! @column
+  street: Street! @column
+}
