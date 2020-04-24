@@ -1,5 +1,5 @@
 type Street @entity {
   _id: String! @id
   name: String! @column
-  houses: [Houses]!
+  houses: [House]!
 }

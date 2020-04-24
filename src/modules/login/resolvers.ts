@@ -1,6 +1,6 @@
 import * as bcrypt from "bcryptjs";
 import { Resolvers } from "../../types/types";
-import User from "../../models/user.model";
+import User from "../../models/User";
 import { AuthenticationError } from "apollo-server";
 import { signAuthToken } from "../../utils/authToken";
 import { responceError } from "../../errors/responce";

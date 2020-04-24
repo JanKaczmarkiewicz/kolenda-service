@@ -1,7 +1,7 @@
 import { AuthenticationError, ForbiddenError } from "apollo-server-core";
 import { Resolvers } from "../../types/types";
 
-import User from "../../models/user.model";
+import User from "../../models/User";
 import { verifyConfirmingToken } from "../../utils/confirmingToken";
 import { responceError } from "../../errors/responce";
 

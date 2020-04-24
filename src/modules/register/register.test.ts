@@ -3,7 +3,7 @@ import { removeAllCollections } from "../../testUtils/connectToMongoose";
 import { REGISTER } from "../../testUtils/queries";
 import { dummyUser } from "../../testUtils/dummyUser";
 import { query } from "../../testUtils/query";
-import User from "../../models/user.model";
+import User from "../../models/User";
 
 beforeAll(async () => {
   await createDatabaseConnection();

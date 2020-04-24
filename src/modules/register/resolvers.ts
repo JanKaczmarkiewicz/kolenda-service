@@ -2,7 +2,7 @@ import * as bcrypt from "bcryptjs";
 import { ForbiddenError } from "apollo-server-core";
 import { Resolvers } from "../../types/types";
 
-import User from "../../models/user.model";
+import User from "../../models/User";
 
 import { signAuthToken } from "../../utils/authToken";
 

@@ -8,6 +8,8 @@ type User @entity(additionalFields: [{ path: "password", type: "string" }]) {
 
 enum Role {
   ADMIN
+  ACOLYTE
+  PRIEST
   USER
 }
 

@@ -1,4 +1,4 @@
-import User from "../../models/user.model";
+import User from "../../models/User";
 import { Resolvers } from "../../types/types";
 
 export const resolvers: Resolvers = {
