@@ -1,5 +1,5 @@
 import * as nodemailer from "nodemailer";
-import { User } from "../types/types";
+import { UserDbObject } from "../types/types";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -9,7 +9,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendConfirmingEmail = async (token: string, user: User) => {
+export const sendConfirmingEmail = async (
+  token: string,
+  user: UserDbObject
+) => {
   transporter.sendMail(
     {
       from: process.env.EMAIL_SENDER_ADDRESS,

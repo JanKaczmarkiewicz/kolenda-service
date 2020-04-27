@@ -1,6 +1,6 @@
 type PastoralVisit @entity {
-  _id: String! @id
-  priest: User! @column
+  id: String! @id
+  priest: User! @column @link
   acolytes: [User]! @column
   visitTime: String! @column
   reeceTime: String! @column

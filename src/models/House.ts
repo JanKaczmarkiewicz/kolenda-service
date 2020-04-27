@@ -7,7 +7,7 @@ const HouseSchema = new mongoose.Schema({
   },
   street: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "PastoralVisit",
+    ref: "Street",
     required: true,
   },
 });

@@ -31,7 +31,7 @@ beforeAll(async () => {
 describe("User", () => {
   it("Authenticated user should have access to find user by id", async () => {
     const res = await query(
-      { query: USER, variables: { id: secondUserData._id } },
+      { query: USER, variables: { id: secondUserData.id } },
       token
     );
     const user = res.data?.user;
@@ -40,17 +40,14 @@ describe("User", () => {
     expect(user.email).toBe(secondUserData.email);
   });
   it("Invalid id argument results in null.", async () => {
-    const res = await query(
-      { query: USER, variables: { id: "bad_id" } },
-      token
-    );
+    const res = await query({ query: USER, variables: { id: "badid" } }, token);
     const user = res.data?.user;
     expect(user).toBeFalsy();
   });
 
   it("Inauthenticated user shouldn't have access to user data.", async () => {
     const res = await query(
-      { query: USER, variables: { id: secondUserData._id } },
+      { query: USER, variables: { id: secondUserData.id } },
       "bad_token"
     );
     const user = res.data?.user;
@@ -61,7 +58,7 @@ describe("User", () => {
 describe("Users", () => {
   it("Authenticated user should have access to find multiple users", async () => {
     const res = await query(
-      { query: USERS, variables: { id: secondUserData._id } },
+      { query: USERS, variables: { id: secondUserData.id } },
       token
     );
     const users = res.data?.users;

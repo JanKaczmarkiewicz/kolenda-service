@@ -11,7 +11,7 @@ export const ME = gql`
     me {
       username
       email
-      _id
+      id
     }
   }
 `;
@@ -34,7 +34,7 @@ export const USER = gql`
       username
       email
       confirmed
-      _id
+      id
     }
   }
 `;
@@ -45,7 +45,7 @@ export const USERS = gql`
       username
       email
       confirmed
-      _id
+      id
     }
   }
 `;

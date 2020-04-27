@@ -1,5 +1,5 @@
 type Entry @entity {
-  _id: String! @id
+  id: String! @id
   house: House! @column
   visitState: RecordState! @column
   reeceState: RecordState! @column

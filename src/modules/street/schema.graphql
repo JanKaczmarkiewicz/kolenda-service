@@ -1,5 +1,39 @@
 type Street @entity {
-  _id: String! @id
+  id: String! @id
   name: String! @column
   houses: [House]!
+}
+
+extend type Mutation {
+  addStreet(input: AddStreetInput!): Street
+  updateStreet(input: UpdateStreetInput!): Street
+  # deleteStreet(input: DeleteStreetInput!): Boolean!
+}
+
+extend type Query {
+  street(input: StreetInput!): Street
+  streets(input: StreetInput!): [Street]!
+}
+
+# Mutation inputs
+input AddStreetInput {
+  name: String!
+}
+
+input UpdateStreetInput {
+  id: String!
+  name: String
+}
+
+# input DeleteStreetInput {
+#   id: String!
+# }
+
+# Query inputs
+input StreetInput {
+  id: String!
+}
+
+input StreetsInput {
+  id: String!
 }

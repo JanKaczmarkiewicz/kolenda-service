@@ -14,14 +14,17 @@ export default () => {
     .filter((folder) => !folder.startsWith("_"));
 
   //resolvers
-  const resolvers: IResolvers = { Mutation: {}, Query: {} };
+  const resolvers: IResolvers = {};
   folders.forEach((folder) => {
     const resolversPath = `${pathToModules}\\${folder}\\resolvers.ts`;
     if (!fs.existsSync(resolversPath)) return;
 
-    const { Query, Mutation } = require(resolversPath).resolvers;
-    Object.assign(resolvers.Mutation, Mutation);
-    Object.assign(resolvers.Query, Query);
+    const moduleResolvers = require(resolversPath).resolvers;
+
+    Object.keys(moduleResolvers).forEach((name) => {
+      if (!resolvers[name]) Object.assign(resolvers, { [name]: {} });
+      Object.assign(resolvers[name], moduleResolvers[name]);
+    });
   });
 
   //typeDefs

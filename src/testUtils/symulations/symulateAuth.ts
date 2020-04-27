@@ -18,9 +18,10 @@ export const symulateAuth = (userData: MutationRegisterArgs) => {
 
   const register = () => {
     stack.push(() =>
-      query({ query: REGISTER, variables: userData }).then(
-        (res) => res.data?.register
-      )
+      query({ query: REGISTER, variables: userData }).then((res) => {
+        // console.log(res);
+        return res.data?.register;
+      })
     );
     return { verifyEmail, login, execute };
   };
@@ -28,11 +29,13 @@ export const symulateAuth = (userData: MutationRegisterArgs) => {
   const verifyEmail = () => {
     stack.push((authToken: string) => {
       const verificationToken = authTokenToVerificationToken(authToken);
-
       return query({
         query: VERIFY_EMAIL,
         variables: { token: verificationToken },
-      }).then((res) => res.data?.verifyEmail);
+      }).then((res) => {
+        // console.log(res);
+        return res.data?.verifyEmail;
+      });
     });
 
     return { login, execute };
@@ -43,21 +46,28 @@ export const symulateAuth = (userData: MutationRegisterArgs) => {
       query({
         query: LOGIN,
         variables: { email: userData.email, password: userData.password },
-      }).then((res) => res.data?.login)
+      }).then((res) => {
+        // console.log(res);
+        return res.data?.login;
+      })
     );
 
     return { me, execute };
   };
 
   const me = () => {
-    stack.push((authToken: string) =>
+    stack.push(async (authToken: string) =>
       query(
         {
           query: ME,
           variables: { email: userData.email, password: userData.password },
         },
         authToken
-      ).then((res) => res.data?.me)
+      )
+        .then((res) => {
+          return res.data?.me;
+        })
+        .catch(console.error)
     );
 
     return { execute };

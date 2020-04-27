@@ -11,8 +11,12 @@ generates:
       - typescript
       - typescript-resolvers
     config:
+      mappers:
+        User: UserDbObject
+        House: HouseDbObject
+        Street: StreetDbObject
       contextType: Context
+      skipTypename: true
       enumsAsString: false
+      useIndexSignature: true
       noSchemaStitching: true
-    namingConvention:
-      enumValues: allCapitals#allCapitals
