@@ -49,3 +49,11 @@ export const USERS = gql`
     }
   }
 `;
+
+// export const ADD_HOUSE = gql`
+//   mutation addHouse($input: {name:}) {
+//     addHouse(input: $input){
+
+//     }
+//   }
+// `;

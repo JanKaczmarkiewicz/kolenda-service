@@ -1,2 +1,6 @@
 directive @authenticated(roles: [Role] = [USER]) on FIELD_DEFINITION
 directive @validate(schemaName: String) on FIELD_DEFINITION
+
+input FindOneInput {
+  id: String!
+}
