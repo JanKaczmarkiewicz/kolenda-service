@@ -24,7 +24,6 @@ input AddHouseInput {
 input UpdateHouseInput {
   id: String!
   number: String
-  street: String
 }
 
 input DeleteHouseInput {

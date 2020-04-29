@@ -19,7 +19,7 @@ export const resolvers: Resolvers = {
     },
   },
   Query: {
-    house: async (_, { input }) => House.findOne({ id: input.id }),
+    house: async (_, { input }) => House.findOne({ _id: input.id }),
     houses: async () => House.find(),
   },
 };
