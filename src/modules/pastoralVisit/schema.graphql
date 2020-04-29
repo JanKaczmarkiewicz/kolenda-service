@@ -1,8 +1,25 @@
 type PastoralVisit @entity {
   id: String! @id
-  priest: User! @column @link
-  acolytes: [User]! @column
+  priest: User @link
+  acolytes: [User]! @link
   visitTime: String! @column
   reeceTime: String! @column
-  season: Season! @column
+  season: Season! @link
+}
+
+input AddPastoralVisitInput {
+  priest: String!
+  acolytes: [String]!
+  visitTime: String!
+  reeceTime: String!
+  season: String!
+}
+
+extend type Query {
+  pastoralVisit(input: FindOneInput!): PastoralVisit
+  pastoralVisits: [PastoralVisit]!
+}
+
+extend type Mutation {
+  addPastoralVisit(input: AddPastoralVisitInput!): PastoralVisit!
 }
