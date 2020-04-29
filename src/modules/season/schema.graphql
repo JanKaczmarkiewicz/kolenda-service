@@ -1,4 +1,18 @@
 type Season @entity {
   id: String! @id
-  name: String! @column
+  year: Int! @column
+  pastoralVisits: [PastoralVisit]!
+}
+
+input AddSeasonInput {
+  year: Int!
+}
+
+extend type Mutation {
+  addSeason(input: AddSeasonInput!): Season!
+}
+
+extend type Query {
+  season(input: FindOneInput!): Season
+  seasons: [Season]!
 }
