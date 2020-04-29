@@ -15,6 +15,9 @@ generates:
         User: UserDbObject
         House: HouseDbObject
         Street: StreetDbObject
+        Season: SeasonDbObject
+        PastoralVisit: PastoralVisitDbObject
+        Entry: EntryDbObject
       contextType: Context
       skipTypename: true
       enumsAsString: false

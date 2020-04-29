@@ -5,7 +5,7 @@ import { USER, USERS } from "../../testUtils/queries";
 import { removeAllCollections } from "../../testUtils/connectToMongoose";
 import { dummyUser, secondDummyUser } from "../../testUtils/dummyUser";
 import { query } from "../../testUtils/query";
-import { symulateAuth } from "../../testUtils/symulations/symulateAuth";
+import { symulateAuth } from "../../testUtils/mock/mockAuth";
 
 let token: string;
 let secondUserData: User;

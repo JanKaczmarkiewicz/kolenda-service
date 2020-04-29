@@ -7,6 +7,29 @@ type Entry @entity {
   pastoralVisit: PastoralVisit! @column
 }
 
+input AddEntryInput {
+  house: String!
+  pastoralVisit: String!
+}
+
+input UpdateEntryInput {
+  id: String!
+  visitState: RecordState
+  reeceState: RecordState
+  comment: String
+  pastoralVisit: String
+}
+
+extend type Query {
+  entry(input: FindOneInput!): Entry
+  entries: [Entry]!
+}
+
+extend type Mutation {
+  addEntry(input: AddEntryInput!): Entry!
+  updateEntry(input: UpdateEntryInput!): Entry
+}
+
 enum RecordState {
   UNKNOWN
   ACCEPTED

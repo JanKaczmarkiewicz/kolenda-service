@@ -3,7 +3,6 @@
 import { Context } from './util';
 import { GraphQLResolveInfo } from 'graphql';
 export type Maybe<T> = T | null;
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 
 
@@ -26,16 +25,16 @@ export type HouseDbObject = {
 
 export type PastoralVisitDbObject = {
   _id: ObjectID,
-  priest: UserDbObject['_id'],
-  acolytes: Array<Maybe<User>>,
+  priest?: Maybe<UserDbObject['_id']>,
+  acolytes: Array<Maybe<UserDbObject['_id']>>,
   visitTime: string,
   reeceTime: string,
-  season: Season,
+  season: SeasonDbObject['_id'],
 };
 
 export type SeasonDbObject = {
   _id: ObjectID,
-  name: string,
+  year: number,
 };
 
 export type StreetDbObject = {
@@ -80,34 +79,102 @@ export type Entry = {
   pastoralVisit: PastoralVisit;
 };
 
-export enum RecordState {
-  Unknown = 'UNKNOWN',
-  Accepted = 'ACCEPTED',
-  Rejected = 'REJECTED',
-  Uncertain = 'UNCERTAIN'
-}
+export type AddEntryInput = {
+  house: Scalars['String'];
+  pastoralVisit: Scalars['String'];
+};
 
-export type House = {
+export type UpdateEntryInput = {
   id: Scalars['String'];
-  number: Scalars['String'];
+  visitState?: Maybe<RecordState>;
+  comment?: Maybe<Scalars['String']>;
+  pastoralVisit?: Maybe<Scalars['String']>;
+};
+
+export type Query = {
+  entries: Array<Maybe<Entry>>;
+  entry?: Maybe<Entry>;
+  house?: Maybe<House>;
+  houses: Array<Maybe<House>>;
+  me: User;
+  pastoralVisit?: Maybe<PastoralVisit>;
+  pastoralVisits: Array<Maybe<PastoralVisit>>;
+  season?: Maybe<Season>;
+  seasons: Array<Maybe<Season>>;
   street?: Maybe<Street>;
+  streets: Array<Maybe<Street>>;
+  user?: Maybe<User>;
+  users?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type QueryEntryArgs = {
+  input: FindOneInput;
+};
+
+
+export type QueryHouseArgs = {
+  input: HouseInput;
+};
+
+
+export type QueryHousesArgs = {
+  input: HouseInput;
+};
+
+
+export type QueryPastoralVisitArgs = {
+  input: FindOneInput;
+};
+
+
+export type QuerySeasonArgs = {
+  input: FindOneInput;
+};
+
+
+export type QueryStreetArgs = {
+  input: FindOneInput;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['String'];
 };
 
 export type Mutation = {
+  addEntry: Entry;
   addHouse?: Maybe<House>;
+  addPastoralVisit: PastoralVisit;
+  addSeason: Season;
   addStreet?: Maybe<Street>;
   deleteHouse: Scalars['Boolean'];
-  deleteStreet: Scalars['Boolean'];
   login: Scalars['String'];
   register: Scalars['String'];
+  updateEntry?: Maybe<Entry>;
   updateHouse?: Maybe<House>;
   updateStreet?: Maybe<Street>;
   verifyEmail: Scalars['Boolean'];
 };
 
 
+export type MutationAddEntryArgs = {
+  input: AddEntryInput;
+};
+
+
 export type MutationAddHouseArgs = {
   input: AddHouseInput;
+};
+
+
+export type MutationAddPastoralVisitArgs = {
+  input: AddPastoralVisitInput;
+};
+
+
+export type MutationAddSeasonArgs = {
+  input: AddSeasonInput;
 };
 
 
@@ -121,11 +188,6 @@ export type MutationDeleteHouseArgs = {
 };
 
 
-export type MutationDeleteStreetArgs = {
-  input: DeleteStreetInput;
-};
-
-
 export type MutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -136,6 +198,11 @@ export type MutationRegisterArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
   username: Scalars['String'];
+};
+
+
+export type MutationUpdateEntryArgs = {
+  input: UpdateEntryInput;
 };
 
 
@@ -153,39 +220,17 @@ export type MutationVerifyEmailArgs = {
   token: Scalars['String'];
 };
 
-export type Query = {
-  house?: Maybe<House>;
-  houses: Array<Maybe<House>>;
-  me: User;
-  street?: Maybe<Street>;
-  streets: Array<Maybe<Street>>;
-  user?: Maybe<User>;
-  users?: Maybe<Array<Maybe<User>>>;
-};
+export enum RecordState {
+  Unknown = 'UNKNOWN',
+  Accepted = 'ACCEPTED',
+  Rejected = 'REJECTED',
+  Uncertain = 'UNCERTAIN'
+}
 
-
-export type QueryHouseArgs = {
-  input: HouseInput;
-};
-
-
-export type QueryHousesArgs = {
-  input: HouseInput;
-};
-
-
-export type QueryStreetArgs = {
-  input: StreetInput;
-};
-
-
-export type QueryStreetsArgs = {
-  input: StreetInput;
-};
-
-
-export type QueryUserArgs = {
+export type House = {
   id: Scalars['String'];
+  number: Scalars['String'];
+  street?: Maybe<Street>;
 };
 
 export type AddHouseInput = {
@@ -196,7 +241,6 @@ export type AddHouseInput = {
 export type UpdateHouseInput = {
   id: Scalars['String'];
   number?: Maybe<Scalars['String']>;
-  street?: Maybe<Scalars['String']>;
 };
 
 export type DeleteHouseInput = {
@@ -213,16 +257,33 @@ export type HousesInput = {
 
 export type PastoralVisit = {
   id: Scalars['String'];
-  priest: User;
+  priest?: Maybe<User>;
   acolytes: Array<Maybe<User>>;
   visitTime: Scalars['String'];
   reeceTime: Scalars['String'];
   season: Season;
 };
 
+export type AddPastoralVisitInput = {
+  priest: Scalars['String'];
+  acolytes: Array<Maybe<Scalars['String']>>;
+  visitTime: Scalars['String'];
+  reeceTime: Scalars['String'];
+  season: Scalars['String'];
+};
+
 export type Season = {
   id: Scalars['String'];
-  name: Scalars['String'];
+  year: Scalars['Int'];
+  pastoralVisits: Array<Maybe<PastoralVisit>>;
+};
+
+export type AddSeasonInput = {
+  year: Scalars['Int'];
+};
+
+export type FindOneInput = {
+  id: Scalars['String'];
 };
 
 export type Street = {
@@ -238,14 +299,6 @@ export type AddStreetInput = {
 export type UpdateStreetInput = {
   id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
-};
-
-export type DeleteStreetInput = {
-  id: Scalars['String'];
-};
-
-export type StreetInput = {
-  id: Scalars['String'];
 };
 
 export type StreetsInput = {
@@ -340,23 +393,27 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = ResolversObject<{
   String: ResolverTypeWrapper<Scalars['String']>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
-  Entry: ResolverTypeWrapper<Omit<Entry, 'house' | 'pastoralVisit'> & { house: ResolversTypes['House'], pastoralVisit: ResolversTypes['PastoralVisit'] }>,
+  Entry: ResolverTypeWrapper<EntryDbObject>,
+  AddEntryInput: AddEntryInput,
+  UpdateEntryInput: UpdateEntryInput,
+  Query: ResolverTypeWrapper<{}>,
+  Mutation: ResolverTypeWrapper<{}>,
   RecordState: RecordState,
   House: ResolverTypeWrapper<HouseDbObject>,
-  Mutation: ResolverTypeWrapper<{}>,
-  Query: ResolverTypeWrapper<{}>,
   AddHouseInput: AddHouseInput,
   UpdateHouseInput: UpdateHouseInput,
   DeleteHouseInput: DeleteHouseInput,
   HouseInput: HouseInput,
   HousesInput: HousesInput,
-  PastoralVisit: ResolverTypeWrapper<Omit<PastoralVisit, 'priest' | 'acolytes'> & { priest: ResolversTypes['User'], acolytes: Array<Maybe<ResolversTypes['User']>> }>,
-  Season: ResolverTypeWrapper<Season>,
+  PastoralVisit: ResolverTypeWrapper<PastoralVisitDbObject>,
+  AddPastoralVisitInput: AddPastoralVisitInput,
+  Season: ResolverTypeWrapper<SeasonDbObject>,
+  Int: ResolverTypeWrapper<Scalars['Int']>,
+  AddSeasonInput: AddSeasonInput,
+  FindOneInput: FindOneInput,
   Street: ResolverTypeWrapper<StreetDbObject>,
   AddStreetInput: AddStreetInput,
   UpdateStreetInput: UpdateStreetInput,
-  DeleteStreetInput: DeleteStreetInput,
-  StreetInput: StreetInput,
   StreetsInput: StreetsInput,
   User: ResolverTypeWrapper<UserDbObject>,
   Role: Role,
@@ -367,23 +424,27 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   String: Scalars['String'],
   Boolean: Scalars['Boolean'],
-  Entry: Omit<Entry, 'house' | 'pastoralVisit'> & { house: ResolversParentTypes['House'], pastoralVisit: ResolversParentTypes['PastoralVisit'] },
+  Entry: EntryDbObject,
+  AddEntryInput: AddEntryInput,
+  UpdateEntryInput: UpdateEntryInput,
+  Query: {},
+  Mutation: {},
   RecordState: RecordState,
   House: HouseDbObject,
-  Mutation: {},
-  Query: {},
   AddHouseInput: AddHouseInput,
   UpdateHouseInput: UpdateHouseInput,
   DeleteHouseInput: DeleteHouseInput,
   HouseInput: HouseInput,
   HousesInput: HousesInput,
-  PastoralVisit: Omit<PastoralVisit, 'priest' | 'acolytes'> & { priest: ResolversParentTypes['User'], acolytes: Array<Maybe<ResolversParentTypes['User']>> },
-  Season: Season,
+  PastoralVisit: PastoralVisitDbObject,
+  AddPastoralVisitInput: AddPastoralVisitInput,
+  Season: SeasonDbObject,
+  Int: Scalars['Int'],
+  AddSeasonInput: AddSeasonInput,
+  FindOneInput: FindOneInput,
   Street: StreetDbObject,
   AddStreetInput: AddStreetInput,
   UpdateStreetInput: UpdateStreetInput,
-  DeleteStreetInput: DeleteStreetInput,
-  StreetInput: StreetInput,
   StreetsInput: StreetsInput,
   User: UserDbObject,
   Role: Role,
@@ -443,6 +504,37 @@ export type EntryResolvers<ContextType = Context, ParentType extends ResolversPa
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
+export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  entries?: Resolver<Array<Maybe<ResolversTypes['Entry']>>, ParentType, ContextType>,
+  entry?: Resolver<Maybe<ResolversTypes['Entry']>, ParentType, ContextType, RequireFields<QueryEntryArgs, 'input'>>,
+  house?: Resolver<Maybe<ResolversTypes['House']>, ParentType, ContextType, RequireFields<QueryHouseArgs, 'input'>>,
+  houses?: Resolver<Array<Maybe<ResolversTypes['House']>>, ParentType, ContextType, RequireFields<QueryHousesArgs, 'input'>>,
+  me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
+  pastoralVisit?: Resolver<Maybe<ResolversTypes['PastoralVisit']>, ParentType, ContextType, RequireFields<QueryPastoralVisitArgs, 'input'>>,
+  pastoralVisits?: Resolver<Array<Maybe<ResolversTypes['PastoralVisit']>>, ParentType, ContextType>,
+  season?: Resolver<Maybe<ResolversTypes['Season']>, ParentType, ContextType, RequireFields<QuerySeasonArgs, 'input'>>,
+  seasons?: Resolver<Array<Maybe<ResolversTypes['Season']>>, ParentType, ContextType>,
+  street?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<QueryStreetArgs, 'input'>>,
+  streets?: Resolver<Array<Maybe<ResolversTypes['Street']>>, ParentType, ContextType>,
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>,
+  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>,
+}>;
+
+export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  addEntry?: Resolver<ResolversTypes['Entry'], ParentType, ContextType, RequireFields<MutationAddEntryArgs, 'input'>>,
+  addHouse?: Resolver<Maybe<ResolversTypes['House']>, ParentType, ContextType, RequireFields<MutationAddHouseArgs, 'input'>>,
+  addPastoralVisit?: Resolver<ResolversTypes['PastoralVisit'], ParentType, ContextType, RequireFields<MutationAddPastoralVisitArgs, 'input'>>,
+  addSeason?: Resolver<ResolversTypes['Season'], ParentType, ContextType, RequireFields<MutationAddSeasonArgs, 'input'>>,
+  addStreet?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<MutationAddStreetArgs, 'input'>>,
+  deleteHouse?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteHouseArgs, 'input'>>,
+  login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>,
+  register?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'password' | 'username'>>,
+  updateEntry?: Resolver<Maybe<ResolversTypes['Entry']>, ParentType, ContextType, RequireFields<MutationUpdateEntryArgs, 'input'>>,
+  updateHouse?: Resolver<Maybe<ResolversTypes['House']>, ParentType, ContextType, RequireFields<MutationUpdateHouseArgs, 'input'>>,
+  updateStreet?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<MutationUpdateStreetArgs, 'input'>>,
+  verifyEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVerifyEmailArgs, 'token'>>,
+}>;
+
 export type HouseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['House'] = ResolversParentTypes['House']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   number?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -450,31 +542,9 @@ export type HouseResolvers<ContextType = Context, ParentType extends ResolversPa
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
-export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  addHouse?: Resolver<Maybe<ResolversTypes['House']>, ParentType, ContextType, RequireFields<MutationAddHouseArgs, 'input'>>,
-  addStreet?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<MutationAddStreetArgs, 'input'>>,
-  deleteHouse?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteHouseArgs, 'input'>>,
-  deleteStreet?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteStreetArgs, 'input'>>,
-  login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>,
-  register?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'email' | 'password' | 'username'>>,
-  updateHouse?: Resolver<Maybe<ResolversTypes['House']>, ParentType, ContextType, RequireFields<MutationUpdateHouseArgs, 'input'>>,
-  updateStreet?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<MutationUpdateStreetArgs, 'input'>>,
-  verifyEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVerifyEmailArgs, 'token'>>,
-}>;
-
-export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  house?: Resolver<Maybe<ResolversTypes['House']>, ParentType, ContextType, RequireFields<QueryHouseArgs, 'input'>>,
-  houses?: Resolver<Array<Maybe<ResolversTypes['House']>>, ParentType, ContextType, RequireFields<QueryHousesArgs, 'input'>>,
-  me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
-  street?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<QueryStreetArgs, 'input'>>,
-  streets?: Resolver<Array<Maybe<ResolversTypes['Street']>>, ParentType, ContextType, RequireFields<QueryStreetsArgs, 'input'>>,
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>,
-  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>,
-}>;
-
 export type PastoralVisitResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PastoralVisit'] = ResolversParentTypes['PastoralVisit']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  priest?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
+  priest?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
   acolytes?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,
   visitTime?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   reeceTime?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -484,7 +554,8 @@ export type PastoralVisitResolvers<ContextType = Context, ParentType extends Res
 
 export type SeasonResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Season'] = ResolversParentTypes['Season']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  pastoralVisits?: Resolver<Array<Maybe<ResolversTypes['PastoralVisit']>>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
@@ -506,9 +577,9 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
   Entry?: EntryResolvers<ContextType>,
-  House?: HouseResolvers<ContextType>,
-  Mutation?: MutationResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
+  Mutation?: MutationResolvers<ContextType>,
+  House?: HouseResolvers<ContextType>,
   PastoralVisit?: PastoralVisitResolvers<ContextType>,
   Season?: SeasonResolvers<ContextType>,
   Street?: StreetResolvers<ContextType>,

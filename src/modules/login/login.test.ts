@@ -4,7 +4,7 @@ import { removeAllCollections } from "../../testUtils/connectToMongoose";
 import { LOGIN } from "../../testUtils/queries";
 import { dummyUser } from "../../testUtils/dummyUser";
 import { query } from "../../testUtils/query";
-import { symulateAuth } from "../../testUtils/symulations/symulateAuth";
+import { symulateAuth } from "../../testUtils/mock/mockAuth";
 
 beforeAll(async () => {
   await createDatabaseConnection();

@@ -3,7 +3,7 @@ import { removeAllCollections } from "../../testUtils/connectToMongoose";
 import { VERIFY_EMAIL } from "../../testUtils/queries";
 import { dummyUser } from "../../testUtils/dummyUser";
 import { query } from "../../testUtils/query";
-import { symulateAuth } from "../../testUtils/symulations/symulateAuth";
+import { symulateAuth } from "../../testUtils/mock/mockAuth";
 import { authTokenToVerificationToken } from "../../utils/authTokenToVerificationToken";
 
 let verificationToken: string;
