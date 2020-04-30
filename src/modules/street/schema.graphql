@@ -6,13 +6,12 @@ type Street @entity {
 
 extend type Mutation {
   addStreet(input: AddStreetInput!): Street @authenticated
-  updateStreet(input: UpdateStreetInput!): Street
-  # deleteStreet(input: DeleteStreetInput!): Boolean!
+  updateStreet(input: UpdateStreetInput!): Street @authenticated
 }
 
 extend type Query {
-  street(input: FindOneInput!): Street
-  streets: [Street]!
+  street(input: FindOneInput!): Street @authenticated
+  streets: [Street]! @authenticated
 }
 
 # Mutation inputs
@@ -23,12 +22,4 @@ input AddStreetInput {
 input UpdateStreetInput {
   id: String!
   name: String
-}
-
-# input DeleteStreetInput {
-#   id: String!
-# }
-
-input StreetsInput {
-  id: String!
 }

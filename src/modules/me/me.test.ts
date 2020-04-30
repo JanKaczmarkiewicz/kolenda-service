@@ -1,31 +1,26 @@
-import createDatabaseConnection from "../../db/connect";
-import { removeAllCollections } from "../../testUtils/connectToMongoose";
 import { ME } from "../../testUtils/queries";
-import { dummyUser } from "../../testUtils/dummyUser";
 import { query } from "../../testUtils/query";
-import { symulateAuth } from "../../testUtils/mock/mockAuth";
+import { signUser } from "../../testUtils/mock/mockAuth";
+import { setup } from "../../testUtils/beforeAllSetup";
+import { dummyUserData } from "../../testUtils/dummyData";
+import { responceError } from "../../errors/responce";
 
 let token: string;
 
 beforeAll(async () => {
-  await createDatabaseConnection();
-  await removeAllCollections();
-  token = await symulateAuth(dummyUser)
-    .register()
-    .verifyEmail()
-    .login()
-    .execute();
+  await setup();
+  token = await signUser(dummyUserData);
 });
 
 describe("Me", () => {
   it("With valid token should returns user data.", async () => {
     const res = await query({ query: ME }, token);
-    const user = res.data?.me;
-    expect(user.username).toBe(dummyUser.username);
+    expect(res.data?.me.username).toBe(dummyUserData.username);
   });
+
   it("With invalid token result in null.", async () => {
     const res = await query({ query: ME });
-    const user = res.data?.me;
-    expect(user).toBeFalsy();
+    expect(res.data?.me).toBeFalsy();
+    expect(res.errors?.[0].message).toBe(responceError.authenticationFailed);
   });
 });

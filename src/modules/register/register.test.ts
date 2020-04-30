@@ -1,32 +1,35 @@
-import createDatabaseConnection from "../../db/connect";
-import { removeAllCollections } from "../../testUtils/connectToMongoose";
 import { REGISTER } from "../../testUtils/queries";
-import { dummyUser } from "../../testUtils/dummyUser";
 import { query } from "../../testUtils/query";
 import User from "../../models/User";
+import { setup } from "../../testUtils/beforeAllSetup";
+import { dummyUserData } from "../../testUtils/dummyData";
+import { responceError } from "../../errors/responce";
+import { Role } from "../../types/types";
 
 beforeAll(async () => {
-  await createDatabaseConnection();
-  await removeAllCollections();
+  await setup();
 });
 
 describe("Register", () => {
   it("Response should returns token", async () => {
-    const res = await query({ query: REGISTER, variables: dummyUser });
+    const res = await query({ query: REGISTER, variables: dummyUserData });
 
     const token = res.data?.register;
     expect(token).toBeTruthy();
-    const foundUsers = await User.find({ email: dummyUser.email });
+
+    const foundUsers = await User.find({ email: dummyUserData.email });
 
     expect(foundUsers).toHaveLength(1);
     const foundUser = foundUsers[0];
-    expect(foundUser.username).toBe(dummyUser.username);
-    expect(foundUser.password).not.toBe(dummyUser.password);
-    expect(foundUser.email).toBe(dummyUser.email);
+    expect(foundUser.username).toBe(dummyUserData.username);
+    expect(foundUser.password).not.toBe(dummyUserData.password);
+    expect(foundUser.email).toBe(dummyUserData.email);
+    expect(foundUser.role).toBe(Role.User);
   });
 
   it("Same user cannot be registered twice.", async () => {
-    const res = await query({ query: REGISTER, variables: dummyUser });
+    const res = await query({ query: REGISTER, variables: dummyUserData });
     expect(res.data?.register).toBeFalsy();
+    expect(res.errors?.[0].message).toBe(responceError.userExists);
   });
 });

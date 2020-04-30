@@ -7,12 +7,7 @@ export const resolvers: Resolvers = {
     addStreet: async (_, { input }) => new Street(input).save(),
 
     updateStreet: async (_, { input: { id, ...rest } }) =>
-      Street.findOneAndUpdate({ _id: id }, { $set: rest }),
-
-    // deleteStreet: async (_, { input }) => {
-    //   const result = await Street.deleteOne({ _id: input.id });
-    //   return !!result.deletedCount && result.deletedCount > 0;
-    // },
+      Street.findOneAndUpdate({ _id: id }, { $set: rest }, { new: true }),
   },
   Street: {
     id: (street) => street._id + "",

@@ -4,3 +4,5 @@ export const dummyUserData = {
   password: "Sdasdasdafa",
   username: "TestUser",
 };
+
+export const badToken = "bad_token";

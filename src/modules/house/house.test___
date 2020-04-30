@@ -5,23 +5,18 @@ import { LOGIN } from "../../testUtils/queries";
 import { dummyUser } from "../../testUtils/dummyUser";
 import { query } from "../../testUtils/query";
 import { symulateAuth } from "../../testUtils/mock/mockAuth";
+import { setup } from "../../testUtils/beforeAllSetup";
 
-let token;
+let token: string;
 
 beforeAll(async () => {
-  await createDatabaseConnection();
-  await removeAllCollections();
-  token = await symulateAuth(dummyUser)
-    .register()
-    .verifyEmail()
-    .login()
-    .execute();
+  await setup();
 });
 
-describe("Login", () => {
-  it("should returns token if credensials valid", async () => {
+describe("House", () => {
+  it("add house if credensials valid", async () => {
     const res = await query({
-      query: LOGIN,
+      query: ADD_HO,
       variables: {
         email: dummyUser.email,
         password: dummyUser.password,
