@@ -13,6 +13,6 @@ extend type Mutation {
 }
 
 extend type Query {
-  season(input: FindOneInput!): Season
+  season(input: FindOneInput!): Season @authenticated
   seasons: [Season]!
 }

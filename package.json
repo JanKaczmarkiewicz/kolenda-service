@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cross-env ENVIRONMENT=dev nodemon --exec ts-node src/init.ts",
     "gen": "graphql-codegen",
-    "test": "cross-env ENVIRONMENT=test jest --detectOpenHandles --watch",
+    "test": "cross-env ENVIRONMENT=test jest --detectOpenHandles",
     "clear-cache": "jest --clearCache",
     "generate": "npm run generate-typings && npm run generator-resolvers",
     "generator-resolvers": "gql-gen --export ./dist/generator/schema.js --project ./src/modules/"

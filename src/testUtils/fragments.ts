@@ -9,3 +9,10 @@ export const StreetFragment = gql`
     }
   }
 `;
+
+export const SeasonFragment = gql`
+  fragment SeasonFragment on Season {
+    year
+    id
+  }
+`;
