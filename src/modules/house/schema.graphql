@@ -5,7 +5,7 @@ type House @entity {
 }
 
 extend type Mutation {
-  addHouse(input: AddHouseInput!): House
+  addHouse(input: AddHouseInput!): House @authenticated
   updateHouse(input: UpdateHouseInput!): House
   deleteHouse(input: DeleteHouseInput!): Boolean!
 }

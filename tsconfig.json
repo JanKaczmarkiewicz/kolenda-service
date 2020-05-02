@@ -21,6 +21,6 @@
   "include": [
     "./src/**/*.tsx",
     "./src/**/*.ts",
-    "src/modules/house/house.test___"
+    "src/modules/house/house.test.ts"
   ]
 }

@@ -16,3 +16,13 @@ export const SeasonFragment = gql`
     id
   }
 `;
+
+export const HouseFragment = gql`
+  fragment HouseFragment on House {
+    id
+    number
+    street {
+      id
+    }
+  }
+`;
