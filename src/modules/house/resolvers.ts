@@ -10,17 +10,8 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     addHouse: async (_, { input }) => await new House(input).save(),
-
-    updateHouse: async (_, { input: { id, ...rest } }) =>
-      House.findOneAndUpdate({ _id: id }, { $set: rest }),
-
-    deleteHouse: async (_, { input }) => {
-      console.log(await House.deleteOne({ _id: input.id }));
-      return true;
-    },
   },
   Query: {
     house: async (_, { input }) => House.findOne({ _id: input.id }),
-    houses: async () => House.find(),
   },
 };

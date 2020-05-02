@@ -6,35 +6,14 @@ type House @entity {
 
 extend type Mutation {
   addHouse(input: AddHouseInput!): House @authenticated
-  updateHouse(input: UpdateHouseInput!): House
-  deleteHouse(input: DeleteHouseInput!): Boolean!
 }
 
 extend type Query {
-  house(input: HouseInput!): House
-  houses(input: HouseInput!): [House]!
+  house(input: FindOneInput!): House @authenticated
 }
 
 # Mutation inputs
 input AddHouseInput {
   number: String!
   street: String!
-}
-
-input UpdateHouseInput {
-  id: String!
-  number: String
-}
-
-input DeleteHouseInput {
-  id: String!
-}
-
-# Query inputs
-input HouseInput {
-  id: String!
-}
-
-input HousesInput {
-  id: String!
 }
