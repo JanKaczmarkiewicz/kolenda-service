@@ -18,3 +18,7 @@ export const usernameError = {
 export const streetError = {
   exist: "Street already exist!",
 };
+
+export const seasonError = {
+  exist: "Season already exist!",
+};

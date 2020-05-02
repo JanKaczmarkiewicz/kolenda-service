@@ -87,6 +87,7 @@ export type AddEntryInput = {
 export type UpdateEntryInput = {
   id: Scalars['String'];
   visitState?: Maybe<RecordState>;
+  reeceState?: Maybe<RecordState>;
   comment?: Maybe<Scalars['String']>;
   pastoralVisit?: Maybe<Scalars['String']>;
 };
@@ -301,10 +302,6 @@ export type UpdateStreetInput = {
   name?: Maybe<Scalars['String']>;
 };
 
-export type StreetsInput = {
-  id: Scalars['String'];
-};
-
 export type User = {
   id: Scalars['String'];
   username: Scalars['String'];
@@ -414,7 +411,6 @@ export type ResolversTypes = ResolversObject<{
   Street: ResolverTypeWrapper<StreetDbObject>,
   AddStreetInput: AddStreetInput,
   UpdateStreetInput: UpdateStreetInput,
-  StreetsInput: StreetsInput,
   User: ResolverTypeWrapper<UserDbObject>,
   Role: Role,
   AdditionalEntityFields: AdditionalEntityFields,
@@ -445,7 +441,6 @@ export type ResolversParentTypes = ResolversObject<{
   Street: StreetDbObject,
   AddStreetInput: AddStreetInput,
   UpdateStreetInput: UpdateStreetInput,
-  StreetsInput: StreetsInput,
   User: UserDbObject,
   Role: Role,
   AdditionalEntityFields: AdditionalEntityFields,

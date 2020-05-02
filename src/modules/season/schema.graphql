@@ -9,10 +9,10 @@ input AddSeasonInput {
 }
 
 extend type Mutation {
-  addSeason(input: AddSeasonInput!): Season!
+  addSeason(input: AddSeasonInput!): Season! @authenticated
 }
 
 extend type Query {
   season(input: FindOneInput!): Season @authenticated
-  seasons: [Season]!
+  seasons: [Season]! @authenticated
 }
