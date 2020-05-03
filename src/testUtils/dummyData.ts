@@ -5,6 +5,12 @@ export const dummyUserData = {
   username: "TestUser",
 };
 
+export const dummyAcolytesData = ["a", "b", "c"].map((el) => ({
+  email: `${el}${dummyUserData.email}`,
+  password: `${dummyUserData.password}${el}`,
+  username: `${el}${dummyUserData.username}`,
+}));
+
 export const dummySeasonData = {
   year: 2020,
 };

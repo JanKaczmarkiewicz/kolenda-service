@@ -13,8 +13,8 @@ let token: string;
 const streetName = "Miodowa";
 
 const ADD_STREET = gql`
-  mutation addStreet($name: String!) {
-    addStreet(input: { name: $name }) {
+  mutation addStreet($input: AddStreetInput!) {
+    addStreet(input: $input) {
       ...StreetFragment
     }
   }
@@ -31,9 +31,7 @@ describe("addStreet resolver", () => {
     const res = await query(
       {
         query: ADD_STREET,
-        variables: {
-          name: streetName,
-        },
+        input: { name: streetName },
       },
       token
     );
@@ -45,9 +43,7 @@ describe("addStreet resolver", () => {
     const res = await query(
       {
         query: ADD_STREET,
-        variables: {
-          name: streetName,
-        },
+        input: { name: streetName },
       },
       token
     );
@@ -59,9 +55,7 @@ describe("addStreet resolver", () => {
     const res = await query(
       {
         query: ADD_STREET,
-        variables: {
-          name: streetName + "_new",
-        },
+        input: { name: streetName + "_new" },
       },
       badToken
     );

@@ -4,7 +4,7 @@ import User from "../../models/User";
 
 export const resolvers: Resolvers = {
   PastoralVisit: {
-    id: (pastoralVisit) => pastoralVisit._id + "",
+    id: (pastoralVisit) => pastoralVisit._id.toHexString(),
     priest: async (pastoralVisit) =>
       User.findOne({ _id: pastoralVisit._id.toHexString() }),
   },

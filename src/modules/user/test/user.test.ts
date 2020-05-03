@@ -19,23 +19,29 @@ beforeAll(async () => {
 describe("User", () => {
   it("Authenticated user should have access to find user by id", async () => {
     const res = await query(
-      { query: USER, variables: { id: savedUser._id.toHexString() } },
+      {
+        query: USER,
+        input: { id: savedUser._id.toHexString() },
+      },
       token
     );
     const user = res.data?.user;
-
+    console.log(res);
     expect(user.username).toBe(savedUser.username);
     expect(user.email).toBe(savedUser.email);
   });
 
   it("Invalid id argument results in null.", async () => {
-    const res = await query({ query: USER, variables: { id: "badid" } }, token);
+    const res = await query({ query: USER, input: { id: "badid" } }, token);
     expect(res.data?.user).toBeNull();
   });
 
   it("Inauthenticated user shouldn't have access to user data.", async () => {
     const res = await query(
-      { query: USER, variables: { id: savedUser._id.toHexString() } },
+      {
+        query: USER,
+        input: { id: savedUser._id.toHexString() },
+      },
       badToken
     );
     expect(res.data?.user).toBeFalsy();

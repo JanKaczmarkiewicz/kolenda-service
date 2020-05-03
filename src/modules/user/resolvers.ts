@@ -3,10 +3,10 @@ import { Resolvers } from "../../types/types";
 
 export const resolvers: Resolvers = {
   Query: {
-    user: async (_, { id }) => User.findOne({ _id: id }),
+    user: async (_, { input: { id } }) => User.findOne({ _id: id }),
     users: async (_, {}) => User.find(),
   },
   User: {
-    id: (user) => user._id + "",
+    id: (user) => user._id.toHexString(),
   },
 };

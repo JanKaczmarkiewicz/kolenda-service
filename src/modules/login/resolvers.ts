@@ -7,7 +7,7 @@ import { responceError } from "../../errors/responce";
 
 export const resolvers: Resolvers = {
   Mutation: {
-    login: async (_, { email, password }) => {
+    login: async (_, { input: { email, password } }) => {
       const foundUser = await User.findOne({ email });
 
       if (!foundUser)

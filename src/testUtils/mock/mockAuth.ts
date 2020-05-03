@@ -1,17 +1,17 @@
-import { MutationRegisterArgs, Role } from "../../types/types";
+import { MutationRegisterArgs, Role, RegisterInput } from "../../types/types";
 import { query } from "../query";
 import { REGISTER, VERIFY_EMAIL, LOGIN, ME } from "../queries";
 import { authTokenToVerificationToken } from "../../utils/authTokenToVerificationToken";
 import User from "../../models/User";
 import { signAuthToken } from "../../utils/authToken";
 
-const user: MutationRegisterArgs = {
+const user: RegisterInput = {
   email: "Exaple@gmail.com",
   password: "shbdkjasldnlash",
   username: "example_user",
 };
 export const signUser = async (
-  userData: MutationRegisterArgs = user,
+  userData: RegisterInput = user,
   role: Role = Role.User
 ): Promise<string> => {
   const savedUser = await new User({
@@ -22,7 +22,7 @@ export const signUser = async (
   return signAuthToken({ id: savedUser._id.toHexString() });
 };
 
-export const symulateAuth = (userData: MutationRegisterArgs) => {
+export const symulateAuth = (userData: RegisterInput) => {
   const stack: Function[] = [];
 
   const execute = async () =>
@@ -37,7 +37,7 @@ export const symulateAuth = (userData: MutationRegisterArgs) => {
 
   const register = () => {
     stack.push(() =>
-      query({ query: REGISTER, variables: userData }).then((res) => {
+      query({ query: REGISTER, input: userData }).then((res) => {
         // console.log(res);
         return res.data?.register;
       })
@@ -50,7 +50,7 @@ export const symulateAuth = (userData: MutationRegisterArgs) => {
       const verificationToken = authTokenToVerificationToken(authToken);
       return query({
         query: VERIFY_EMAIL,
-        variables: { token: verificationToken },
+        input: { token: verificationToken },
       }).then((res) => {
         // console.log(res);
         return res.data?.verifyEmail;
@@ -64,7 +64,7 @@ export const symulateAuth = (userData: MutationRegisterArgs) => {
     stack.push(() =>
       query({
         query: LOGIN,
-        variables: { email: userData.email, password: userData.password },
+        input: { email: userData.email, password: userData.password },
       }).then((res) => {
         // console.log(res);
         return res.data?.login;
@@ -79,7 +79,7 @@ export const symulateAuth = (userData: MutationRegisterArgs) => {
       query(
         {
           query: ME,
-          variables: { email: userData.email, password: userData.password },
+          input: { email: userData.email, password: userData.password },
         },
         authToken
       )

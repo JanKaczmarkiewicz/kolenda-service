@@ -12,7 +12,7 @@ import { responceError } from "../../errors/responce";
 
 export const resolvers: Resolvers = {
   Mutation: {
-    register: async (_, { password, username, email }) => {
+    register: async (_, { input: { password, username, email } }) => {
       const foundUsers = await User.find({ $or: [{ username }, { email }] });
 
       if (foundUsers.length > 0)
@@ -26,11 +26,12 @@ export const resolvers: Resolvers = {
         password: hashedPassword,
         confirmed: false,
       }).save();
-
+      console.log(savedUser);
       const confirmingToken = signConfirmingToken({ id: savedUser.id });
       sendConfirmingEmail(confirmingToken, savedUser);
 
       const authToken: string = signAuthToken({ id: savedUser.id });
+      console.log(authToken);
       return authToken;
     },
   },

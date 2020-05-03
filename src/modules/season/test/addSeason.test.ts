@@ -11,8 +11,8 @@ import { seasonError } from "../../../errors/validations";
 let token: string;
 
 const ADD_SEASON = gql`
-  mutation addSeason($year: Int!) {
-    addSeason(input: { year: $year }) {
+  mutation addSeason($input: AddSeasonInput!) {
+    addSeason(input: $input) {
       ...SeasonFragment
     }
   }
@@ -27,10 +27,7 @@ beforeAll(async () => {
 describe("Add season", () => {
   it("Authenticated user can create a season.", async () => {
     const seasonInput = { year: 2011 };
-    const res = await query(
-      { query: ADD_SEASON, variables: seasonInput },
-      token
-    );
+    const res = await query({ query: ADD_SEASON, input: seasonInput }, token);
 
     const foundSeason = (await Season.findOne({
       _id: res.data?.addSeason.id,
@@ -44,10 +41,7 @@ describe("Add season", () => {
 
   it("User cannot add season with existing unique.", async () => {
     const seasonInput = { year: 2011 };
-    const res = await query(
-      { query: ADD_SEASON, variables: seasonInput },
-      token
-    );
+    const res = await query({ query: ADD_SEASON, input: seasonInput }, token);
 
     expect(res.errors?.[0].message).toBe(seasonError.exist);
   });
@@ -55,10 +49,7 @@ describe("Add season", () => {
   it("Bad year format results validation error.", async () => {
     const seasonInput = { year: 22000 };
 
-    const res = await query(
-      { query: ADD_SEASON, variables: seasonInput },
-      token
-    );
+    const res = await query({ query: ADD_SEASON, input: seasonInput }, token);
 
     expect(res.data?.addSeason).toBeFalsy();
 
@@ -73,7 +64,7 @@ describe("Add season", () => {
     const seasonInput = { year: 2011 + 1 };
 
     const res = await query(
-      { query: ADD_SEASON, variables: seasonInput },
+      { query: ADD_SEASON, input: seasonInput },
       badToken
     );
     expect(res.data?.addSeason).toBeFalsy();

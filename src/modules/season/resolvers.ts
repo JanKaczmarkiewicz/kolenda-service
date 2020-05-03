@@ -4,7 +4,7 @@ import PastoralVisit from "../../models/PastoralVisit";
 
 export const resolvers: Resolvers = {
   Season: {
-    id: (season) => season._id + "",
+    id: (season) => season._id.toHexString(),
     pastoralVisits: async (season) =>
       PastoralVisit.find({ season: season._id }),
   },

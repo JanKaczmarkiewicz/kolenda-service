@@ -15,8 +15,8 @@ let street: StreetDbObject;
 const streetNumer = "2d";
 
 const ADD_HOUSE = gql`
-  mutation addHouse($street: String!, $number: String!) {
-    addHouse(input: { street: $street, number: $number }) {
+  mutation addHouse($input: AddHouseInput!) {
+    addHouse(input: $input) {
       ...HouseFragment
     }
   }
@@ -38,7 +38,7 @@ describe("addHouse", () => {
     const res = await query(
       {
         query: ADD_HOUSE,
-        variables: houseInput,
+        input: houseInput,
       },
       token
     );
@@ -64,7 +64,7 @@ describe("addHouse", () => {
     const res = await query(
       {
         query: ADD_HOUSE,
-        variables: houseInput,
+        input: houseInput,
       },
       badToken
     );

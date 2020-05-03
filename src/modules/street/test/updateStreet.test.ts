@@ -12,8 +12,8 @@ let token: string;
 let street: StreetDbObject;
 
 const UPDATE_STREET = gql`
-  mutation updateStreet($id: String!, $name: String) {
-    updateStreet(input: { id: $id, name: $name }) {
+  mutation updateStreet($input: UpdateStreetInput!) {
+    updateStreet(input: $input) {
       ...StreetFragment
     }
   }
@@ -33,10 +33,7 @@ describe("Update Street", () => {
     const res = await query(
       {
         query: UPDATE_STREET,
-        variables: {
-          id: street._id.toHexString(),
-          name: newName,
-        },
+        input: { id: street._id.toHexString(), name: newName },
       },
       token
     );
@@ -50,10 +47,7 @@ describe("Update Street", () => {
     const res = await query(
       {
         query: UPDATE_STREET,
-        variables: {
-          id: street._id.toHexString(),
-          name: newName,
-        },
+        input: { id: street._id.toHexString(), name: newName },
       },
       badToken
     );

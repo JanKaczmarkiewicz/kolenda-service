@@ -1,15 +1,16 @@
 type Entry @entity {
   id: String! @id
-  house: House! @column
+  house: House @link
   visitState: RecordState! @column
   reeceState: RecordState! @column
-  comment: String! @column
-  pastoralVisit: PastoralVisit! @column
+  comment: String @column
+  pastoralVisit: PastoralVisit @link
 }
 
 input AddEntryInput {
   house: String!
   pastoralVisit: String!
+  comment: String
 }
 
 input UpdateEntryInput {
@@ -21,13 +22,13 @@ input UpdateEntryInput {
 }
 
 extend type Query {
-  entry(input: FindOneInput!): Entry
-  entries: [Entry]!
+  entry(input: FindOneInput!): Entry @authenticated
+  entries: [Entry]! @authenticated
 }
 
 extend type Mutation {
-  addEntry(input: AddEntryInput!): Entry!
-  updateEntry(input: UpdateEntryInput!): Entry
+  addEntry(input: AddEntryInput!): Entry! @authenticated
+  updateEntry(input: UpdateEntryInput!): Entry! @authenticated
 }
 
 enum RecordState {

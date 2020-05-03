@@ -14,6 +14,6 @@ enum Role {
 }
 
 extend type Query {
-  user(id: String!): User @authenticated
+  user(input: FindOneInput!): User @authenticated
   users: [User] @authenticated
 }

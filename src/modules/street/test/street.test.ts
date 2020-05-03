@@ -17,8 +17,8 @@ beforeAll(async () => {
 
 describe("street resolver (single element)", () => {
   const STREET = gql`
-    query street($id: String!) {
-      street(input: { id: $id }) {
+    query street($input: FindOneInput!) {
+      street(input: $input) {
         ...StreetFragment
       }
     }
@@ -35,9 +35,7 @@ describe("street resolver (single element)", () => {
     const res = await query(
       {
         query: STREET,
-        variables: {
-          id: street._id.toHexString(),
-        },
+        input: { id: street._id.toHexString() },
       },
       token
     );
@@ -50,9 +48,7 @@ describe("street resolver (single element)", () => {
     const res = await query(
       {
         query: STREET,
-        variables: {
-          id: street._id.toHexString(),
-        },
+        input: { id: street._id.toHexString() },
       },
       badToken
     );

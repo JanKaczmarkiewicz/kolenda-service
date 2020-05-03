@@ -6,7 +6,7 @@ export const resolvers: Resolvers = {
   House: {
     id: (house) => house._id.toHexString(),
     street: async (house) =>
-      await Street.findOne({ _id: house.street?.toHexString() }),
+      Street.findOne({ _id: house.street?.toHexString() }),
   },
   Mutation: {
     addHouse: async (_, { input }) => await new House(input).save(),

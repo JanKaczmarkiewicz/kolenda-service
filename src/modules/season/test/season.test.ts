@@ -12,8 +12,8 @@ let token: string;
 let season: SeasonDbObject;
 
 const SEASON = gql`
-  query season($id: String!) {
-    season(input: { id: $id }) {
+  query season($input: FindOneInput!) {
+    season(input: $input) {
       ...SeasonFragment
     }
   }
@@ -31,9 +31,7 @@ describe("Season (single)", () => {
     const res = await query(
       {
         query: SEASON,
-        variables: {
-          id: season._id.toHexString(),
-        },
+        input: { id: season._id.toHexString() },
       },
       token
     );
@@ -48,9 +46,7 @@ describe("Season (single)", () => {
     const res = await query(
       {
         query: SEASON,
-        variables: {
-          id: badId,
-        },
+        input: { id: badId },
       },
       token
     );
@@ -62,9 +58,7 @@ describe("Season (single)", () => {
     const res = await query(
       {
         query: SEASON,
-        variables: {
-          id: season._id.toHexString(),
-        },
+        input: { id: season._id.toHexString() },
       },
       badToken
     );

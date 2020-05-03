@@ -1,9 +1,14 @@
 import { Resolvers } from "../../types/types";
 import Entry from "../../models/Entry";
+import House from "../../models/House";
+import PastoralVisit from "../../models/PastoralVisit";
 
 export const resolvers: Resolvers = {
   Entry: {
-    id: (pastoralVisit) => pastoralVisit._id + "",
+    id: (entry) => entry._id.toHexString(),
+    house: async (entry) => House.findOne({ _id: entry.house?.toHexString() }),
+    pastoralVisit: async (entry) =>
+      PastoralVisit.findOne({ _id: entry.pastoralVisit?.toHexString() }),
   },
   Mutation: {
     addEntry: async (_, { input }) => new Entry(input).save(),

@@ -20,9 +20,7 @@ describe("Login", () => {
   it("should returns true if verificationToken valid", async () => {
     const res = await query({
       query: VERIFY_EMAIL,
-      variables: {
-        token: verificationToken,
-      },
+      input: { token: verificationToken },
     });
 
     expect(res.data?.verifyEmail).toBeTruthy();
@@ -31,9 +29,7 @@ describe("Login", () => {
   it("should returns false if verificationToken invalid", async () => {
     const res = await query({
       query: VERIFY_EMAIL,
-      variables: {
-        token: "Wrong token",
-      },
+      input: { token: "Wrong token" },
     });
 
     expect(res.data?.verifyEmail).toBeFalsy();
@@ -43,7 +39,7 @@ describe("Login", () => {
     const authToken = await symulateAuth(dummyUserData).register().execute();
     const res = await query({
       query: VERIFY_EMAIL,
-      variables: {
+      input: {
         token: authToken,
       },
     });

@@ -14,8 +14,8 @@ let house: HouseDbObject;
 let street: StreetDbObject;
 
 const HOUSE = gql`
-  query house($id: String!) {
-    house(input: { id: $id }) {
+  query house($input: FindOneInput!) {
+    house(input: $input) {
       ...HouseFragment
     }
   }
@@ -34,7 +34,7 @@ describe("house", () => {
     const res = await query(
       {
         query: HOUSE,
-        variables: { id: house._id.toHexString() },
+        input: { id: house._id.toHexString() },
       },
       token
     );
@@ -52,7 +52,7 @@ describe("house", () => {
     const res = await query(
       {
         query: HOUSE,
-        variables: { id: house._id.toHexString() },
+        input: { id: house._id.toHexString() },
       },
       badToken
     );

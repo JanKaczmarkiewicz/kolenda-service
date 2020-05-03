@@ -14,10 +14,7 @@ describe("Login", () => {
   it("should returns token if credensials valid", async () => {
     const res = await query({
       query: LOGIN,
-      variables: {
-        email: dummyUserData.email,
-        password: dummyUserData.password,
-      },
+      input: { email: dummyUserData.email, password: dummyUserData.password },
     });
 
     expect(res.data?.login).toBeTruthy();
@@ -26,7 +23,7 @@ describe("Login", () => {
   it("should return null if there is no user with this email", async () => {
     const res = await query({
       query: LOGIN,
-      variables: {
+      input: {
         email: "bad_user_email@test.com",
         password: dummyUserData.password,
       },
@@ -39,7 +36,7 @@ describe("Login", () => {
   it("should return null if password invalid", async () => {
     const res = await query({
       query: LOGIN,
-      variables: {
+      input: {
         email: dummyUserData.email,
         password: "bad_user_password",
       },

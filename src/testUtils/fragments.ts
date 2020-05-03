@@ -10,6 +10,15 @@ export const StreetFragment = gql`
   }
 `;
 
+export const UserFragment = gql`
+  fragment UserFragment on User {
+    username
+    email
+    confirmed
+    id
+  }
+`;
+
 export const SeasonFragment = gql`
   fragment SeasonFragment on Season {
     year
@@ -22,6 +31,21 @@ export const HouseFragment = gql`
     id
     number
     street {
+      id
+    }
+  }
+`;
+
+export const EntryFragment = gql`
+  fragment EntryFragment on Entry {
+    id
+    visitState
+    reeceState
+    comment
+    house {
+      id
+    }
+    pastoralVisit {
       id
     }
   }

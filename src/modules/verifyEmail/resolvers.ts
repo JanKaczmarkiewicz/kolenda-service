@@ -7,7 +7,7 @@ import { responceError } from "../../errors/responce";
 
 export const resolvers: Resolvers = {
   Mutation: {
-    verifyEmail: async (_, { token }) => {
+    verifyEmail: async (_, { input: { token } }) => {
       const userId = verifyConfirmingToken(token);
 
       if (!userId) throw new ForbiddenError(responceError.badConfirmingToken);

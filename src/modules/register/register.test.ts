@@ -12,7 +12,10 @@ beforeAll(async () => {
 
 describe("Register", () => {
   it("Response should returns token", async () => {
-    const res = await query({ query: REGISTER, variables: dummyUserData });
+    const res = await query({
+      query: REGISTER,
+      input: dummyUserData,
+    });
 
     const token = res.data?.register;
     expect(token).toBeTruthy();
@@ -28,7 +31,10 @@ describe("Register", () => {
   });
 
   it("Same user cannot be registered twice.", async () => {
-    const res = await query({ query: REGISTER, variables: dummyUserData });
+    const res = await query({
+      query: REGISTER,
+      input: dummyUserData,
+    });
     expect(res.data?.register).toBeFalsy();
     expect(res.errors?.[0].message).toBe(responceError.userExists);
   });
