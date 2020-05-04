@@ -13,7 +13,7 @@ export const resolvers: Resolvers = {
   Mutation: {
     addEntry: async (_, { input }) => new Entry(input).save(),
     updateEntry: async (_, { input: { id, ...rest } }) =>
-      Entry.findOneAndUpdate({ _id: id }, { $set: rest }),
+      Entry.findOneAndUpdate({ _id: id }, { $set: rest }, { new: true }),
   },
   Query: {
     entry: async (_, { input }) => Entry.findOne({ _id: input.id }),

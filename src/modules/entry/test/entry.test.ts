@@ -6,8 +6,7 @@ import { badToken } from "../../../testUtils/dummyData";
 import { responceError } from "../../../errors/responce";
 import { EntryFragment } from "../../../testUtils/fragments";
 import { RecordState, EntryDbObject } from "../../../types/types";
-import mockEntry from "../../../testUtils/mock/mockEntry";
-import Entry from "../../../models/Entry";
+import { addEntry } from "../../../testUtils/mock/mockEntry";
 
 let token: string;
 let savedEntry: EntryDbObject;
@@ -24,12 +23,7 @@ const ENTRY = gql`
 beforeAll(async () => {
   await setup();
   token = await signUser();
-  const mock = await mockEntry();
-  savedEntry = await new Entry({
-    house: mock.house._id.toHexString(),
-    pastoralVisit: mock.pastoralVisit._id.toHexString(),
-    comment: "test comment",
-  }).save();
+  savedEntry = (await addEntry()).entry;
 });
 
 describe("entry", () => {

@@ -12,7 +12,7 @@ import {
   RecordState,
 } from "../../../types/types";
 import Entry from "../../../models/Entry";
-import mockEntry from "../../../testUtils/mock/mockEntry";
+import { mockDbBeforeAddingEntry } from "../../../testUtils/mock/mockEntry";
 
 let token: string;
 
@@ -31,7 +31,7 @@ const ADD_ENTRY = gql`
 beforeAll(async () => {
   await setup();
   token = await signUser();
-  const mock = await mockEntry();
+  const mock = await mockDbBeforeAddingEntry();
   house = mock.house;
   pastoralVisit = mock.pastoralVisit;
 });

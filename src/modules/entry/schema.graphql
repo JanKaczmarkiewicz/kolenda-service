@@ -28,7 +28,7 @@ extend type Query {
 
 extend type Mutation {
   addEntry(input: AddEntryInput!): Entry! @authenticated
-  updateEntry(input: UpdateEntryInput!): Entry! @authenticated
+  updateEntry(input: UpdateEntryInput!): Entry @authenticated
 }
 
 enum RecordState {

@@ -146,7 +146,7 @@ export type Mutation = {
   addStreet?: Maybe<Street>;
   login: Scalars['String'];
   register: Scalars['String'];
-  updateEntry: Entry;
+  updateEntry?: Maybe<Entry>;
   updateStreet?: Maybe<Street>;
   verifyEmail: Scalars['Boolean'];
 };
@@ -376,7 +376,7 @@ export type ResolversTypes = ResolversObject<{
   RecordState: RecordState,
   House: ResolverTypeWrapper<HouseDbObject>,
   AddHouseInput: AddHouseInput,
-  LoginInput: ResolverTypeWrapper<LoginInput>,
+  LoginInput: LoginInput,
   PastoralVisit: ResolverTypeWrapper<PastoralVisitDbObject>,
   AddPastoralVisitInput: AddPastoralVisitInput,
   RegisterInput: RegisterInput,
@@ -498,7 +498,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   addStreet?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<MutationAddStreetArgs, 'input'>>,
   login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>,
   register?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'input'>>,
-  updateEntry?: Resolver<ResolversTypes['Entry'], ParentType, ContextType, RequireFields<MutationUpdateEntryArgs, 'input'>>,
+  updateEntry?: Resolver<Maybe<ResolversTypes['Entry']>, ParentType, ContextType, RequireFields<MutationUpdateEntryArgs, 'input'>>,
   updateStreet?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<MutationUpdateStreetArgs, 'input'>>,
   verifyEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVerifyEmailArgs, 'input'>>,
 }>;
@@ -507,12 +507,6 @@ export type HouseResolvers<ContextType = Context, ParentType extends ResolversPa
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   number?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   street?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn<ParentType>,
-}>;
-
-export type LoginInputResolvers<ContextType = Context, ParentType extends ResolversParentTypes['LoginInput'] = ResolversParentTypes['LoginInput']> = ResolversObject<{
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
@@ -554,7 +548,6 @@ export type Resolvers<ContextType = Context> = ResolversObject<{
   Query?: QueryResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
   House?: HouseResolvers<ContextType>,
-  LoginInput?: LoginInputResolvers<ContextType>,
   PastoralVisit?: PastoralVisitResolvers<ContextType>,
   Season?: SeasonResolvers<ContextType>,
   Street?: StreetResolvers<ContextType>,

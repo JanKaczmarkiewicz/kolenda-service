@@ -10,8 +10,18 @@ import User from "../../models/User";
 import { Role } from "../../types/types";
 import Season from "../../models/Season";
 import PastoralVisit from "../../models/PastoralVisit";
+import Entry from "../../models/Entry";
 
-export default async () => {
+export const addEntry = async () => {
+  const mock = await mockDbBeforeAddingEntry();
+  const entry = await new Entry({
+    pastoralVisit: mock.pastoralVisit._id.toHexString(),
+    house: mock.house._id.toHexString(),
+  }).save();
+  return { ...mock, entry };
+};
+
+export const mockDbBeforeAddingEntry = async () => {
   const street = await new Street(dummyStreetData).save();
 
   const house = await new House({
