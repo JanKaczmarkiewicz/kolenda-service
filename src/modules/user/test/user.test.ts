@@ -26,7 +26,6 @@ describe("User", () => {
       token
     );
     const user = res.data?.user;
-    console.log(res);
     expect(user.username).toBe(savedUser.username);
     expect(user.email).toBe(savedUser.email);
   });

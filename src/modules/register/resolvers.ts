@@ -26,12 +26,11 @@ export const resolvers: Resolvers = {
         password: hashedPassword,
         confirmed: false,
       }).save();
-      console.log(savedUser);
+
       const confirmingToken = signConfirmingToken({ id: savedUser.id });
       sendConfirmingEmail(confirmingToken, savedUser);
 
       const authToken: string = signAuthToken({ id: savedUser.id });
-      console.log(authToken);
       return authToken;
     },
   },

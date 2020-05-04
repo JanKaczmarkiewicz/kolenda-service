@@ -1,5 +1,5 @@
 type Entry @entity {
-  id: String! @id
+  id: ID! @id
   house: House @link
   visitState: RecordState! @column
   reeceState: RecordState! @column
@@ -23,7 +23,7 @@ input UpdateEntryInput {
 
 extend type Query {
   entry(input: FindOneInput!): Entry @authenticated
-  entries: [Entry]! @authenticated
+  entries: [Entry!]! @authenticated
 }
 
 extend type Mutation {

@@ -1,7 +1,7 @@
 type Street @entity {
-  id: String! @id
+  id: ID! @id
   name: String! @column
-  houses: [House]!
+  houses: [House!]!
 }
 
 extend type Mutation {
@@ -11,7 +11,7 @@ extend type Mutation {
 
 extend type Query {
   street(input: FindOneInput!): Street @authenticated
-  streets: [Street]! @authenticated
+  streets: [Street!]! @authenticated
 }
 
 # Mutation inputs

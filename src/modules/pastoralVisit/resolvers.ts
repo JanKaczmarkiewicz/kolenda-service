@@ -6,10 +6,15 @@ export const resolvers: Resolvers = {
   PastoralVisit: {
     id: (pastoralVisit) => pastoralVisit._id.toHexString(),
     priest: async (pastoralVisit) =>
-      User.findOne({ _id: pastoralVisit._id.toHexString() }),
+      User.findOne({ _id: pastoralVisit.priest?.toHexString() }),
+    acolytes: async (pastoralVisit) =>
+      User.find({
+        _id: { $in: pastoralVisit.acolytes },
+      }),
   },
   Mutation: {
-    addPastoralVisit: async (_, { input }) => new PastoralVisit(input).save(),
+    addPastoralVisit: async (_, { input }) =>
+      await new PastoralVisit(input).save(),
   },
   Query: {
     pastoralVisit: async (_, { input }) =>

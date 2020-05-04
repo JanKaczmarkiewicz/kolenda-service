@@ -50,3 +50,20 @@ export const EntryFragment = gql`
     }
   }
 `;
+
+export const PastoralVisitFragment = gql`
+  fragment PastoralVisitFragment on PastoralVisit {
+    id
+    priest {
+      id
+    }
+    acolytes {
+      id
+    }
+    visitTime
+    reeceTime
+    season {
+      id
+    }
+  }
+`;

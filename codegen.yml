@@ -11,6 +11,8 @@ generates:
       - typescript
       - typescript-resolvers
     config:
+      scalars:
+        DateTime: Date
       mappers:
         User: UserDbObject
         House: HouseDbObject

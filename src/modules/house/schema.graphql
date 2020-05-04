@@ -1,5 +1,5 @@
 type House @entity {
-  id: String! @id
+  id: ID! @id
   number: String! @column
   street: Street @link
 }

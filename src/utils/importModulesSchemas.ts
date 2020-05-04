@@ -5,6 +5,7 @@ import { AuthenticatedDirective } from "../directives/authenticated";
 import gql from "graphql-tag";
 import { DIRECTIVES } from "@graphql-codegen/typescript-mongodb";
 import { ValidateDirective } from "../directives/validate";
+import { date } from "../customScalars/date";
 
 const pathToModules = path.join(__dirname, "../modules");
 
@@ -26,6 +27,7 @@ export default () => {
       Object.assign(resolvers[name], moduleResolvers[name]);
     });
   });
+  Object.assign(resolvers, { DateTime: date });
 
   //typeDefs
   const moduleTypeDefs = folders

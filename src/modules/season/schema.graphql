@@ -1,7 +1,7 @@
 type Season @entity {
-  id: String! @id
+  id: ID! @id
   year: Int! @column
-  pastoralVisits: [PastoralVisit]!
+  pastoralVisits: [PastoralVisit!]!
 }
 
 input AddSeasonInput {
@@ -14,5 +14,5 @@ extend type Mutation {
 
 extend type Query {
   season(input: FindOneInput!): Season @authenticated
-  seasons: [Season]! @authenticated
+  seasons: [Season!]! @authenticated
 }
