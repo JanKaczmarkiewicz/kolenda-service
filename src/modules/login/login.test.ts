@@ -1,25 +1,20 @@
-import createDatabaseConnection from "../../db/connect";
-
-import { removeAllCollections } from "../../testUtils/connectToMongoose";
 import { LOGIN } from "../../testUtils/queries";
-import { dummyUser } from "../../testUtils/dummyUser";
 import { query } from "../../testUtils/query";
-import { symulateAuth } from "../../testUtils/symulations/symulateAuth";
+import { symulateAuth } from "../../testUtils/mock/mockAuth";
+import { setup } from "../../testUtils/beforeAllSetup";
+import { dummyUserData } from "../../testUtils/dummyData";
+import { responceError } from "../../errors/responce";
 
 beforeAll(async () => {
-  await createDatabaseConnection();
-  await removeAllCollections();
-  await symulateAuth(dummyUser).register().verifyEmail().execute();
+  await setup();
+  await symulateAuth(dummyUserData).register().verifyEmail().execute();
 });
 
 describe("Login", () => {
   it("should returns token if credensials valid", async () => {
     const res = await query({
       query: LOGIN,
-      variables: {
-        email: dummyUser.email,
-        password: dummyUser.password,
-      },
+      input: { email: dummyUserData.email, password: dummyUserData.password },
     });
 
     expect(res.data?.login).toBeTruthy();
@@ -28,24 +23,25 @@ describe("Login", () => {
   it("should return null if there is no user with this email", async () => {
     const res = await query({
       query: LOGIN,
-      variables: {
+      input: {
         email: "bad_user_email@test.com",
-        password: dummyUser.password,
+        password: dummyUserData.password,
       },
     });
 
     expect(res.data?.login).toBeFalsy();
+    expect(res.errors?.[0].message).toBe(responceError.invalidCredentials);
   });
 
   it("should return null if password invalid", async () => {
     const res = await query({
       query: LOGIN,
-      variables: {
-        email: dummyUser.email,
+      input: {
+        email: dummyUserData.email,
         password: "bad_user_password",
       },
     });
-
     expect(res.data?.login).toBeFalsy();
+    expect(res.errors?.[0].message).toBe(responceError.invalidCredentials);
   });
 });

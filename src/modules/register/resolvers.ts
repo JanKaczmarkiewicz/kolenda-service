@@ -2,7 +2,7 @@ import * as bcrypt from "bcryptjs";
 import { ForbiddenError } from "apollo-server-core";
 import { Resolvers } from "../../types/types";
 
-import User from "../../models/user.model";
+import User from "../../models/User";
 
 import { signAuthToken } from "../../utils/authToken";
 
@@ -12,7 +12,7 @@ import { responceError } from "../../errors/responce";
 
 export const resolvers: Resolvers = {
   Mutation: {
-    register: async (_, { password, username, email }) => {
+    register: async (_, { input: { password, username, email } }) => {
       const foundUsers = await User.find({ $or: [{ username }, { email }] });
 
       if (foundUsers.length > 0)

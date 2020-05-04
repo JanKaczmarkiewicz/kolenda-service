@@ -1,13 +1,13 @@
 import * as bcrypt from "bcryptjs";
 import { Resolvers } from "../../types/types";
-import User from "../../models/user.model";
+import User from "../../models/User";
 import { AuthenticationError } from "apollo-server";
 import { signAuthToken } from "../../utils/authToken";
 import { responceError } from "../../errors/responce";
 
 export const resolvers: Resolvers = {
   Mutation: {
-    login: async (_, { email, password }) => {
+    login: async (_, { input: { email, password } }) => {
       const foundUser = await User.findOne({ email });
 
       if (!foundUser)

@@ -5,7 +5,7 @@ import { ServerOptions } from "../types/util";
 
 type Query = {
   query: DocumentNode;
-  variables?: {
+  input?: {
     [name: string]: any;
   };
 };
@@ -13,5 +13,5 @@ type Query = {
 export const query = (gql: Query, token?: string) => {
   const options: ServerOptions = token ? { token: `Bearer ${token}` } : {};
   const { query: request } = createTestClient(createServer(options));
-  return request(gql);
+  return request({ query: gql.query, variables: { input: gql.input } });
 };

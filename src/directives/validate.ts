@@ -24,7 +24,7 @@ export class ValidateDirective extends SchemaDirectiveVisitor {
 
     field.resolve = async (...resolverArgs) => {
       const [, args] = resolverArgs;
-      const validationErrors = await validateArgs(validator, args);
+      const validationErrors = await validateArgs(validator, args.input);
       if (validationErrors.length > 0) {
         throw new UserInputError(responceError.validationFails, {
           validationErrors,

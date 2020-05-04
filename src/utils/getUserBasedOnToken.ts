@@ -1,6 +1,6 @@
 import { verifyAuthToken } from "./authToken";
 import { User as TUser } from "../types/types";
-import User from "../models/user.model";
+import User from "../models/User";
 
 const getUserBasedOnToken = async (token: string): Promise<TUser | null> => {
   const tokenData = verifyAuthToken(token);

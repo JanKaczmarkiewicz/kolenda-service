@@ -1,11 +1,11 @@
-import { User } from "./types";
+import { UserDbObject } from "./types";
 
 export interface TokenData {
   id: string;
 }
 
 export type Context = {
-  user: User | null;
+  user: UserDbObject | null;
   req: Express.Request;
   res: Express.Response;
 };

@@ -1,51 +1,47 @@
 import gql from "graphql-tag";
+import { UserFragment } from "./fragments";
 
 export const REGISTER = gql`
-  mutation register($email: String!, $password: String!, $username: String!) {
-    register(email: $email, password: $password, username: $username)
+  mutation register($input: RegisterInput!) {
+    register(input: $input)
   }
 `;
 
 export const ME = gql`
   query {
     me {
-      username
-      email
-      _id
+      ...UserFragment
     }
   }
+  ${UserFragment}
 `;
 
 export const LOGIN = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password)
+  mutation login($input: LoginInput!) {
+    login(input: $input)
   }
 `;
 
 export const VERIFY_EMAIL = gql`
-  mutation verifyEmail($token: String!) {
-    verifyEmail(token: $token)
+  mutation verifyEmail($input: VerifyEmailInput!) {
+    verifyEmail(input: $input)
   }
 `;
 
 export const USER = gql`
-  query user($id: String!) {
-    user(id: $id) {
-      username
-      email
-      confirmed
-      _id
+  query user($input: FindOneInput!) {
+    user(input: $input) {
+      ...UserFragment
     }
   }
+  ${UserFragment}
 `;
 
 export const USERS = gql`
   query {
     users {
-      username
-      email
-      confirmed
-      _id
+      ...UserFragment
     }
   }
+  ${UserFragment}
 `;

@@ -11,8 +11,17 @@ generates:
       - typescript
       - typescript-resolvers
     config:
+      scalars:
+        DateTime: Date
+      mappers:
+        User: UserDbObject
+        House: HouseDbObject
+        Street: StreetDbObject
+        Season: SeasonDbObject
+        PastoralVisit: PastoralVisitDbObject
+        Entry: EntryDbObject
       contextType: Context
+      skipTypename: true
       enumsAsString: false
+      useIndexSignature: true
       noSchemaStitching: true
-    namingConvention:
-      enumValues: allCapitals#allCapitals

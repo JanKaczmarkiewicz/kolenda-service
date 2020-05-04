@@ -5,6 +5,7 @@ import { AuthenticatedDirective } from "../directives/authenticated";
 import gql from "graphql-tag";
 import { DIRECTIVES } from "@graphql-codegen/typescript-mongodb";
 import { ValidateDirective } from "../directives/validate";
+import { date } from "../customScalars/date";
 
 const pathToModules = path.join(__dirname, "../modules");
 
@@ -14,15 +15,19 @@ export default () => {
     .filter((folder) => !folder.startsWith("_"));
 
   //resolvers
-  const resolvers: IResolvers = { Mutation: {}, Query: {} };
+  const resolvers: IResolvers = {};
   folders.forEach((folder) => {
     const resolversPath = `${pathToModules}\\${folder}\\resolvers.ts`;
     if (!fs.existsSync(resolversPath)) return;
 
-    const { Query, Mutation } = require(resolversPath).resolvers;
-    Object.assign(resolvers.Mutation, Mutation);
-    Object.assign(resolvers.Query, Query);
+    const moduleResolvers = require(resolversPath).resolvers;
+
+    Object.keys(moduleResolvers).forEach((name) => {
+      if (!resolvers[name]) Object.assign(resolvers, { [name]: {} });
+      Object.assign(resolvers[name], moduleResolvers[name]);
+    });
   });
+  Object.assign(resolvers, { DateTime: date });
 
   //typeDefs
   const moduleTypeDefs = folders

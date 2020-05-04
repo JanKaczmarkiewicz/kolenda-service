@@ -1,13 +1,13 @@
 import { AuthenticationError, ForbiddenError } from "apollo-server-core";
 import { Resolvers } from "../../types/types";
 
-import User from "../../models/user.model";
+import User from "../../models/User";
 import { verifyConfirmingToken } from "../../utils/confirmingToken";
 import { responceError } from "../../errors/responce";
 
 export const resolvers: Resolvers = {
   Mutation: {
-    verifyEmail: async (_, { token }) => {
+    verifyEmail: async (_, { input: { token } }) => {
       const userId = verifyConfirmingToken(token);
 
       if (!userId) throw new ForbiddenError(responceError.badConfirmingToken);

@@ -1,0 +1,19 @@
+type House @entity {
+  id: ID! @id
+  number: String! @column
+  street: Street @link
+}
+
+extend type Mutation {
+  addHouse(input: AddHouseInput!): House @authenticated
+}
+
+extend type Query {
+  house(input: FindOneInput!): House @authenticated
+}
+
+# Mutation inputs
+input AddHouseInput {
+  number: String!
+  street: String!
+}
