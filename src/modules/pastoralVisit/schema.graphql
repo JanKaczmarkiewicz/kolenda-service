@@ -17,7 +17,7 @@ input AddPastoralVisitInput {
 
 extend type Query {
   pastoralVisit(input: FindOneInput!): PastoralVisit @authenticated
-  pastoralVisits: [PastoralVisit!]!
+  pastoralVisits: [PastoralVisit!]! @authenticated
 }
 
 extend type Mutation {
