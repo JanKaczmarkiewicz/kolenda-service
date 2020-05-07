@@ -1,11 +1,11 @@
 import { defaultFieldResolver, GraphQLField } from "graphql";
 import { SchemaDirectiveVisitor, UserInputError } from "apollo-server";
 
-import * as validators from "../validators/validators";
 import { responceError } from "../errors/responce";
 import { validateArgs } from "../utils/validateArgs";
 
 import { Context } from "../types/util";
+import { validators } from "../modules";
 
 export class ValidateDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field: GraphQLField<any, Context>) {
@@ -19,7 +19,7 @@ export class ValidateDirective extends SchemaDirectiveVisitor {
     const validator = (validators as any)[schemaName];
 
     if (!validator) {
-      throw new Error("Schema not found!");
+      throw new Error(`Schema not found: ${schemaName}`);
     }
 
     field.resolve = async (...resolverArgs) => {

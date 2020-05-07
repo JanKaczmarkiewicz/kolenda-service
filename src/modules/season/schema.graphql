@@ -8,11 +8,11 @@ input AddSeasonInput {
   year: Int!
 }
 
-extend type Mutation {
+type Mutation {
   addSeason(input: AddSeasonInput!): Season! @authenticated
 }
 
-extend type Query {
+type Query {
   season(input: FindOneInput!): Season @authenticated
   seasons: [Season!]! @authenticated
 }

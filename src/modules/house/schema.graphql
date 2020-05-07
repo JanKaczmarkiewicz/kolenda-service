@@ -4,11 +4,11 @@ type House @entity {
   street: Street @link
 }
 
-extend type Mutation {
+type Mutation {
   addHouse(input: AddHouseInput!): House @authenticated
 }
 
-extend type Query {
+type Query {
   house(input: FindOneInput!): House @authenticated
 }
 

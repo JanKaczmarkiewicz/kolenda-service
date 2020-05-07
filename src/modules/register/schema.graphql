@@ -1,4 +1,4 @@
-extend type Mutation {
+type Mutation {
   register(input: RegisterInput!): String!
     @validate(schemaName: "registerSchema") #token
 }

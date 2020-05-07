@@ -1,3 +1,5 @@
+import { RecordState } from "../types/types";
+
 export const passwordError = {
   required: "No password provided.",
   min: (min: number) =>
@@ -21,4 +23,11 @@ export const streetError = {
 
 export const seasonError = {
   exist: "Season already exist!",
+};
+
+export const pastoralVisitError = {
+  stateFormat: `State should be one of: ${Object.values(RecordState).join(
+    ", "
+  )}!`,
+  timeValues: `Reece should be before a visit`,
 };

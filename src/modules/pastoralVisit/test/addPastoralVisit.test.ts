@@ -7,7 +7,6 @@ import {
   AddPastoralVisitInput,
   UserDbObject,
   SeasonDbObject,
-  PastoralVisitDbObject,
 } from "../../../types/types";
 import { mockDbBeforeAddingPastralVisit } from "../../../testUtils/mock/mockPastoralVisit";
 import PastoralVisit from "../../../models/PastoralVisit";

@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { UserInputError } from "apollo-server";
 
 interface ValidationError {
   path: string;
@@ -12,11 +13,13 @@ export const validateArgs = async (
   try {
     await schema.validate(args, { abortEarly: false });
   } catch (err) {
-    return err.inner.map(({ path, message }: ValidationError) => ({
+    console.log(err);
+    const errors = err.inner.map(({ path, message }: ValidationError) => ({
       name: path,
       message,
     }));
+    console.log(errors);
+    return errors;
   }
-
   return [];
 };

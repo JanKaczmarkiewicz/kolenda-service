@@ -3,7 +3,7 @@ import {
   passwordError,
   emailError,
   usernameError,
-} from "../errors/validations";
+} from "../../errors/validations";
 
 const password = yup
   .string()

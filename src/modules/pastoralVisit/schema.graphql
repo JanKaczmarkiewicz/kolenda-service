@@ -15,11 +15,23 @@ input AddPastoralVisitInput {
   season: String!
 }
 
-extend type Query {
+input UpdatePastoralVisitInput {
+  id: String!
+  visitTime: String
+  reeceTime: String
+}
+
+type Query {
   pastoralVisit(input: FindOneInput!): PastoralVisit @authenticated
   pastoralVisits: [PastoralVisit!]! @authenticated
 }
 
-extend type Mutation {
-  addPastoralVisit(input: AddPastoralVisitInput!): PastoralVisit! @authenticated
+type Mutation {
+  addPastoralVisit(input: AddPastoralVisitInput!): PastoralVisit!
+    @authenticated
+    @validate(schemaName: "addPastoralVisitSchema")
+
+  updatePastoralVisit(input: UpdatePastoralVisitInput!): PastoralVisit
+    @authenticated
+    @validate(schemaName: "updatePastoralVisitSchema")
 }

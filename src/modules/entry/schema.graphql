@@ -21,12 +21,12 @@ input UpdateEntryInput {
   pastoralVisit: String
 }
 
-extend type Query {
+type Query {
   entry(input: FindOneInput!): Entry @authenticated
   entries: [Entry!]! @authenticated
 }
 
-extend type Mutation {
+type Mutation {
   addEntry(input: AddEntryInput!): Entry! @authenticated
   updateEntry(input: UpdateEntryInput!): Entry @authenticated
 }

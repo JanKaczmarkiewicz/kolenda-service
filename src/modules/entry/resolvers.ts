@@ -2,6 +2,8 @@ import { Resolvers } from "../../types/types";
 import Entry from "../../models/Entry";
 import House from "../../models/House";
 import PastoralVisit from "../../models/PastoralVisit";
+import { validateArgs } from "../../utils/validateArgs";
+import { addEntryValidation } from "./validators";
 
 export const resolvers: Resolvers = {
   Entry: {
@@ -11,7 +13,10 @@ export const resolvers: Resolvers = {
       PastoralVisit.findOne({ _id: entry.pastoralVisit?.toHexString() }),
   },
   Mutation: {
-    addEntry: async (_, { input }) => new Entry(input).save(),
+    addEntry: async (_, { input }) =>
+      validateArgs(addEntryValidation, input).then(() =>
+        new Entry(input).save()
+      ),
     updateEntry: async (_, { input: { id, ...rest } }) =>
       Entry.findOneAndUpdate({ _id: id }, { $set: rest }, { new: true }),
   },

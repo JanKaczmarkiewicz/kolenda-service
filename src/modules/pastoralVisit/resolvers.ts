@@ -1,4 +1,5 @@
 import { Resolvers } from "../../types/types";
+import "reflect-metadata";
 import PastoralVisit from "../../models/PastoralVisit";
 import User from "../../models/User";
 
@@ -13,8 +14,14 @@ export const resolvers: Resolvers = {
       }),
   },
   Mutation: {
-    addPastoralVisit: async (_, { input }) =>
-      await new PastoralVisit(input).save(),
+    addPastoralVisit: async (_, { input }) => new PastoralVisit(input).save(),
+
+    updatePastoralVisit: async (_, { input }) =>
+      PastoralVisit.findByIdAndUpdate(
+        { _id: input.id },
+        { visitTime: input.visitTime, reeceTime: input.reeceTime },
+        { new: true }
+      ),
   },
   Query: {
     pastoralVisit: async (_, { input }) =>
