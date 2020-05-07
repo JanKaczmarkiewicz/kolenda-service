@@ -1,8 +1,10 @@
 import { verifyAuthToken } from "./authToken";
-import { User as TUser } from "../types/types";
+import { User as TUser, UserDbObject } from "../types/types";
 import User from "../models/User";
 
-const getUserBasedOnToken = async (token: string): Promise<TUser | null> => {
+const getUserBasedOnToken = async (
+  token: string
+): Promise<UserDbObject | null> => {
   const tokenData = verifyAuthToken(token);
 
   if (!tokenData) return null;
@@ -13,7 +15,7 @@ const getUserBasedOnToken = async (token: string): Promise<TUser | null> => {
 
   if (!foundUser) return null;
 
-  return <TUser>foundUser;
+  return foundUser;
 };
 
 export default getUserBasedOnToken;
