@@ -41,7 +41,7 @@ describe("Register", () => {
       input,
     });
 
-    // expect(res.data?.register).toBeFalsy();
+    expect(res.data?.register).toBeFalsy();
     const foundUsers = await User.find({ email: input.email });
     expect(foundUsers).toHaveLength(0);
 

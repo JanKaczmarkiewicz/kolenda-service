@@ -37,7 +37,68 @@ beforeAll(async () => {
   season = mock.season;
 });
 
-describe("addPastoralVisit.ts", () => {
+describe("addPastoralVisit", () => {
+  it("Input is validated", async () => {
+    const validationCase = async (
+      input: AddPastoralVisitInput,
+      errors: { name: string; message: string }[]
+    ) => {
+      const res = await query(
+        {
+          query: ADD_PASTORAL_VISIT,
+          input,
+        },
+        token
+      );
+
+      const foundPastoralVisits = await PastoralVisit.find({});
+      expect(foundPastoralVisits).toHaveLength(0);
+
+      expect(res.data?.addPastoralVisit).toBeFalsy();
+
+      expect(res.errors?.[0].extensions?.validationErrors).toEqual(errors);
+    };
+
+    {
+      //reece time after the visit time case
+      const input: AddPastoralVisitInput = {
+        acolytes: acolytes.map(({ _id }) => _id.toHexString()),
+        priest: priest._id.toHexString(),
+        visitTime: new Date(Date.now() - 1000).toISOString(),
+        reeceTime: new Date(Date.now()).toISOString(),
+        season: season._id.toHexString(),
+      };
+
+      validationCase(input, [
+        {
+          name: "visitTime",
+          message: expect.stringContaining(
+            "visitTime field must be later than"
+          ),
+        },
+      ]);
+    }
+
+    {
+      //reece time in past case
+      const input: AddPastoralVisitInput = {
+        acolytes: acolytes.map(({ _id }) => _id.toHexString()),
+        priest: priest._id.toHexString(),
+        visitTime: new Date(Date.now()).toISOString(),
+        reeceTime: new Date(Date.now() - 1000).toISOString(),
+        season: season._id.toHexString(),
+      };
+
+      validationCase(input, [
+        {
+          name: "visitTime",
+          message: expect.stringContaining(
+            "visitTime field must be later than"
+          ),
+        },
+      ]);
+    }
+  });
   it("Authenticated user can addPastoralVisit", async () => {
     const input: AddPastoralVisitInput = {
       acolytes: acolytes.map(({ _id }) => _id.toHexString()),

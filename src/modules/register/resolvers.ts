@@ -24,7 +24,7 @@ export const resolvers: Resolvers = {
         username,
         email,
         password: hashedPassword,
-        confirmed: true, // dev
+        confirmed: false,
       }).save();
 
       const confirmingToken = signConfirmingToken({ id: savedUser.id });
