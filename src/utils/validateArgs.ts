@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-interface ValidationError {
+export interface ValidationError {
   path: string;
   message: string;
 }
