@@ -1,10 +1,10 @@
-import { REGISTER } from "../../testUtils/queries";
-import { query } from "../../testUtils/query";
-import User from "../../models/User";
-import { setup } from "../../testUtils/beforeAllSetup";
-import { dummyUserData } from "../../testUtils/dummyData";
-import { responceError } from "../../errors/responce";
-import { Role, RegisterInput } from "../../types/types";
+import { REGISTER } from "../../../testUtils/queries";
+import { query } from "../../../testUtils/query";
+import User from "../../../models/User";
+import { setup } from "../../../testUtils/beforeAllSetup";
+import { dummyUserData } from "../../../testUtils/dummyData";
+import { responceError } from "../../../errors/responce";
+import { Role, RegisterInput } from "../../../types/types";
 
 beforeAll(async () => {
   await setup();

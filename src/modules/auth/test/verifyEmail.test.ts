@@ -1,11 +1,11 @@
-import createDatabaseConnection from "../../db/connect";
-import { removeAllCollections } from "../../testUtils/connectToMongoose";
-import { VERIFY_EMAIL } from "../../testUtils/queries";
-import { dummyUserData } from "../../testUtils/dummyData";
-import { query } from "../../testUtils/query";
-import { symulateAuth } from "../../testUtils/mock/mockAuth";
-import { authTokenToVerificationToken } from "../../utils/authTokenToVerificationToken";
-import { setup } from "../../testUtils/beforeAllSetup";
+import createDatabaseConnection from "../../../db/connect";
+import { removeAllCollections } from "../../../testUtils/connectToMongoose";
+import { VERIFY_EMAIL } from "../../../testUtils/queries";
+import { dummyUserData } from "../../../testUtils/dummyData";
+import { query } from "../../../testUtils/query";
+import { symulateAuth } from "../../../testUtils/mock/mockAuth";
+import { authTokenToVerificationToken } from "../../../utils/authTokenToVerificationToken";
+import { setup } from "../../../testUtils/beforeAllSetup";
 
 let verificationToken: string;
 
