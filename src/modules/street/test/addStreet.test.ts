@@ -3,11 +3,11 @@ import { setup } from "../../../testUtils/beforeAllSetup";
 import { query } from "../../../testUtils/query";
 
 import { responceError } from "../../../errors/responce";
-import { streetError } from "../../../errors/validations";
 
 import { signUser } from "../../../testUtils/mock/mockAuth";
 import { StreetFragment } from "../../../testUtils/fragments";
 import { badToken } from "../../../testUtils/dummyData";
+import errors from "../errors";
 
 let token: string;
 const streetName = "Miodowa";
@@ -48,7 +48,7 @@ describe("addStreet resolver", () => {
       token
     );
     expect(res.data?.addStreet).toBeFalsy();
-    expect(res.errors?.[0].message).toBe(streetError.exist);
+    expect(res.errors?.[0].message).toBe(errors.street.exist);
   });
 
   it("User with no valid token/confirmed can't create street.", async () => {

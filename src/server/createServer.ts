@@ -1,10 +1,8 @@
 import { ApolloServer } from "apollo-server";
 
-import importModulesSchemas from "../utils/importModulesSchemas";
+import { resolvers, typeDefs, directives } from "../modules";
 import getUserBasedOnToken from "../utils/getUserBasedOnToken";
 import { Context, ServerOptions } from "../types/util";
-
-const { resolvers, typeDefs, directives } = importModulesSchemas();
 
 export default (options?: ServerOptions) => {
   const server = new ApolloServer({

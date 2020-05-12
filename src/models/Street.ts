@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 import { StreetDbObject } from "../types/types";
-import { streetError } from "../errors/validations";
+import errors from "../modules/street/errors";
 
 const StreetSchema = new mongoose.Schema({
   name: {
@@ -11,7 +11,7 @@ const StreetSchema = new mongoose.Schema({
 });
 
 StreetSchema.post("save", (error: any, _: any, next: any) => {
-  next(error.code === 11000 ? new Error(streetError.exist) : error);
+  next(error.code === 11000 ? new Error(errors.street.exist) : error);
 });
 const Street = mongoose.model<StreetDbObject & mongoose.Document>(
   "Street",

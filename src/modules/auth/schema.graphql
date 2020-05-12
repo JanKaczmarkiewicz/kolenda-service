@@ -1,0 +1,25 @@
+type Mutation {
+  register(input: RegisterInput!): String!
+    @validate(schemaName: "registerSchema") #token
+  verifyEmail(input: VerifyEmailInput!): Boolean!
+  login(input: LoginInput!): String! #token
+}
+
+type Query {
+  me: User! @authenticated
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  username: String!
+}
+
+input VerifyEmailInput {
+  token: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}

@@ -1,7 +1,0 @@
-extend type Mutation {
-  verifyEmail(input: VerifyEmailInput!): Boolean!
-}
-
-input VerifyEmailInput {
-  token: String!
-}

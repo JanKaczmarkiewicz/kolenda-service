@@ -1,5 +1,6 @@
 import * as mongoose from "mongoose";
 import { EntryDbObject, RecordState } from "../types/types";
+import errors from "../modules/entry/errors";
 
 const EntrySchema = new mongoose.Schema<EntryDbObject>({
   house: {
@@ -9,12 +10,18 @@ const EntrySchema = new mongoose.Schema<EntryDbObject>({
   },
   visitState: {
     type: String,
-    enum: Object.values(RecordState),
+    enum: {
+      values: Object.values(RecordState),
+      message: errors.entry.stateFormat,
+    },
     default: RecordState.Unknown,
   },
   reeceState: {
     type: String,
-    enum: Object.values(RecordState),
+    enum: {
+      values: Object.values(RecordState),
+      message: errors.entry.stateFormat,
+    },
     default: RecordState.Unknown,
   },
   pastoralVisit: {

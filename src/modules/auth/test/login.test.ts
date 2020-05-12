@@ -1,9 +1,9 @@
-import { LOGIN } from "../../testUtils/queries";
-import { query } from "../../testUtils/query";
-import { symulateAuth } from "../../testUtils/mock/mockAuth";
-import { setup } from "../../testUtils/beforeAllSetup";
-import { dummyUserData } from "../../testUtils/dummyData";
-import { responceError } from "../../errors/responce";
+import { LOGIN } from "../../../testUtils/queries";
+import { query } from "../../../testUtils/query";
+import { symulateAuth } from "../../../testUtils/mock/mockAuth";
+import { setup } from "../../../testUtils/beforeAllSetup";
+import { dummyUserData } from "../../../testUtils/dummyData";
+import { responceError } from "../../../errors/responce";
 
 beforeAll(async () => {
   await setup();

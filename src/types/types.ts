@@ -148,6 +148,7 @@ export type Mutation = {
   login: Scalars['String'];
   register: Scalars['String'];
   updateEntry?: Maybe<Entry>;
+  updatePastoralVisit?: Maybe<PastoralVisit>;
   updateStreet?: Maybe<Street>;
   verifyEmail: Scalars['Boolean'];
 };
@@ -190,6 +191,11 @@ export type MutationRegisterArgs = {
 
 export type MutationUpdateEntryArgs = {
   input: UpdateEntryInput;
+};
+
+
+export type MutationUpdatePastoralVisitArgs = {
+  input: UpdatePastoralVisitInput;
 };
 
 
@@ -240,6 +246,12 @@ export type AddPastoralVisitInput = {
   visitTime: Scalars['String'];
   reeceTime: Scalars['String'];
   season: Scalars['String'];
+};
+
+export type UpdatePastoralVisitInput = {
+  id: Scalars['String'];
+  visitTime?: Maybe<Scalars['String']>;
+  reeceTime?: Maybe<Scalars['String']>;
 };
 
 export type RegisterInput = {
@@ -382,6 +394,7 @@ export type ResolversTypes = ResolversObject<{
   LoginInput: LoginInput,
   PastoralVisit: ResolverTypeWrapper<PastoralVisitDbObject>,
   AddPastoralVisitInput: AddPastoralVisitInput,
+  UpdatePastoralVisitInput: UpdatePastoralVisitInput,
   RegisterInput: RegisterInput,
   Season: ResolverTypeWrapper<SeasonDbObject>,
   Int: ResolverTypeWrapper<Scalars['Int']>,
@@ -413,6 +426,7 @@ export type ResolversParentTypes = ResolversObject<{
   LoginInput: LoginInput,
   PastoralVisit: PastoralVisitDbObject,
   AddPastoralVisitInput: AddPastoralVisitInput,
+  UpdatePastoralVisitInput: UpdatePastoralVisitInput,
   RegisterInput: RegisterInput,
   Season: SeasonDbObject,
   Int: Scalars['Int'],
@@ -505,6 +519,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>,
   register?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'input'>>,
   updateEntry?: Resolver<Maybe<ResolversTypes['Entry']>, ParentType, ContextType, RequireFields<MutationUpdateEntryArgs, 'input'>>,
+  updatePastoralVisit?: Resolver<Maybe<ResolversTypes['PastoralVisit']>, ParentType, ContextType, RequireFields<MutationUpdatePastoralVisitArgs, 'input'>>,
   updateStreet?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<MutationUpdateStreetArgs, 'input'>>,
   verifyEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVerifyEmailArgs, 'input'>>,
 }>;

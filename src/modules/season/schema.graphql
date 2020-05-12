@@ -5,14 +5,14 @@ type Season @entity {
 }
 
 input AddSeasonInput {
-  year: Int!
+  year: Int! #validate
 }
 
-extend type Mutation {
+type Mutation {
   addSeason(input: AddSeasonInput!): Season! @authenticated
 }
 
-extend type Query {
+type Query {
   season(input: FindOneInput!): Season @authenticated
   seasons: [Season!]! @authenticated
 }
