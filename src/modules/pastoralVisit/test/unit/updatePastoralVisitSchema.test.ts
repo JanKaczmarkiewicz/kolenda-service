@@ -6,7 +6,7 @@ import {
 import { addPastralVisit } from "../../../../testUtils/mock/mockPastoralVisit";
 import { setup } from "../../../../testUtils/beforeAllSetup";
 import errors from "../../errors";
-import sheredErrors from "../../../shered/errors";
+import commonErrors from "../../../shered/errors";
 import { createValidationTest } from "../../../../testUtils/validationTest";
 
 const validationTest = createValidationTest(updatePastoralVisitSchema);
@@ -24,7 +24,7 @@ describe("Id checks", () => {
     };
 
     await validationTest(input, [
-      { path: "id", message: sheredErrors.id.invalid },
+      { path: "id", message: commonErrors.id.invalid },
     ]);
   });
   it("Good id should pass", async () => {
@@ -47,11 +47,11 @@ describe("all before now", () => {
     await validationTest(input, [
       {
         path: "reeceTime",
-        message: errors.reeceTime.beforeNow,
+        message: commonErrors.futureDate.beforeNow,
       },
       {
         path: "visitTime",
-        message: errors.visitTime.beforeNow,
+        message: commonErrors.futureDate.beforeNow,
       },
     ]);
   });
@@ -70,7 +70,7 @@ describe("all before now", () => {
       },
       {
         path: "reeceTime",
-        message: errors.reeceTime.beforeNow,
+        message: commonErrors.futureDate.beforeNow,
       },
       {
         path: "visitTime",
@@ -78,7 +78,7 @@ describe("all before now", () => {
       },
       {
         path: "visitTime",
-        message: errors.visitTime.beforeNow,
+        message: commonErrors.futureDate.beforeNow,
       },
     ]);
   });
@@ -94,7 +94,7 @@ describe("before and after", () => {
     await validationTest(input, [
       {
         path: "reeceTime",
-        message: errors.reeceTime.beforeNow,
+        message: commonErrors.futureDate.beforeNow,
       },
     ]);
   });
@@ -113,7 +113,7 @@ describe("before and after", () => {
       },
       {
         path: "visitTime",
-        message: errors.visitTime.beforeNow,
+        message: commonErrors.futureDate.beforeNow,
       },
       {
         path: "visitTime",
