@@ -6,7 +6,7 @@ import { SeasonFragment } from "../../../testUtils/fragments";
 import Season from "../../../models/Season";
 import { SeasonDbObject } from "../../../types/types";
 import { badToken } from "../../../testUtils/dummyData";
-import { seasonError } from "../../../errors/validations";
+import errors from "../errors";
 
 let token: string;
 
@@ -43,7 +43,7 @@ describe("Add season", () => {
     const seasonInput = { year: 2011 };
     const res = await query({ query: ADD_SEASON, input: seasonInput }, token);
 
-    expect(res.errors?.[0].message).toBe(seasonError.exist);
+    expect(res.errors?.[0].message).toBe(errors.season.exist);
   });
 
   it("Bad year format results validation error.", async () => {

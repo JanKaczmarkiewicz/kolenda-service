@@ -73,8 +73,8 @@ describe("addPastoralVisit", () => {
     const input: AddPastoralVisitInput = {
       acolytes: acolytes.map(({ _id }) => _id.toHexString()),
       priest: priest._id.toHexString(),
-      visitTime: new Date().toISOString(),
-      reeceTime: new Date().toISOString(),
+      visitTime: new Date(Date.now() + 30000).toISOString(),
+      reeceTime: new Date(Date.now() + 10000).toISOString(),
       season: season._id.toHexString(),
     };
     const res = await query(
@@ -92,8 +92,8 @@ describe("addPastoralVisit", () => {
     const input: AddPastoralVisitInput = {
       acolytes: acolytes.map(({ _id }) => _id.toHexString()),
       priest: priest._id.toHexString(),
-      visitTime: new Date().toISOString(),
-      reeceTime: new Date().toISOString(),
+      visitTime: new Date(Date.now() + 30000).toISOString(),
+      reeceTime: new Date(Date.now() + 10000).toISOString(),
       season: season._id.toHexString(),
     };
 

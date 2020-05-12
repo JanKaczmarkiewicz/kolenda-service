@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 import { SeasonDbObject } from "../types/types";
-import { seasonError } from "../errors/validations";
+import errors from "../modules/season/errors";
 
 const SeasonSchema = new mongoose.Schema({
   year: {
@@ -13,7 +13,7 @@ const SeasonSchema = new mongoose.Schema({
 });
 
 SeasonSchema.post("save", (error: any, _: any, next: any) => {
-  next(error.code === 11000 ? new Error(seasonError.exist) : error);
+  next(error.code === 11000 ? new Error(errors.season.exist) : error);
 });
 
 const Season = mongoose.model<SeasonDbObject & mongoose.Document>(

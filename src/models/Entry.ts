@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 import { EntryDbObject, RecordState } from "../types/types";
-import { pastoralVisitError } from "../errors/validations";
+import errors from "../modules/entry/errors";
 
 const EntrySchema = new mongoose.Schema<EntryDbObject>({
   house: {
@@ -12,7 +12,7 @@ const EntrySchema = new mongoose.Schema<EntryDbObject>({
     type: String,
     enum: {
       values: Object.values(RecordState),
-      message: pastoralVisitError.stateFormat,
+      message: errors.entry.stateFormat,
     },
     default: RecordState.Unknown,
   },
@@ -20,7 +20,7 @@ const EntrySchema = new mongoose.Schema<EntryDbObject>({
     type: String,
     enum: {
       values: Object.values(RecordState),
-      message: pastoralVisitError.stateFormat,
+      message: errors.entry.stateFormat,
     },
     default: RecordState.Unknown,
   },

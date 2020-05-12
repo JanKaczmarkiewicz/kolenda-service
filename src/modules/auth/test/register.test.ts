@@ -51,7 +51,7 @@ describe("Register", () => {
     expect(errorObject.validationErrors).toEqual([
       {
         path: "password",
-        message: "Password is too short",
+        message: expect.stringContaining("Password is too short"),
       },
     ]);
   });
