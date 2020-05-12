@@ -50,8 +50,8 @@ describe("Register", () => {
 
     expect(errorObject.validationErrors).toEqual([
       {
-        name: "password",
-        message: "Password is too short - should be 8 chars minimum.",
+        path: "password",
+        message: "Password is too short",
       },
     ]);
   });

@@ -1,6 +1,9 @@
 import * as yup from "yup";
 import PastoralVisit from "../../models/PastoralVisit";
 import * as mongoose from "mongoose";
+import errors from "./errors";
+import sheredErrors from "../shered/errors";
+import { isTimeAfterNow } from "../../testUtils/date";
 
 export const addPastoralVisitSchema = yup.object().shape({
   reeceTime: yup.date().min(new Date(Date.now())).required(),
@@ -10,21 +13,24 @@ export const addPastoralVisitSchema = yup.object().shape({
 export const updatePastoralVisitSchema = yup.object().shape({
   id: yup
     .string()
-    .test("", "Bad id", mongoose.Types.ObjectId.isValid)
+    .test("", sheredErrors.id.invalid, mongoose.Types.ObjectId.isValid)
     .required(),
+
   reeceTime: yup
     .date()
-    .min(new Date(Date.now()))
-    .test("", "reeceTime should be before visitTime", function (reeceTime) {
+    .test("", errors.reeceTime.beforeNow, isTimeAfterNow)
+    .test("", errors.reeceTime.afterVisitTime, function (reeceTime) {
       return checkTimes({
         id: this.parent.id,
         reeceTime,
         visitTime: this.parent.visitTime,
       });
     }),
+
   visitTime: yup
     .date()
-    .test("", "Visit time should be after reeceTime", function (visitTime) {
+    .test("", errors.visitTime.beforeNow, isTimeAfterNow)
+    .test("", errors.visitTime.beforeReeceTime, function (visitTime) {
       return checkTimes({
         id: this.parent.id,
         reeceTime: this.parent.reeceTime,

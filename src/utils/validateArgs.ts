@@ -13,7 +13,7 @@ export const validateArgs = async (
     await schema.validate(args, { abortEarly: false });
   } catch (err) {
     const errors = err.inner.map(({ path, message }: ValidationError) => ({
-      name: path,
+      path,
       message,
     }));
     return errors;

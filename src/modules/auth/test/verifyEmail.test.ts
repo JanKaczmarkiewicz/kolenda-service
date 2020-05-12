@@ -1,5 +1,3 @@
-import createDatabaseConnection from "../../../db/connect";
-import { removeAllCollections } from "../../../testUtils/connectToMongoose";
 import { VERIFY_EMAIL } from "../../../testUtils/queries";
 import { dummyUserData } from "../../../testUtils/dummyData";
 import { query } from "../../../testUtils/query";

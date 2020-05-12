@@ -5,7 +5,7 @@ type Season @entity {
 }
 
 input AddSeasonInput {
-  year: Int!
+  year: Int! #validate
 }
 
 type Mutation {

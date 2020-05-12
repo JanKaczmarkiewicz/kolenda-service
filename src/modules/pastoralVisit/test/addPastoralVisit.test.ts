@@ -41,45 +41,32 @@ beforeAll(async () => {
 
 describe("addPastoralVisit", () => {
   it("Input is validated", async () => {
-    const validationCase = async (input: AddPastoralVisitInput) => {
-      const res = await query(
-        {
-          query: ADD_PASTORAL_VISIT,
-          input,
-        },
-        token
-      );
-
-      const errors = await validateArgs(addPastoralVisitSchema, input);
-      const foundPastoralVisits = await PastoralVisit.find({});
-      expect(foundPastoralVisits).toHaveLength(0);
-
-      expect(res.data?.addPastoralVisit).toBeFalsy();
-
-      expect(res.errors?.[0].extensions?.validationErrors).toEqual(errors);
+    const input: AddPastoralVisitInput = {
+      acolytes: acolytes.map(({ _id }) => _id.toHexString()),
+      priest: priest._id.toHexString(),
+      visitTime: new Date(Date.now() - 1000).toISOString(),
+      reeceTime: new Date(Date.now()).toISOString(),
+      season: season._id.toHexString(),
     };
 
-    {
-      //reece time after the visit time case
-      await validationCase({
-        acolytes: acolytes.map(({ _id }) => _id.toHexString()),
-        priest: priest._id.toHexString(),
-        visitTime: new Date(Date.now() - 1000).toISOString(),
-        reeceTime: new Date(Date.now()).toISOString(),
-        season: season._id.toHexString(),
-      });
-    }
+    const res = await query(
+      {
+        query: ADD_PASTORAL_VISIT,
+        input,
+      },
+      token
+    );
 
-    {
-      //reece time in past case
-      await validationCase({
-        acolytes: acolytes.map(({ _id }) => _id.toHexString()),
-        priest: priest._id.toHexString(),
-        visitTime: new Date(Date.now()).toISOString(),
-        reeceTime: new Date(Date.now() - 1000).toISOString(),
-        season: season._id.toHexString(),
-      });
-    }
+    const errors = await validateArgs(addPastoralVisitSchema, input);
+
+    expect(errors.length > 0).toBeTruthy();
+
+    const foundPastoralVisits = await PastoralVisit.find({});
+    expect(foundPastoralVisits).toHaveLength(0);
+
+    expect(res.data?.addPastoralVisit).toBeFalsy();
+
+    expect(res.errors?.[0].extensions?.validationErrors).toEqual(errors);
   });
 
   it("Unauthenticated user can not addPastoralVisit.ts.", async () => {
