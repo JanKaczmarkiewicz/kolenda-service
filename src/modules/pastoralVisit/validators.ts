@@ -18,8 +18,10 @@ export const updatePastoralVisitSchema = yup.object().shape({
 
   reeceTime: yup
     .date()
-    .test("", errors.reeceTime.beforeNow, isTimeAfterNow)
-    .test("", errors.reeceTime.afterVisitTime, function (reeceTime) {
+    .test("isBeforeNow", errors.reeceTime.beforeNow, isTimeAfterNow)
+    .test("isBeforeVisitTime", errors.reeceTime.afterVisitTime, function (
+      reeceTime
+    ) {
       return checkTimes({
         id: this.parent.id,
         reeceTime,
@@ -29,8 +31,10 @@ export const updatePastoralVisitSchema = yup.object().shape({
 
   visitTime: yup
     .date()
-    .test("", errors.visitTime.beforeNow, isTimeAfterNow)
-    .test("", errors.visitTime.beforeReeceTime, function (visitTime) {
+    .test("isAfterNow", errors.visitTime.beforeNow, isTimeAfterNow)
+    .test("isAfterReeceTime", errors.visitTime.beforeReeceTime, function (
+      visitTime
+    ) {
       return checkTimes({
         id: this.parent.id,
         reeceTime: this.parent.reeceTime,
