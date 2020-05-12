@@ -152,3 +152,13 @@ describe("all after now", () => {
     ]);
   });
 });
+
+describe("single date passed", () => {
+  it("reeceTime before visitTime", async () => {
+    const input: UpdatePastoralVisitInput = {
+      id: pastoralVisit._id.toHexString(),
+      reeceTime: new Date(Date.now() + 30000).toISOString(),
+    };
+    await validationTest(input, []);
+  });
+});
