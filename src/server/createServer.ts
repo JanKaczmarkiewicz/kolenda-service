@@ -18,7 +18,6 @@ export default (options?: ServerOptions) => {
         expressContext.req?.headers.authorization ?? options?.token;
 
       const user = token ? await getUserBasedOnToken(token) : null;
-      console.log(user);
       return {
         req: expressContext.req,
         res: expressContext.res,
