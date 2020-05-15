@@ -14,7 +14,7 @@ const folders = fs.readdirSync(pathToModules);
 
 // resolvers
 const moduleResolvers = folders.reduce((resolvers, folder) => {
-  const resolversPath = `${pathToModules}\\${folder}\\resolvers.ts`;
+  const resolversPath = path.join(pathToModules, `${folder}/resolvers.ts`);
   if (!fs.existsSync(resolversPath)) return resolvers;
 
   const moduleResolvers = require(resolversPath).resolvers;
@@ -39,7 +39,7 @@ export { directives };
 
 //validators
 const validators = folders.reduce((validators, folder) => {
-  const validatorPath = `${pathToModules}\\${folder}\\validators.ts`;
+  const validatorPath = path.join(pathToModules, `${folder}/validators.ts`);
   console.log(fs.existsSync(validatorPath), validatorPath);
   return fs.existsSync(validatorPath)
     ? { ...validators, ...require(validatorPath) }
