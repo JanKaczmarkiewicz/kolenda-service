@@ -5,6 +5,7 @@ import loadEnv from "./utils/loadEnv";
 if (process.env.ENVIRONMENT !== "PRODUCTION") loadEnv();
 
 (async () => {
+  console.log(process.env);
   await createDatabaseConnection();
 
   await createServer().listen(process.env.PORT);
