@@ -8,16 +8,13 @@ const createDatabaseConnection = async (
   mongoose.connection.on("error", console.error);
 
   await mongoose
-    .connect(
-      `mongodb://${process.env.DB_ADDRESS}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
-      {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        ...options,
-      }
-    )
+    .connect(process.env.MONGO_URL as string, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      ...options,
+    })
     .catch((err) => {
       throw new Error(err);
     });

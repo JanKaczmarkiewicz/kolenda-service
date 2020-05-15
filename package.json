@@ -7,9 +7,7 @@
     "gen": "graphql-codegen",
     "test": "cross-env ENVIRONMENT=test jest --detectOpenHandles",
     "clear-cache": "jest --clearCache",
-    "generate": "npm run generate-typings && npm run generator-resolvers",
-    "generator-resolvers": "gql-gen --export ./dist/generator/schema.js --project ./src/modules/",
-    "playground": "ts-node playground/index.ts"
+    "generate": "npm run generate-typings && npm run generator-resolvers"
   },
   "author": "Jan Kaczmarkiewicz",
   "license": "ISC",
