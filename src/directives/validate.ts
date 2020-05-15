@@ -15,9 +15,9 @@ export class ValidateDirective extends SchemaDirectiveVisitor {
     if (typeof schemaName !== "string") {
       throw new Error("schemaName should be a string!");
     }
+    console.log(validators);
 
     const validator = (validators as any)[schemaName];
-
     if (!validator) {
       throw new Error(`Schema not found: ${schemaName}`);
     }
