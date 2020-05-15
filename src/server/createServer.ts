@@ -9,12 +9,16 @@ export default (options?: ServerOptions) => {
     resolvers,
     typeDefs,
     schemaDirectives: directives,
+    cors: {
+      origin: "*",
+      credentials: true,
+    },
     context: async (expressContext) => {
       const token: string | undefined =
         expressContext.req?.headers.authorization ?? options?.token;
 
       const user = token ? await getUserBasedOnToken(token) : null;
-
+      console.log(user);
       return {
         req: expressContext.req,
         res: expressContext.res,

@@ -1,5 +1,5 @@
 import { verifyAuthToken } from "./authToken";
-import { User as TUser, UserDbObject } from "../types/types";
+import { UserDbObject } from "../types/types";
 import User from "../models/User";
 
 const getUserBasedOnToken = async (
