@@ -9,7 +9,6 @@ import { ValidateDirective } from "../directives/validate";
 import { date } from "../customScalars/date";
 
 const pathToModules = path.join(__dirname, "../modules");
-console.log(pathToModules);
 const folders = fs.readdirSync(pathToModules);
 
 // resolvers
@@ -40,7 +39,6 @@ export { directives };
 //validators
 const validators = folders.reduce((validators, folder) => {
   const validatorPath = path.join(pathToModules, `${folder}/validators.ts`);
-  console.log(fs.existsSync(validatorPath), validatorPath);
   return fs.existsSync(validatorPath)
     ? { ...validators, ...require(validatorPath) }
     : validators;

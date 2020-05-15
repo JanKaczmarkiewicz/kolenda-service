@@ -4,6 +4,7 @@
   "description": "boilerplate for express, graphql, typescript, setup",
   "scripts": {
     "start": "cross-env ENVIRONMENT=dev nodemon --exec ts-node src/init.ts",
+    "production": "ts-node src/init.ts",
     "gen": "graphql-codegen",
     "test": "cross-env ENVIRONMENT=test jest --detectOpenHandles",
     "clear-cache": "jest --clearCache",
