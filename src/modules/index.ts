@@ -11,7 +11,7 @@ import { date } from "../customScalars/date";
 const pathToModules = path.join(__dirname, "../modules");
 console.log(pathToModules);
 const folders = fs.readdirSync(pathToModules);
-console.log(folders);
+
 // resolvers
 const moduleResolvers = folders.reduce((resolvers, folder) => {
   const resolversPath = `${pathToModules}\\${folder}\\resolvers.ts`;
@@ -40,6 +40,7 @@ export { directives };
 //validators
 const validators = folders.reduce((validators, folder) => {
   const validatorPath = `${pathToModules}\\${folder}\\validators.ts`;
+  console.log(fs.existsSync(validatorPath), validatorPath);
   return fs.existsSync(validatorPath)
     ? { ...validators, ...require(validatorPath) }
     : validators;
