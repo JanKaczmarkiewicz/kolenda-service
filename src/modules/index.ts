@@ -9,8 +9,9 @@ import { ValidateDirective } from "../directives/validate";
 import { date } from "../customScalars/date";
 
 const pathToModules = path.join(__dirname, "../modules");
+console.log(pathToModules);
 const folders = fs.readdirSync(pathToModules);
-
+console.log(folders);
 // resolvers
 const moduleResolvers = folders.reduce((resolvers, folder) => {
   const resolversPath = `${pathToModules}\\${folder}\\resolvers.ts`;
