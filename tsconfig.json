@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
     "strict": true,
     "target": "es6",
     "module": "commonjs",
-    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
+    "lib": ["es6", "es2017", "esnext.asynciterable"],
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "dist",
     "moduleResolution": "node",
     "removeComments": true,
     "noImplicitAny": true,
@@ -15,10 +17,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "skipLibCheck": true
   },
   "exclude": ["node_modules"],
-  "typeRoots": ["./node_modules/@types"],
   "include": ["./src/**/*.ts"]
 }

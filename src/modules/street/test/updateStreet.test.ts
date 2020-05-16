@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "apollo-server";
 import { StreetFragment } from "../../../testUtils/fragments";
 import { StreetDbObject } from "../../../types/types";
 import Street from "../../../models/Street";

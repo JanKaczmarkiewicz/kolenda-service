@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { gql } from "apollo-server";
 import { setup } from "../../../testUtils/beforeAllSetup";
 import { query } from "../../../testUtils/query";
 

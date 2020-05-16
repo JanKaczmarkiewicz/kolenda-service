@@ -9,7 +9,7 @@ export const resolvers: Resolvers = {
       PastoralVisit.find({ season: season._id }),
   },
   Mutation: {
-    addSeason: async (_, { input }) => await new Season(input).save(),
+    addSeason: async (_, { input }) => new Season(input).save(),
   },
   Query: {
     season: async (_, { input }) => Season.findOne({ _id: input.id }),

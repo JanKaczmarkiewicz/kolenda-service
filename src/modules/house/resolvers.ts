@@ -9,7 +9,7 @@ export const resolvers: Resolvers = {
       Street.findOne({ _id: house.street?.toHexString() }),
   },
   Mutation: {
-    addHouse: async (_, { input }) => await new House(input).save(),
+    addHouse: async (_, { input }) => new House(input).save(),
   },
   Query: {
     house: async (_, { input }) => House.findOne({ _id: input.id }),

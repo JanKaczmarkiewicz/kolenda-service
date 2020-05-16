@@ -1,6 +1,5 @@
-import { validateArgs } from "../utils/validateArgs";
+import { validateArgs, ValidationError } from "../utils/validateArgs";
 import * as yup from "yup";
-import { ValidationError } from "../utils/validateArgs";
 
 export const createValidationTest = (schema: yup.ObjectSchema) => async (
   input: object,

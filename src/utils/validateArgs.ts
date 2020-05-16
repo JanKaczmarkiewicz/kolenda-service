@@ -7,7 +7,7 @@ export interface ValidationError {
 
 export const validateArgs = async (
   schema: yup.ObjectSchema,
-  args: Object
+  args: object
 ): Promise<ValidationError[]> => {
   try {
     await schema.validate(args, { abortEarly: false });

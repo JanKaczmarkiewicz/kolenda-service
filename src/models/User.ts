@@ -1,7 +1,5 @@
 import * as mongoose from "mongoose";
-import { UserDbObject } from "../types/types";
-
-import { Role } from "../types/types";
+import { UserDbObject, Role } from "../types/types";
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },

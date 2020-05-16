@@ -1,7 +1,7 @@
 import { setup } from "../../../testUtils/beforeAllSetup";
 import { signUser } from "../../../testUtils/mock/mockAuth";
 import { query } from "../../../testUtils/query";
-import gql from "graphql-tag";
+import { gql } from "apollo-server";
 import { PastoralVisitFragment } from "../../../testUtils/fragments";
 import {
   AddPastoralVisitInput,

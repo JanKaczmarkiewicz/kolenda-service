@@ -2,7 +2,7 @@ import { setup } from "../../../testUtils/beforeAllSetup";
 import { signUser } from "../../../testUtils/mock/mockAuth";
 import { addPastralVisit } from "../../../testUtils/mock/mockPastoralVisit";
 import { query } from "../../../testUtils/query";
-import gql from "graphql-tag";
+import { gql } from "apollo-server";
 import { badToken } from "../../../testUtils/dummyData";
 import { responceError } from "../../../errors/responce";
 import { PastoralVisitFragment } from "../../../testUtils/fragments";

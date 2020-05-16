@@ -7,9 +7,11 @@ import User from "../../models/User";
 import { signAuthToken } from "../../utils/authToken";
 
 import { sendConfirmingEmail } from "../../utils/sendConfirmingEmail";
-import { signConfirmingToken } from "../../utils/confirmingToken";
+import {
+  signConfirmingToken,
+  verifyConfirmingToken,
+} from "../../utils/confirmingToken";
 import { responceError } from "../../errors/responce";
-import { verifyConfirmingToken } from "../../utils/confirmingToken";
 
 export const resolvers: Resolvers = {
   Query: {
@@ -32,7 +34,7 @@ export const resolvers: Resolvers = {
       }).save();
 
       const confirmingToken = signConfirmingToken({ id: savedUser.id });
-      sendConfirmingEmail(confirmingToken, savedUser);
+      await sendConfirmingEmail(confirmingToken, savedUser);
 
       const authToken: string = signAuthToken({ id: savedUser.id });
       return authToken;

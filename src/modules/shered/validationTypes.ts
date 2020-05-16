@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { Types } from "mongoose";
 import errors from "./errors";
-import { isTimeAfterNow } from "../../testUtils/date";
+import { isTimeAfterNow } from "../../utils/visitTimeAndReeceTimeValidationHelpers";
 
 export const id = yup
   .string()

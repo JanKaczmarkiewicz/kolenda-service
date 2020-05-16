@@ -18,11 +18,14 @@ export default (options?: ServerOptions) => {
         expressContext.req?.headers.authorization ?? options?.token;
 
       const user = token ? await getUserBasedOnToken(token) : null;
-      return {
+
+      const context: Context = {
         req: expressContext.req,
         res: expressContext.res,
         user,
-      } as Context;
+      };
+
+      return context;
     },
   });
 

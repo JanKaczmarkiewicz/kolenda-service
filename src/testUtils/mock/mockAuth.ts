@@ -23,17 +23,15 @@ export const signUser = async (
 };
 
 export const symulateAuth = (userData: RegisterInput) => {
-  const stack: Function[] = [];
+  const stack: ((prevRes: any) => any)[] = [];
 
   const execute = async () =>
-    <any>(
-      stack
-        .reduce(
-          (promise, callback: any) => promise.then(callback),
-          Promise.resolve()
-        )
-        .catch(console.error)
-    );
+    stack
+      .reduce(
+        (promise, callback: any) => promise.then(callback),
+        Promise.resolve()
+      )
+      .catch(console.error) as any;
 
   const register = () => {
     stack.push(() =>
