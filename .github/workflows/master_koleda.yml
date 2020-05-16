@@ -23,6 +23,10 @@ jobs:
     - name: npm install, build, and test
       env:
         MONGO_URL: ${{ secrets.MONGO_URL }}
+        EMAIL_SENDER_ADDRESS: ${{ secrets.EMAIL_SENDER_ADDRESS }}
+        JWT_AUTH_SECRET: ${{ secrets.JWT_AUTH_SECRET }}
+        JWT_CONFIRM_SECRET: ${{ secrets.JWT_CONFIRM_SECRET }}
+        EMAIL_SENDER_PASSWORD: ${{ secrets.EMAIL_SENDER_PASSWORD }}
       run: |
         npm install
         npm run build --if-present
