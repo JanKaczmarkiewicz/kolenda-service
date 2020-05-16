@@ -5,9 +5,13 @@ import errors from "../../errors";
 import commonErrors from "../../../shered/errors";
 import { createValidationTest } from "../../../../testUtils/validationTest";
 import { dummyUserData } from "../../../../testUtils/dummyData";
+import * as mongoose from "mongoose";
 
 const validationTest = createValidationTest(registerSchema);
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
 });

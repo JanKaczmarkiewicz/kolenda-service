@@ -8,6 +8,7 @@ import { HouseFragment } from "../../../testUtils/fragments";
 import House from "../../../models/House";
 import { HouseDbObject, StreetDbObject } from "../../../types/types";
 import Street from "../../../models/Street";
+import * as mongoose from "mongoose";
 
 let token: string;
 let house: HouseDbObject;
@@ -22,6 +23,9 @@ const HOUSE = gql`
   ${HouseFragment}
 `;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   token = await signUser();

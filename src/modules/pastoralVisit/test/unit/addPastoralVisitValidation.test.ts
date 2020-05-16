@@ -9,6 +9,7 @@ import { setup } from "../../../../testUtils/beforeAllSetup";
 import errors from "../../errors";
 import commonErrors from "../../../shered/errors";
 import { createValidationTest } from "../../../../testUtils/validationTest";
+import * as mongoose from "mongoose";
 
 const validationTest = createValidationTest(addPastoralVisitSchema);
 
@@ -16,6 +17,9 @@ let acolytes: UserDbObject[];
 let priest: UserDbObject;
 let season: SeasonDbObject;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   const mock = await mockDbBeforeAddingPastralVisit();

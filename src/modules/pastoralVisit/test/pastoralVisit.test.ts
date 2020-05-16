@@ -7,6 +7,7 @@ import { badToken } from "../../../testUtils/dummyData";
 import { responceError } from "../../../errors/responce";
 import { PastoralVisitFragment } from "../../../testUtils/fragments";
 import { PastoralVisitDbObject, FindOneInput } from "../../../types/types";
+import * as mongoose from "mongoose";
 
 let token: string;
 let pastoralVisit: PastoralVisitDbObject;
@@ -20,6 +21,9 @@ const PASTORAL_VISIT = gql`
   ${PastoralVisitFragment}
 `;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   token = await signUser();

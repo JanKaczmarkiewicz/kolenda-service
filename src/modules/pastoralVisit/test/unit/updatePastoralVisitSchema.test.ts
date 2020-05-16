@@ -8,10 +8,14 @@ import { setup } from "../../../../testUtils/beforeAllSetup";
 import errors from "../../errors";
 import commonErrors from "../../../shered/errors";
 import { createValidationTest } from "../../../../testUtils/validationTest";
+import * as mongoose from "mongoose";
 
 const validationTest = createValidationTest(updatePastoralVisitSchema);
 let pastoralVisit: PastoralVisitDbObject;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   pastoralVisit = (await addPastralVisit()).pastoralVisit;

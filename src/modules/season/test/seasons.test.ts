@@ -7,6 +7,7 @@ import { dummySeasonData, badToken } from "../../../testUtils/dummyData";
 import { SeasonDbObject } from "../../../types/types";
 import { SeasonFragment } from "../../../testUtils/fragments";
 import { responceError } from "../../../errors/responce";
+import * as mongoose from "mongoose";
 
 let token: string;
 let season: SeasonDbObject;
@@ -20,6 +21,9 @@ const SEASONS = gql`
   ${SeasonFragment}
 `;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   token = await signUser();

@@ -5,7 +5,11 @@ import { setup } from "../../../testUtils/beforeAllSetup";
 import { dummyUserData } from "../../../testUtils/dummyData";
 import { responceError } from "../../../errors/responce";
 import { Role, RegisterInput } from "../../../types/types";
+import * as mongoose from "mongoose";
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
 });

@@ -14,6 +14,7 @@ import { badToken } from "../../../testUtils/dummyData";
 import { responceError } from "../../../errors/responce";
 import { validateArgs, ValidationError } from "../../../utils/validateArgs";
 import { addPastoralVisitSchema } from "../validators";
+import * as mongoose from "mongoose";
 
 let token: string;
 
@@ -30,6 +31,9 @@ const ADD_PASTORAL_VISIT = gql`
   ${PastoralVisitFragment}
 `;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   token = await signUser();

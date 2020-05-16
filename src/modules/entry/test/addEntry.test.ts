@@ -13,6 +13,7 @@ import {
 } from "../../../types/types";
 import Entry from "../../../models/Entry";
 import { mockDbBeforeAddingEntry } from "../../../testUtils/mock/mockEntry";
+import * as mongoose from "mongoose";
 
 let token: string;
 
@@ -28,6 +29,9 @@ const ADD_ENTRY = gql`
   ${EntryFragment}
 `;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   token = await signUser();

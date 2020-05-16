@@ -8,6 +8,7 @@ import { signUser } from "../../../testUtils/mock/mockAuth";
 import { StreetFragment } from "../../../testUtils/fragments";
 import { badToken } from "../../../testUtils/dummyData";
 import errors from "../errors";
+import * as mongoose from "mongoose";
 
 let token: string;
 const streetName = "Miodowa";
@@ -21,6 +22,9 @@ const ADD_STREET = gql`
   ${StreetFragment}
 `;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   token = await signUser();

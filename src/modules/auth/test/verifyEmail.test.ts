@@ -4,9 +4,13 @@ import { query } from "../../../testUtils/query";
 import { symulateAuth } from "../../../testUtils/mock/mockAuth";
 import { authTokenToVerificationToken } from "../../../utils/authTokenToVerificationToken";
 import { setup } from "../../../testUtils/beforeAllSetup";
+import * as mongoose from "mongoose";
 
 let verificationToken: string;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
 

@@ -7,6 +7,7 @@ import { badToken } from "../../../testUtils/dummyData";
 import { responceError } from "../../../errors/responce";
 import { signUser } from "../../../testUtils/mock/mockAuth";
 import { setup } from "../../../testUtils/beforeAllSetup";
+import * as mongoose from "mongoose";
 
 let token: string;
 let street: StreetDbObject;
@@ -20,6 +21,9 @@ const UPDATE_STREET = gql`
   ${StreetFragment}
 `;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   street = await new Street({ name: "Test update single street" }).save();

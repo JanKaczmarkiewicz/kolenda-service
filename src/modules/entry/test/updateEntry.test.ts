@@ -11,6 +11,7 @@ import {
   RecordState,
   UpdateEntryInput,
 } from "../../../types/types";
+import * as mongoose from "mongoose";
 
 let token: string;
 let entry: EntryDbObject;
@@ -24,6 +25,9 @@ const UPDATE_ENTRY = gql`
   ${EntryFragment}
 `;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   token = await signUser();

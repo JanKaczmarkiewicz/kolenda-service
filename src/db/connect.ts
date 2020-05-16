@@ -3,10 +3,6 @@ import * as mongoose from "mongoose";
 const createDatabaseConnection = async (
   options: mongoose.ConnectionOptions = {}
 ) => {
-  if (mongoose.connection.readyState == 1) return;
-
-  mongoose.connection.on("error", console.error);
-
   await mongoose
     .connect(process.env.MONGO_URL as string, {
       useNewUrlParser: true,
@@ -18,6 +14,7 @@ const createDatabaseConnection = async (
     .catch((err) => {
       throw new Error(err);
     });
+  mongoose.connection.on("error", console.error);
 };
 
 export default createDatabaseConnection;

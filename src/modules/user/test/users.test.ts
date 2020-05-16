@@ -6,10 +6,14 @@ import { query } from "../../../testUtils/query";
 import { responceError } from "../../../errors/responce";
 import User from "../../../models/User";
 import { setup } from "../../../testUtils/beforeAllSetup";
+import * as mongoose from "mongoose";
 
 let token: string;
 let savedUser: UserDbObject;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   token = await signUser();

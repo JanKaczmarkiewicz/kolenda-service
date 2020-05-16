@@ -6,6 +6,7 @@ import { badToken } from "../../../testUtils/dummyData";
 import { responceError } from "../../../errors/responce";
 import { EntryFragment } from "../../../testUtils/fragments";
 import { RecordState, EntryDbObject } from "../../../types/types";
+import * as mongoose from "mongoose";
 import { addEntry } from "../../../testUtils/mock/mockEntry";
 
 let token: string;
@@ -20,6 +21,9 @@ const ENTRY = gql`
   ${EntryFragment}
 `;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   token = await signUser();

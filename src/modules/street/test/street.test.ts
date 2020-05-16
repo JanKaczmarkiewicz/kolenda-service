@@ -7,9 +7,13 @@ import { badToken } from "../../../testUtils/dummyData";
 import { responceError } from "../../../errors/responce";
 import { signUser } from "../../../testUtils/mock/mockAuth";
 import { setup } from "../../../testUtils/beforeAllSetup";
+import * as mongoose from "mongoose";
 
 let token: string;
 
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 beforeAll(async () => {
   await setup();
   token = await signUser();
@@ -27,6 +31,9 @@ describe("street resolver (single element)", () => {
 
   let street: StreetDbObject;
 
+  afterAll(async () => {
+    await mongoose.disconnect();
+  });
   beforeAll(async () => {
     street = await new Street({ name: "Test single street" }).save();
   });
