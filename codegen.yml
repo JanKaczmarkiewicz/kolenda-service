@@ -19,7 +19,7 @@ generates:
         Street: StreetDbObject
         Season: SeasonDbObject
         PastoralVisit: PastoralVisitDbObject
-        Entry: EntryDbObject
+        Entrance: EntranceDbObject
       contextType: Context
       skipTypename: true
       enumsAsString: false

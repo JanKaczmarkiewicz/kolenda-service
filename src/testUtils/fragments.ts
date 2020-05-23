@@ -36,8 +36,8 @@ export const HouseFragment = gql`
   }
 `;
 
-export const EntryFragment = gql`
-  fragment EntryFragment on Entry {
+export const EntranceFragment = gql`
+  fragment EntranceFragment on Entrance {
     id
     visitState
     reeceState

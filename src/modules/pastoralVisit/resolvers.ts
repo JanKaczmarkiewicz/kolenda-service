@@ -2,6 +2,7 @@ import { Resolvers } from "../../types/types";
 import "reflect-metadata";
 import PastoralVisit from "../../models/PastoralVisit";
 import User from "../../models/User";
+import Entrance from "../../models/Entrance";
 
 export const resolvers: Resolvers = {
   PastoralVisit: {
@@ -11,6 +12,10 @@ export const resolvers: Resolvers = {
     acolytes: async (pastoralVisit) =>
       User.find({
         _id: { $in: pastoralVisit.acolytes },
+      }),
+    entrances: async (pastoralVisit) =>
+      Entrance.find({
+        pastoralVisit: pastoralVisit._id.toHexString(),
       }),
   },
   Mutation: {

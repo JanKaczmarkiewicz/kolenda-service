@@ -1,8 +1,8 @@
 import * as mongoose from "mongoose";
-import { EntryDbObject, RecordState } from "../types/types";
-import errors from "../modules/entry/errors";
+import { EntranceDbObject, RecordState } from "../types/types";
+import errors from "../modules/entrance/errors";
 
-const EntrySchema = new mongoose.Schema<EntryDbObject>({
+const EntranceSchema = new mongoose.Schema<EntranceDbObject>({
   house: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "House",
@@ -12,7 +12,7 @@ const EntrySchema = new mongoose.Schema<EntryDbObject>({
     type: String,
     enum: {
       values: Object.values(RecordState),
-      message: errors.entry.stateFormat,
+      message: errors.entrance.stateFormat,
     },
     default: RecordState.Unknown,
   },
@@ -20,7 +20,7 @@ const EntrySchema = new mongoose.Schema<EntryDbObject>({
     type: String,
     enum: {
       values: Object.values(RecordState),
-      message: errors.entry.stateFormat,
+      message: errors.entrance.stateFormat,
     },
     default: RecordState.Unknown,
   },
@@ -32,9 +32,9 @@ const EntrySchema = new mongoose.Schema<EntryDbObject>({
   comment: String,
 });
 
-const Entry = mongoose.model<EntryDbObject & mongoose.Document>(
-  "Entry",
-  EntrySchema
+const Entrance = mongoose.model<EntranceDbObject & mongoose.Document>(
+  "Entrance",
+  EntranceSchema
 );
 
-export default Entry;
+export default Entrance;

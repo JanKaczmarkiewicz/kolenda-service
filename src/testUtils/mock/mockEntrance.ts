@@ -3,20 +3,20 @@ import { dummyStreetData, dummyUserData } from "../dummyData";
 import House from "../../models/House";
 import User from "../../models/User";
 import { Role } from "../../types/types";
-import Entry from "../../models/Entry";
+import Entrance from "../../models/Entrance";
 import { addPastralVisit } from "./mockPastoralVisit";
 
-export const addEntry = async () => {
-  const mock = await mockDbBeforeAddingEntry();
-  const entry = await new Entry({
+export const addEntrance = async () => {
+  const mock = await mockDbBeforeAddingEntrance();
+  const entrance = await new Entrance({
     pastoralVisit: mock.pastoralVisit._id.toHexString(),
     house: mock.house._id.toHexString(),
     comment: "test_coment",
   }).save();
-  return { ...mock, entry };
+  return { ...mock, entrance };
 };
 
-export const mockDbBeforeAddingEntry = async () => {
+export const mockDbBeforeAddingEntrance = async () => {
   const street = await new Street(dummyStreetData).save();
 
   const house = await new House({

@@ -4,25 +4,25 @@ import { query } from "../../../testUtils/query";
 import { gql } from "apollo-server";
 import { badToken } from "../../../testUtils/dummyData";
 import { responceError } from "../../../errors/responce";
-import { EntryFragment } from "../../../testUtils/fragments";
-import { addEntry } from "../../../testUtils/mock/mockEntry";
+import { EntranceFragment } from "../../../testUtils/fragments";
+import { addEntrance } from "../../../testUtils/mock/mockEntrance";
 import {
-  EntryDbObject,
+  EntranceDbObject,
   RecordState,
-  UpdateEntryInput,
+  UpdateEntranceInput,
 } from "../../../types/types";
 import * as mongoose from "mongoose";
 
 let token: string;
-let entry: EntryDbObject;
+let entrance: EntranceDbObject;
 
-const UPDATE_ENTRY = gql`
-  mutation updateEntry($input: UpdateEntryInput!) {
-    updateEntry(input: $input) {
-      ...EntryFragment
+const UPDATE_ENTRENCE = gql`
+  mutation updateEntrance($input: UpdateEntranceInput!) {
+    updateEntrance(input: $input) {
+      ...EntranceFragment
     }
   }
-  ${EntryFragment}
+  ${EntranceFragment}
 `;
 
 afterAll(async () => {
@@ -31,56 +31,56 @@ afterAll(async () => {
 beforeAll(async () => {
   await setup();
   token = await signUser();
-  const mock = await addEntry();
-  entry = mock.entry;
+  const mock = await addEntrance();
+  entrance = mock.entrance;
 });
 
-describe("updateEntry", () => {
-  it("Authenticated user can updateEntry", async () => {
-    const input: UpdateEntryInput = {
-      id: entry._id.toHexString(),
+describe("updateEntrance", () => {
+  it("Authenticated user can updateEntrance", async () => {
+    const input: UpdateEntranceInput = {
+      id: entrance._id.toHexString(),
       reeceState: RecordState.Accepted,
       comment: "from 17",
     };
 
     const res = await query(
       {
-        query: UPDATE_ENTRY,
+        query: UPDATE_ENTRENCE,
         input,
       },
       token
     );
 
-    expect(res.data?.updateEntry).toEqual({
-      id: entry._id.toHexString(),
+    expect(res.data?.updateEntrance).toEqual({
+      id: entrance._id.toHexString(),
       house: {
-        id: entry.house?.toHexString(),
+        id: entrance.house?.toHexString(),
       },
       comment: input.comment,
-      visitState: entry.reeceState,
+      visitState: entrance.reeceState,
       reeceState: input.reeceState,
       pastoralVisit: {
-        id: entry.pastoralVisit?.toHexString(),
+        id: entrance.pastoralVisit?.toHexString(),
       },
     });
   });
 
-  it("Unauthenticated user can not updateEntry.", async () => {
-    const input: UpdateEntryInput = {
-      id: entry._id.toHexString(),
+  it("Unauthenticated user can not updateEntrance.", async () => {
+    const input: UpdateEntranceInput = {
+      id: entrance._id.toHexString(),
       reeceState: RecordState.Accepted,
       comment: "from 17",
     };
 
     const res = await query(
       {
-        query: UPDATE_ENTRY,
+        query: UPDATE_ENTRENCE,
         input,
       },
       badToken
     );
 
-    expect(res.data?.updateEntry).toBeFalsy();
+    expect(res.data?.updateEntrance).toBeFalsy();
     expect(res.errors?.[0].message).toBe(responceError.authenticationFailed);
   });
 });

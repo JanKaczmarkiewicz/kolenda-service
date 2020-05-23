@@ -1,18 +1,18 @@
 import { setup } from "../../../testUtils/beforeAllSetup";
 import { signUser } from "../../../testUtils/mock/mockAuth";
 import { query } from "../../../testUtils/query";
-import {gql} from "apollo-server";
+import { gql } from "apollo-server";
 import { badToken } from "../../../testUtils/dummyData";
 import { responceError } from "../../../errors/responce";
-import { EntryFragment } from "../../../testUtils/fragments";
+import { EntranceFragment } from "../../../testUtils/fragments";
 import {
   HouseDbObject,
   PastoralVisitDbObject,
-  EntryDbObject,
+  EntranceDbObject,
   RecordState,
 } from "../../../types/types";
-import Entry from "../../../models/Entry";
-import { mockDbBeforeAddingEntry } from "../../../testUtils/mock/mockEntry";
+import Entrance from "../../../models/Entrance";
+import { mockDbBeforeAddingEntrance } from "../../../testUtils/mock/mockEntrance";
 import * as mongoose from "mongoose";
 
 let token: string;
@@ -20,13 +20,13 @@ let token: string;
 let house: HouseDbObject;
 let pastoralVisit: PastoralVisitDbObject;
 
-const ADD_ENTRY = gql`
-  mutation addEntry($input: AddEntryInput!) {
-    addEntry(input: $input) {
-      ...EntryFragment
+const ADD_ENTRANCE = gql`
+  mutation addEntrance($input: AddEntranceInput!) {
+    addEntrance(input: $input) {
+      ...EntranceFragment
     }
   }
-  ${EntryFragment}
+  ${EntranceFragment}
 `;
 
 afterAll(async () => {
@@ -35,13 +35,13 @@ afterAll(async () => {
 beforeAll(async () => {
   await setup();
   token = await signUser();
-  const mock = await mockDbBeforeAddingEntry();
+  const mock = await mockDbBeforeAddingEntrance();
   house = mock.house;
   pastoralVisit = mock.pastoralVisit;
 });
 
-describe("entry", () => {
-  it("Authenticated user can addEntry", async () => {
+describe("Entrance", () => {
+  it("Authenticated user can addEntrance", async () => {
     const input = {
       house: house._id.toHexString(),
       pastoralVisit: pastoralVisit._id.toHexString(),
@@ -49,29 +49,29 @@ describe("entry", () => {
     };
     const res = await query(
       {
-        query: ADD_ENTRY,
+        query: ADD_ENTRANCE,
         input,
       },
       token
     );
 
-    const foundEntry = (await Entry.findOne({})) as EntryDbObject;
+    const foundEntrance = (await Entrance.findOne({})) as EntranceDbObject;
 
-    expect(res.data?.addEntry).toEqual({
-      id: foundEntry._id.toHexString(),
+    expect(res.data?.addEntrance).toEqual({
+      id: foundEntrance._id.toHexString(),
       house: {
-        id: foundEntry.house?.toHexString(),
+        id: foundEntrance.house?.toHexString(),
       },
-      comment: foundEntry.comment,
+      comment: foundEntrance.comment,
       visitState: RecordState.Unknown,
       reeceState: RecordState.Unknown,
       pastoralVisit: {
-        id: foundEntry.pastoralVisit?.toHexString(),
+        id: foundEntrance.pastoralVisit?.toHexString(),
       },
     });
   });
 
-  it("Unauthenticated user can not addEntry.", async () => {
+  it("Unauthenticated user can not addEntrance.", async () => {
     const input = {
       house: house._id.toHexString(),
       pastoralVisit: pastoralVisit._id.toHexString(),
@@ -80,13 +80,13 @@ describe("entry", () => {
 
     const res = await query(
       {
-        query: ADD_ENTRY,
+        query: ADD_ENTRANCE,
         input,
       },
       badToken
     );
 
-    expect(res.data?.addEntry).toBeFalsy();
+    expect(res.data?.addEntrance).toBeFalsy();
     expect(res.errors?.[0].message).toBe(responceError.authenticationFailed);
   });
 });

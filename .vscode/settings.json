@@ -3,5 +3,6 @@
         "node_modules{,/**}",
         ".vscode{,/**}"
     ],
-    "appService.deploySubpath": ""
+    "appService.deploySubpath": "",
+    "appService.defaultWebAppToDeploy": "/subscriptions/4d253894-a106-438d-b11e-f8c9bcd03bdf/resourceGroups/koleda/providers/Microsoft.Web/sites/koleda"
 }

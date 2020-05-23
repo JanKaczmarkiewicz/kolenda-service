@@ -1,4 +1,4 @@
-type Entry @entity {
+type Entrance @entity {
   id: ID! @id
   house: House @link
   visitState: RecordState! @column
@@ -7,13 +7,13 @@ type Entry @entity {
   pastoralVisit: PastoralVisit @link
 }
 
-input AddEntryInput {
+input AddEntranceInput {
   house: String!
   pastoralVisit: String!
   comment: String
 }
 
-input UpdateEntryInput {
+input UpdateEntranceInput {
   id: String!
   visitState: RecordState
   reeceState: RecordState
@@ -22,13 +22,13 @@ input UpdateEntryInput {
 }
 
 type Query {
-  entry(input: FindOneInput!): Entry @authenticated
-  entries: [Entry!]! @authenticated
+  entrance(input: FindOneInput!): Entrance @authenticated
+  entrances: [Entrance!]! @authenticated
 }
 
 type Mutation {
-  addEntry(input: AddEntryInput!): Entry! @authenticated
-  updateEntry(input: UpdateEntryInput!): Entry @authenticated
+  addEntrance(input: AddEntranceInput!): Entrance! @authenticated
+  updateEntrance(input: UpdateEntranceInput!): Entrance @authenticated
 }
 
 enum RecordState {

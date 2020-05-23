@@ -5,6 +5,7 @@ type PastoralVisit @entity {
   visitTime: DateTime! @column
   reeceTime: DateTime! @column
   season: Season! @link
+  entrances: [Entrance!]!
 }
 
 input AddPastoralVisitInput {
