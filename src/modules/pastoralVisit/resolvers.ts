@@ -3,6 +3,7 @@ import "reflect-metadata";
 import PastoralVisit from "../../models/PastoralVisit";
 import User from "../../models/User";
 import Entrance from "../../models/Entrance";
+import Season from "../../models/Season";
 
 export const resolvers: Resolvers = {
   PastoralVisit: {
@@ -16,6 +17,10 @@ export const resolvers: Resolvers = {
     entrances: async (pastoralVisit) =>
       Entrance.find({
         pastoralVisit: pastoralVisit._id.toHexString(),
+      }),
+    season: async (pastoralVisit) =>
+      Season.findOne({
+        _id: pastoralVisit.season?.toHexString(),
       }),
   },
   Mutation: {

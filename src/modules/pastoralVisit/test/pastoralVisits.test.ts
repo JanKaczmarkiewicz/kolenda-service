@@ -49,7 +49,7 @@ describe("pastoralVisits", () => {
       ),
       visitTime: pastoralVisit.visitTime.toISOString(),
       reeceTime: pastoralVisit.reeceTime.toISOString(),
-      season: { id: pastoralVisit.season.toHexString() },
+      season: { id: pastoralVisit?.season?.toHexString() },
     });
   });
 

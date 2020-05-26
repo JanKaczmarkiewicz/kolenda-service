@@ -16,7 +16,6 @@ export default (options?: ServerOptions) => {
     context: async (expressContext) => {
       const token: string | undefined =
         expressContext.req?.headers.authorization ?? options?.token;
-
       const user = token ? await getUserBasedOnToken(token) : null;
 
       const context: Context = {

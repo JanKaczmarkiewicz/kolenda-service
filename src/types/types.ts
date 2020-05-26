@@ -29,7 +29,7 @@ export type PastoralVisitDbObject = {
   acolytes: Array<UserDbObject['_id']>,
   visitTime: Date,
   reeceTime: Date,
-  season: SeasonDbObject['_id'],
+  season?: Maybe<SeasonDbObject['_id']>,
 };
 
 export type SeasonDbObject = {
@@ -247,7 +247,7 @@ export type PastoralVisit = {
   acolytes: Array<User>;
   visitTime: Scalars['DateTime'];
   reeceTime: Scalars['DateTime'];
-  season: Season;
+  season?: Maybe<Season>;
   entrances: Array<Entrance>;
 };
 
@@ -538,7 +538,7 @@ export type PastoralVisitResolvers<ContextType = Context, ParentType extends Res
   acolytes?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>,
   visitTime?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
   reeceTime?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
-  season?: Resolver<ResolversTypes['Season'], ParentType, ContextType>,
+  season?: Resolver<Maybe<ResolversTypes['Season']>, ParentType, ContextType>,
   entrances?: Resolver<Array<ResolversTypes['Entrance']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
