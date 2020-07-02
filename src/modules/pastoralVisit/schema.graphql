@@ -22,9 +22,13 @@ input UpdatePastoralVisitInput {
   reeceTime: String
 }
 
+input PastoralVisitsInput {
+  date: String
+}
+
 type Query {
   pastoralVisit(input: FindOneInput!): PastoralVisit @authenticated
-  pastoralVisits: [PastoralVisit!]! @authenticated
+  pastoralVisits(input: PastoralVisitsInput!): [PastoralVisit!]! @authenticated
 }
 
 type Mutation {

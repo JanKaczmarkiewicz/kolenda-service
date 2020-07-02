@@ -15,7 +15,7 @@ import { responceError } from "../../errors/responce";
 
 export const resolvers: Resolvers = {
   Query: {
-    me: async (_, __, { user }) => user as UserDbObject,
+    me: async (_, __, { user }) => user!,
   },
   Mutation: {
     register: async (_, { input: { password, username, email } }) => {

@@ -171,6 +171,11 @@ export type QueryPastoralVisitArgs = {
 };
 
 
+export type QueryPastoralVisitsArgs = {
+  input: PastoralVisitsInput;
+};
+
+
 export type QuerySeasonArgs = {
   input: FindOneInput;
 };
@@ -263,6 +268,10 @@ export type UpdatePastoralVisitInput = {
   id: Scalars['String'];
   visitTime?: Maybe<Scalars['String']>;
   reeceTime?: Maybe<Scalars['String']>;
+};
+
+export type PastoralVisitsInput = {
+  date?: Maybe<Scalars['String']>;
 };
 
 export type Season = {
@@ -398,6 +407,7 @@ export type ResolversTypes = ResolversObject<{
   PastoralVisit: ResolverTypeWrapper<PastoralVisitDbObject>,
   AddPastoralVisitInput: AddPastoralVisitInput,
   UpdatePastoralVisitInput: UpdatePastoralVisitInput,
+  PastoralVisitsInput: PastoralVisitsInput,
   Season: ResolverTypeWrapper<SeasonDbObject>,
   Int: ResolverTypeWrapper<Scalars['Int']>,
   AddSeasonInput: AddSeasonInput,
@@ -430,6 +440,7 @@ export type ResolversParentTypes = ResolversObject<{
   PastoralVisit: PastoralVisitDbObject,
   AddPastoralVisitInput: AddPastoralVisitInput,
   UpdatePastoralVisitInput: UpdatePastoralVisitInput,
+  PastoralVisitsInput: PastoralVisitsInput,
   Season: SeasonDbObject,
   Int: Scalars['Int'],
   AddSeasonInput: AddSeasonInput,
@@ -506,7 +517,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   house?: Resolver<Maybe<ResolversTypes['House']>, ParentType, ContextType, RequireFields<QueryHouseArgs, 'input'>>,
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   pastoralVisit?: Resolver<Maybe<ResolversTypes['PastoralVisit']>, ParentType, ContextType, RequireFields<QueryPastoralVisitArgs, 'input'>>,
-  pastoralVisits?: Resolver<Array<ResolversTypes['PastoralVisit']>, ParentType, ContextType>,
+  pastoralVisits?: Resolver<Array<ResolversTypes['PastoralVisit']>, ParentType, ContextType, RequireFields<QueryPastoralVisitsArgs, 'input'>>,
   season?: Resolver<Maybe<ResolversTypes['Season']>, ParentType, ContextType, RequireFields<QuerySeasonArgs, 'input'>>,
   seasons?: Resolver<Array<ResolversTypes['Season']>, ParentType, ContextType>,
   street?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<QueryStreetArgs, 'input'>>,
