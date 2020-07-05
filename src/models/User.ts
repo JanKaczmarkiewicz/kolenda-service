@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: Object.values(Role),
-    default: Role.User,
+    default: Role.Acolyte,
   },
 });
 

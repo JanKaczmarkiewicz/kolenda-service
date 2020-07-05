@@ -315,8 +315,7 @@ export type User = {
 export enum Role {
   Admin = 'ADMIN',
   Acolyte = 'ACOLYTE',
-  Priest = 'PRIEST',
-  User = 'USER'
+  Priest = 'PRIEST'
 }
 
 export type AdditionalEntityFields = {

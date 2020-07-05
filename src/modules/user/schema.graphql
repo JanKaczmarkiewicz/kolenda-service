@@ -10,7 +10,6 @@ enum Role {
   ADMIN
   ACOLYTE
   PRIEST
-  USER
 }
 
 type Query {
