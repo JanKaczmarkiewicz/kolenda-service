@@ -10,6 +10,7 @@
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "postbuild": "copyfiles -u 1 src/modules/**/*.graphql dist",
+    "pretest": "npm run clear-cache",
     "test": "cross-env ENVIRONMENT=test jest --detectOpenHandles",
     "clear-cache": "jest --clearCache",
     "seeder": "cross-env ENVIRONMENT=dev ts-node src/seed/seeder.ts"
