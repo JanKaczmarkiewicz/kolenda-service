@@ -13,14 +13,6 @@ const PastoralVisitSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
-  visitTime: {
-    type: Date,
-    required: true,
-  },
-  reeceTime: {
-    type: Date,
-    required: true,
-  },
   season: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Season",

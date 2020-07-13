@@ -8,12 +8,19 @@ const EntranceSchema = new mongoose.Schema<EntranceDbObject>({
     ref: "House",
     required: true,
   },
+  hour: {
+    type: Number,
+    required: true,
+    min: 8,
+    max: 20,
+  },
   visitState: {
     type: String,
     enum: {
       values: Object.values(RecordState),
       message: errors.entrance.stateFormat,
     },
+    required: true,
     default: RecordState.Unknown,
   },
   reeceState: {
@@ -22,6 +29,7 @@ const EntranceSchema = new mongoose.Schema<EntranceDbObject>({
       values: Object.values(RecordState),
       message: errors.entrance.stateFormat,
     },
+    required: true,
     default: RecordState.Unknown,
   },
   pastoralVisit: {
