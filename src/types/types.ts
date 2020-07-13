@@ -143,6 +143,7 @@ export type MutationVerifyEmailArgs = {
 export type Query = {
   entrance?: Maybe<Entrance>;
   entrances: Array<Entrance>;
+  findUnused: Array<House>;
   house?: Maybe<House>;
   me: User;
   pastoralVisit?: Maybe<PastoralVisit>;
@@ -158,6 +159,11 @@ export type Query = {
 
 export type QueryEntranceArgs = {
   input: FindOneInput;
+};
+
+
+export type QueryFindUnusedArgs = {
+  input: FindUnusedInput;
 };
 
 
@@ -246,6 +252,11 @@ export type AddHouseInput = {
   street: Scalars['String'];
 };
 
+export type FindUnusedInput = {
+  streets: Array<Scalars['String']>;
+  season: Scalars['String'];
+};
+
 export type PastoralVisit = {
   id: Scalars['ID'];
   priest?: Maybe<User>;
@@ -315,8 +326,7 @@ export type User = {
 export enum Role {
   Admin = 'ADMIN',
   Acolyte = 'ACOLYTE',
-  Priest = 'PRIEST',
-  User = 'USER'
+  Priest = 'PRIEST'
 }
 
 export type AdditionalEntityFields = {
@@ -404,6 +414,7 @@ export type ResolversTypes = ResolversObject<{
   RecordState: RecordState,
   House: ResolverTypeWrapper<HouseDbObject>,
   AddHouseInput: AddHouseInput,
+  FindUnusedInput: FindUnusedInput,
   PastoralVisit: ResolverTypeWrapper<PastoralVisitDbObject>,
   AddPastoralVisitInput: AddPastoralVisitInput,
   UpdatePastoralVisitInput: UpdatePastoralVisitInput,
@@ -437,6 +448,7 @@ export type ResolversParentTypes = ResolversObject<{
   RecordState: RecordState,
   House: HouseDbObject,
   AddHouseInput: AddHouseInput,
+  FindUnusedInput: FindUnusedInput,
   PastoralVisit: PastoralVisitDbObject,
   AddPastoralVisitInput: AddPastoralVisitInput,
   UpdatePastoralVisitInput: UpdatePastoralVisitInput,
@@ -514,6 +526,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   entrance?: Resolver<Maybe<ResolversTypes['Entrance']>, ParentType, ContextType, RequireFields<QueryEntranceArgs, 'input'>>,
   entrances?: Resolver<Array<ResolversTypes['Entrance']>, ParentType, ContextType>,
+  findUnused?: Resolver<Array<ResolversTypes['House']>, ParentType, ContextType, RequireFields<QueryFindUnusedArgs, 'input'>>,
   house?: Resolver<Maybe<ResolversTypes['House']>, ParentType, ContextType, RequireFields<QueryHouseArgs, 'input'>>,
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   pastoralVisit?: Resolver<Maybe<ResolversTypes['PastoralVisit']>, ParentType, ContextType, RequireFields<QueryPastoralVisitArgs, 'input'>>,

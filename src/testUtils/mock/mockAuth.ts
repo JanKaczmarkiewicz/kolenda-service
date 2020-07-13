@@ -12,7 +12,7 @@ const user: RegisterInput = {
 };
 export const signUser = async (
   userData: RegisterInput = user,
-  role: Role = Role.User
+  role: Role = Role.Acolyte
 ): Promise<string> => {
   const savedUser = await new User({
     ...userData,

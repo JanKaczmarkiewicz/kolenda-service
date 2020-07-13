@@ -9,7 +9,7 @@ export class AuthenticatedDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field: GraphQLField<any, Context>) {
     const { resolve = defaultFieldResolver } = field;
 
-    const { roles } = this.args as { roles: Role[] };
+    const { roles = [] } = this.args as { roles: Role[] };
     field.resolve = async (...resolverArgs) => {
       const [, , { user }] = resolverArgs;
 
