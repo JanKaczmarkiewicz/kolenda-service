@@ -1,42 +1,33 @@
 type PastoralVisit @entity {
   id: ID! @id
+  day: Day @link
   priest: User @link
   acolytes: [User!]! @link
-  visitTime: DateTime! @column
-  reeceTime: DateTime! @column
-  season: Season @link
   entrances: [Entrance!]!
+  hour: Int! @column
 }
 
 input AddPastoralVisitInput {
   priest: String!
   acolytes: [String!]!
-  visitTime: String!
-  reeceTime: String!
-  season: String!
+  hour: Int!
+  day: String!
 }
 
 input UpdatePastoralVisitInput {
   id: String!
-  visitTime: String
-  reeceTime: String
-}
-
-input PastoralVisitsInput {
-  date: String
+  priest: String
+  hour: Int
+  acolytes: [String!]
 }
 
 type Query {
   pastoralVisit(input: FindOneInput!): PastoralVisit @authenticated
-  pastoralVisits(input: PastoralVisitsInput!): [PastoralVisit!]! @authenticated
 }
 
 type Mutation {
-  addPastoralVisit(input: AddPastoralVisitInput!): PastoralVisit!
-    @authenticated
-    @validate(schemaName: "addPastoralVisitSchema")
+  addPastoralVisit(input: AddPastoralVisitInput!): PastoralVisit! @authenticated
 
   updatePastoralVisit(input: UpdatePastoralVisitInput!): PastoralVisit
     @authenticated
-    @validate(schemaName: "updatePastoralVisitSchema")
 }

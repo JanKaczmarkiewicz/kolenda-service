@@ -10,6 +10,23 @@ export const StreetFragment = gql`
   }
 `;
 
+export const DayFragment = gql`
+  fragment DayFragment on Day {
+    id
+    season {
+      id
+    }
+    visitDate
+    reeceDate
+    unusedHouses {
+      id
+    }
+    pastoralVisits {
+      id
+    }
+  }
+`;
+
 export const UserFragment = gql`
   fragment UserFragment on User {
     username
@@ -23,6 +40,9 @@ export const SeasonFragment = gql`
   fragment SeasonFragment on Season {
     year
     id
+    days {
+      id
+    }
   }
 `;
 
@@ -57,12 +77,10 @@ export const PastoralVisitFragment = gql`
     priest {
       id
     }
-    acolytes {
+    day {
       id
     }
-    visitTime
-    reeceTime
-    season {
+    acolytes {
       id
     }
   }

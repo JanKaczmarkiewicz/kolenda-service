@@ -5,18 +5,18 @@ import { id, futureDate } from "../shered/validationTypes";
 import {
   areAddedDatesValid,
   areUpdatedDatesValid,
-} from "../../utils/visitTimeAndReeceTimeValidationHelpers";
+} from "../../utils/visitDateAndReeceDateValidationHelpers";
 
-export const addPastoralVisitSchema = yup.object().shape({
-  reeceTime: futureDate
+export const addDaySchema = yup.object().shape({
+  reeceDate: futureDate
     .required(commonErrors.any.required)
-    .test("isBeforeVisitTime", errors.reeceTime.afterVisitTime, function () {
+    .test("isBeforeVisitDate", errors.reeceDate.afterVisitDate, function () {
       return areAddedDatesValid(this.parent);
     }),
 
-  visitTime: futureDate
+  visitDate: futureDate
     .required(commonErrors.any.required)
-    .test("isAfterReeceTime", errors.visitTime.beforeReeceTime, function () {
+    .test("isAfterReeceDate", errors.visitDate.beforeReeceDate, function () {
       return areAddedDatesValid(this.parent);
     }),
 
@@ -32,20 +32,20 @@ export const addPastoralVisitSchema = yup.object().shape({
   season: id.required(commonErrors.any.required),
 });
 
-export const updatePastoralVisitSchema = yup.object().shape({
+export const updateDaySchema = yup.object().shape({
   id: id.required(commonErrors.any.required),
 
-  reeceTime: futureDate.test(
-    "isBeforeVisitTime",
-    errors.reeceTime.afterVisitTime,
+  reeceDate: futureDate.test(
+    "isBeforeVisitDate",
+    errors.reeceDate.afterVisitDate,
     function () {
       return areUpdatedDatesValid(this.parent);
     }
   ),
 
-  visitTime: futureDate.test(
-    "isAfterReeceTime",
-    errors.visitTime.beforeReeceTime,
+  visitDate: futureDate.test(
+    "isAfterReeceDate",
+    errors.visitDate.beforeReeceDate,
     function () {
       return areUpdatedDatesValid(this.parent);
     }

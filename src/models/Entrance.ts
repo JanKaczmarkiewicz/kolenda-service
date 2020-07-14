@@ -8,12 +8,7 @@ const EntranceSchema = new mongoose.Schema<EntranceDbObject>({
     ref: "House",
     required: true,
   },
-  hour: {
-    type: Number,
-    required: true,
-    min: 8,
-    max: 20,
-  },
+
   visitState: {
     type: String,
     enum: {

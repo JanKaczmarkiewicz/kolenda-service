@@ -1,7 +1,7 @@
 type Season @entity {
   id: ID! @id
   year: Int! @column
-  pastoralVisits: [PastoralVisit!]!
+  days: [Day!]!
 }
 
 input AddSeasonInput {

@@ -20,5 +20,9 @@
     "skipLibCheck": true
   },
   "exclude": ["node_modules"],
-  "include": ["./src/**/*.ts"]
+  "include": [
+    "./src/**/*.ts",
+    "src/modules/day/test/unit/updatePastoralVisitSchema.test.tsasdasda",
+    "src/modules/day/test/unit/addPastoralVisitValidation.test.tstasda"
+  ]
 }

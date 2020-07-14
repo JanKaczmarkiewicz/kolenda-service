@@ -8,6 +8,14 @@ export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?:
 
 
 import { ObjectID } from 'mongodb';
+export type DayDbObject = {
+  _id: ObjectID,
+  season?: Maybe<SeasonDbObject['_id']>,
+  visitDate: Date,
+  reeceDate: Date,
+  assignedStreets: string[],
+};
+
 export type EntranceDbObject = {
   _id: ObjectID,
   house?: Maybe<HouseDbObject['_id']>,
@@ -25,11 +33,10 @@ export type HouseDbObject = {
 
 export type PastoralVisitDbObject = {
   _id: ObjectID,
+  day?: Maybe<DayDbObject['_id']>,
   priest?: Maybe<UserDbObject['_id']>,
   acolytes: Array<UserDbObject['_id']>,
-  visitTime: Date,
-  reeceTime: Date,
-  season?: Maybe<SeasonDbObject['_id']>,
+  hour: number,
 };
 
 export type SeasonDbObject = {
@@ -72,6 +79,7 @@ export type Scalars = {
 
 
 export type Mutation = {
+  addDay: Day;
   addEntrance: Entrance;
   addHouse?: Maybe<House>;
   addPastoralVisit: PastoralVisit;
@@ -79,10 +87,16 @@ export type Mutation = {
   addStreet?: Maybe<Street>;
   login: Scalars['String'];
   register: Scalars['String'];
+  updateDay: Day;
   updateEntrance?: Maybe<Entrance>;
   updatePastoralVisit?: Maybe<PastoralVisit>;
   updateStreet?: Maybe<Street>;
   verifyEmail: Scalars['Boolean'];
+};
+
+
+export type MutationAddDayArgs = {
+  input: AddDayInput;
 };
 
 
@@ -121,6 +135,11 @@ export type MutationRegisterArgs = {
 };
 
 
+export type MutationUpdateDayArgs = {
+  input: UpdateDayInput;
+};
+
+
 export type MutationUpdateEntranceArgs = {
   input: UpdateEntranceInput;
 };
@@ -141,18 +160,29 @@ export type MutationVerifyEmailArgs = {
 };
 
 export type Query = {
+  day?: Maybe<Day>;
+  days: Array<Maybe<Day>>;
   entrance?: Maybe<Entrance>;
   entrances: Array<Entrance>;
   house?: Maybe<House>;
   me: User;
   pastoralVisit?: Maybe<PastoralVisit>;
-  pastoralVisits: Array<PastoralVisit>;
   season?: Maybe<Season>;
   seasons: Array<Season>;
   street?: Maybe<Street>;
   streets: Array<Street>;
   user?: Maybe<User>;
   users?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type QueryDayArgs = {
+  input: FindOneInput;
+};
+
+
+export type QueryDaysArgs = {
+  input: DaysInput;
 };
 
 
@@ -168,11 +198,6 @@ export type QueryHouseArgs = {
 
 export type QueryPastoralVisitArgs = {
   input: FindOneInput;
-};
-
-
-export type QueryPastoralVisitsArgs = {
-  input: PastoralVisitsInput;
 };
 
 
@@ -203,6 +228,33 @@ export type VerifyEmailInput = {
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type Day = {
+  id: Scalars['ID'];
+  season?: Maybe<Season>;
+  visitDate: Scalars['DateTime'];
+  reeceDate: Scalars['DateTime'];
+  unusedHouses: Array<House>;
+  pastoralVisits: Array<PastoralVisit>;
+};
+
+export type DaysInput = {
+  season: Scalars['String'];
+};
+
+export type AddDayInput = {
+  season: Scalars['String'];
+  visitDate: Scalars['String'];
+  reeceDate: Scalars['String'];
+  assignedStreets?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type UpdateDayInput = {
+  id: Scalars['String'];
+  visitDate?: Maybe<Scalars['String']>;
+  reeceDate?: Maybe<Scalars['String']>;
+  assignedStreets?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type Entrance = {
@@ -248,36 +300,31 @@ export type AddHouseInput = {
 
 export type PastoralVisit = {
   id: Scalars['ID'];
+  day?: Maybe<Day>;
   priest?: Maybe<User>;
   acolytes: Array<User>;
-  visitTime: Scalars['DateTime'];
-  reeceTime: Scalars['DateTime'];
-  season?: Maybe<Season>;
   entrances: Array<Entrance>;
+  hour: Scalars['Int'];
 };
 
 export type AddPastoralVisitInput = {
   priest: Scalars['String'];
   acolytes: Array<Scalars['String']>;
-  visitTime: Scalars['String'];
-  reeceTime: Scalars['String'];
-  season: Scalars['String'];
+  hour: Scalars['Int'];
+  day: Scalars['String'];
 };
 
 export type UpdatePastoralVisitInput = {
   id: Scalars['String'];
-  visitTime?: Maybe<Scalars['String']>;
-  reeceTime?: Maybe<Scalars['String']>;
-};
-
-export type PastoralVisitsInput = {
-  date?: Maybe<Scalars['String']>;
+  priest?: Maybe<Scalars['String']>;
+  hour?: Maybe<Scalars['Int']>;
+  acolytes?: Maybe<Array<Scalars['String']>>;
 };
 
 export type Season = {
   id: Scalars['ID'];
   year: Scalars['Int'];
-  pastoralVisits: Array<PastoralVisit>;
+  days: Array<Day>;
 };
 
 export type AddSeasonInput = {
@@ -397,19 +444,22 @@ export type ResolversTypes = ResolversObject<{
   RegisterInput: RegisterInput,
   VerifyEmailInput: VerifyEmailInput,
   LoginInput: LoginInput,
-  Entrance: ResolverTypeWrapper<EntranceDbObject>,
+  Day: ResolverTypeWrapper<DayDbObject>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
+  DaysInput: DaysInput,
+  AddDayInput: AddDayInput,
+  UpdateDayInput: UpdateDayInput,
+  Entrance: ResolverTypeWrapper<EntranceDbObject>,
   AddEntranceInput: AddEntranceInput,
   UpdateEntranceInput: UpdateEntranceInput,
   RecordState: RecordState,
   House: ResolverTypeWrapper<HouseDbObject>,
   AddHouseInput: AddHouseInput,
   PastoralVisit: ResolverTypeWrapper<PastoralVisitDbObject>,
+  Int: ResolverTypeWrapper<Scalars['Int']>,
   AddPastoralVisitInput: AddPastoralVisitInput,
   UpdatePastoralVisitInput: UpdatePastoralVisitInput,
-  PastoralVisitsInput: PastoralVisitsInput,
   Season: ResolverTypeWrapper<SeasonDbObject>,
-  Int: ResolverTypeWrapper<Scalars['Int']>,
   AddSeasonInput: AddSeasonInput,
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
   FindOneInput: FindOneInput,
@@ -430,19 +480,22 @@ export type ResolversParentTypes = ResolversObject<{
   RegisterInput: RegisterInput,
   VerifyEmailInput: VerifyEmailInput,
   LoginInput: LoginInput,
-  Entrance: EntranceDbObject,
+  Day: DayDbObject,
   ID: Scalars['ID'],
+  DaysInput: DaysInput,
+  AddDayInput: AddDayInput,
+  UpdateDayInput: UpdateDayInput,
+  Entrance: EntranceDbObject,
   AddEntranceInput: AddEntranceInput,
   UpdateEntranceInput: UpdateEntranceInput,
   RecordState: RecordState,
   House: HouseDbObject,
   AddHouseInput: AddHouseInput,
   PastoralVisit: PastoralVisitDbObject,
+  Int: Scalars['Int'],
   AddPastoralVisitInput: AddPastoralVisitInput,
   UpdatePastoralVisitInput: UpdatePastoralVisitInput,
-  PastoralVisitsInput: PastoralVisitsInput,
   Season: SeasonDbObject,
-  Int: Scalars['Int'],
   AddSeasonInput: AddSeasonInput,
   DateTime: Scalars['DateTime'],
   FindOneInput: FindOneInput,
@@ -498,6 +551,7 @@ export type MapDirectiveArgs = {   path: Scalars['String']; };
 export type MapDirectiveResolver<Result, Parent, ContextType = Context, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  addDay?: Resolver<ResolversTypes['Day'], ParentType, ContextType, RequireFields<MutationAddDayArgs, 'input'>>,
   addEntrance?: Resolver<ResolversTypes['Entrance'], ParentType, ContextType, RequireFields<MutationAddEntranceArgs, 'input'>>,
   addHouse?: Resolver<Maybe<ResolversTypes['House']>, ParentType, ContextType, RequireFields<MutationAddHouseArgs, 'input'>>,
   addPastoralVisit?: Resolver<ResolversTypes['PastoralVisit'], ParentType, ContextType, RequireFields<MutationAddPastoralVisitArgs, 'input'>>,
@@ -505,6 +559,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   addStreet?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<MutationAddStreetArgs, 'input'>>,
   login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>,
   register?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'input'>>,
+  updateDay?: Resolver<ResolversTypes['Day'], ParentType, ContextType, RequireFields<MutationUpdateDayArgs, 'input'>>,
   updateEntrance?: Resolver<Maybe<ResolversTypes['Entrance']>, ParentType, ContextType, RequireFields<MutationUpdateEntranceArgs, 'input'>>,
   updatePastoralVisit?: Resolver<Maybe<ResolversTypes['PastoralVisit']>, ParentType, ContextType, RequireFields<MutationUpdatePastoralVisitArgs, 'input'>>,
   updateStreet?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<MutationUpdateStreetArgs, 'input'>>,
@@ -512,18 +567,29 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  day?: Resolver<Maybe<ResolversTypes['Day']>, ParentType, ContextType, RequireFields<QueryDayArgs, 'input'>>,
+  days?: Resolver<Array<Maybe<ResolversTypes['Day']>>, ParentType, ContextType, RequireFields<QueryDaysArgs, 'input'>>,
   entrance?: Resolver<Maybe<ResolversTypes['Entrance']>, ParentType, ContextType, RequireFields<QueryEntranceArgs, 'input'>>,
   entrances?: Resolver<Array<ResolversTypes['Entrance']>, ParentType, ContextType>,
   house?: Resolver<Maybe<ResolversTypes['House']>, ParentType, ContextType, RequireFields<QueryHouseArgs, 'input'>>,
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   pastoralVisit?: Resolver<Maybe<ResolversTypes['PastoralVisit']>, ParentType, ContextType, RequireFields<QueryPastoralVisitArgs, 'input'>>,
-  pastoralVisits?: Resolver<Array<ResolversTypes['PastoralVisit']>, ParentType, ContextType, RequireFields<QueryPastoralVisitsArgs, 'input'>>,
   season?: Resolver<Maybe<ResolversTypes['Season']>, ParentType, ContextType, RequireFields<QuerySeasonArgs, 'input'>>,
   seasons?: Resolver<Array<ResolversTypes['Season']>, ParentType, ContextType>,
   street?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<QueryStreetArgs, 'input'>>,
   streets?: Resolver<Array<ResolversTypes['Street']>, ParentType, ContextType>,
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'input'>>,
   users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>,
+}>;
+
+export type DayResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Day'] = ResolversParentTypes['Day']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  season?: Resolver<Maybe<ResolversTypes['Season']>, ParentType, ContextType>,
+  visitDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
+  reeceDate?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
+  unusedHouses?: Resolver<Array<ResolversTypes['House']>, ParentType, ContextType>,
+  pastoralVisits?: Resolver<Array<ResolversTypes['PastoralVisit']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
 export type EntranceResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Entrance'] = ResolversParentTypes['Entrance']> = ResolversObject<{
@@ -545,19 +611,18 @@ export type HouseResolvers<ContextType = Context, ParentType extends ResolversPa
 
 export type PastoralVisitResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PastoralVisit'] = ResolversParentTypes['PastoralVisit']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  day?: Resolver<Maybe<ResolversTypes['Day']>, ParentType, ContextType>,
   priest?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
   acolytes?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>,
-  visitTime?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
-  reeceTime?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
-  season?: Resolver<Maybe<ResolversTypes['Season']>, ParentType, ContextType>,
   entrances?: Resolver<Array<ResolversTypes['Entrance']>, ParentType, ContextType>,
+  hour?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
 export type SeasonResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Season'] = ResolversParentTypes['Season']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
-  pastoralVisits?: Resolver<Array<ResolversTypes['PastoralVisit']>, ParentType, ContextType>,
+  days?: Resolver<Array<ResolversTypes['Day']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
@@ -584,6 +649,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 export type Resolvers<ContextType = Context> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
+  Day?: DayResolvers<ContextType>,
   Entrance?: EntranceResolvers<ContextType>,
   House?: HouseResolvers<ContextType>,
   PastoralVisit?: PastoralVisitResolvers<ContextType>,

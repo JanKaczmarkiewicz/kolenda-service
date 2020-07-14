@@ -1,0 +1,42 @@
+# prettier-ignore
+type Day @entity(additionalFields: [{ path: "assignedStreets", type: "string[]" }]) {
+  id: ID! @id
+  season: Season @link
+  visitDate: DateTime! @column
+  reeceDate: DateTime! @column
+  unusedHouses: [House!]!
+  pastoralVisits: [PastoralVisit!]!
+}
+
+type Query {
+  days(input: DaysInput!): [Day]! @authenticated
+  day(input: FindOneInput!): Day @authenticated
+}
+
+type Mutation {
+  addDay(input: AddDayInput!): Day!
+    @authenticated
+    @validate(schemaName: "addDaySchema")
+
+  updateDay(input: UpdateDayInput!): Day!
+    @authenticated
+    @validate(schemaName: "updateDaySchema")
+}
+
+input DaysInput {
+  season: String!
+}
+
+input AddDayInput {
+  season: String!
+  visitDate: String!
+  reeceDate: String!
+  assignedStreets: [String]
+}
+
+input UpdateDayInput {
+  id: String!
+  visitDate: String
+  reeceDate: String
+  assignedStreets: [String]
+}

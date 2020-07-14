@@ -8,6 +8,7 @@ import { SeasonDbObject } from "../../../types/types";
 import { badToken } from "../../../testUtils/dummyData";
 import errors from "../errors";
 import * as mongoose from "mongoose";
+import Day from "../../../models/Day";
 
 let token: string;
 
@@ -36,6 +37,8 @@ describe("Add season", () => {
     const foundSeason = (await Season.findOne({
       _id: res.data?.addSeason.id,
     })) as SeasonDbObject;
+
+    const day = await new Day({ season: foundSeason._id }).save();
 
     expect(res.data?.addSeason).toEqual({
       year: foundSeason.year,

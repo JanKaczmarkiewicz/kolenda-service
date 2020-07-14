@@ -51,9 +51,9 @@ describe("pastoralVisit", () => {
       acolytes: expect.arrayContaining(
         pastoralVisit.acolytes.map((_id) => ({ id: _id.toHexString() }))
       ),
-      visitTime: pastoralVisit.visitTime.toISOString(),
-      reeceTime: pastoralVisit.reeceTime.toISOString(),
-      season: { id: pastoralVisit?.season?.toHexString() },
+      day: {
+        id: pastoralVisit.day?.toHexString(),
+      },
     });
   });
 

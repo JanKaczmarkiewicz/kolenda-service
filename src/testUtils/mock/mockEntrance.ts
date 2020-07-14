@@ -33,7 +33,6 @@ export const mockDbBeforeAddingEntrance = async () => {
   return {
     street,
     house,
-    priest,
     ...(await addPastralVisit()),
   };
 };

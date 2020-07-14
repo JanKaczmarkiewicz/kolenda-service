@@ -1,16 +1,24 @@
 import * as mongoose from "mongoose";
+import { DayDbObject } from "../types/types";
 
 const DaySchema = new mongoose.Schema({
+  assignedStreets: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Street",
+    },
+  ],
+  visitDate: {
+    type: Date,
+    required: true,
+  },
+  reeceDate: {
+    type: Date,
+    required: true,
+  },
   season: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  },
-  visitTime: {
-    type: Date,
-    required: true,
-  },
-  reeceTime: {
-    type: Date,
+    ref: "Season",
     required: true,
   },
 });
