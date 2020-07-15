@@ -37,6 +37,7 @@ describe("Seasons (multiple)", () => {
 
     expect(res.data?.seasons[0]).toEqual({
       id: season._id.toHexString(),
+      days: [],
       year: season.year,
     });
   });

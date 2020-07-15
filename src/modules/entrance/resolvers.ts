@@ -20,6 +20,5 @@ export const resolvers: Resolvers = {
   },
   Query: {
     entrance: async (_, { input }) => Entrance.findOne({ _id: input.id }),
-    entrances: async () => Entrance.find(),
   },
 };
