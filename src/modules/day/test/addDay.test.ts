@@ -8,14 +8,7 @@ import Day from "../../../models/Day";
 import { query } from "../../../testUtils/query";
 import gql from "graphql-tag";
 import { DayFragment } from "../../../testUtils/fragments";
-import { badToken, dummyStreetData } from "../../../testUtils/dummyData";
-import { mockServer } from "graphql-tools";
-import { mockDbBeforeAddingPastralVisit } from "../../../testUtils/mock/mockPastoralVisit";
-import { mockDbBeforeAddingEntrance } from "../../../testUtils/mock/mockEntrance";
-import Street from "../../../models/Street";
-import House from "../../../models/House";
-import Entrance from "../../../models/Entrance";
-import PastoralVisit from "../../../models/PastoralVisit";
+import { badToken } from "../../../testUtils/dummyData";
 
 let token: string;
 let season: SeasonDbObject;
