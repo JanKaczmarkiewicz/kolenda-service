@@ -18,7 +18,7 @@ type Mutation {
     @authenticated
     @validate(schemaName: "addDaySchema")
 
-  updateDay(input: UpdateDayInput!): Day!
+  updateDay(input: UpdateDayInput!): Day
     @authenticated
     @validate(schemaName: "updateDaySchema")
 }

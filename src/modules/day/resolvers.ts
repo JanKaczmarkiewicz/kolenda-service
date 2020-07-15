@@ -37,6 +37,8 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     addDay: async (_, { input }) => new Day(input).save(),
+    updateDay: async (_, { input: { id, ...rest } }) =>
+      Day.findOneAndUpdate({ _id: id }, { $set: rest }, { new: true }),
   },
   Query: {
     day: async (_, { input }) => Day.findOne({ _id: input.id }),
