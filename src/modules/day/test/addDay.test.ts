@@ -33,7 +33,7 @@ describe("Day addition", () => {
   it("Input is validated", async () => {
     const input: AddDayInput = {
       reeceDate: new Date(Date.now() + 9000).toISOString(),
-      visitDate: new Date(Date.now() + 9000 * 2).toISOString(),
+      visitDate: new Date(Date.now() + 4000).toISOString(),
       season: season._id.toHexString(),
       assignedStreets: [],
     };
@@ -96,14 +96,15 @@ describe("Day addition", () => {
       token
     );
 
-    const day = res.data?.addPastoralVisit;
+    const day = res.data?.addDay;
 
-    expect(res.data?.addDay).toBe({
-      id: day.id.toHexString(),
-      season: day.season,
+    expect(day).toEqual({
+      id: day.id,
+      season: { id: input.season },
       reeceDate: input.reeceDate,
       visitDate: input.visitDate,
       unusedHouses: [],
+      pastoralVisits: [],
     });
   });
 });

@@ -8,6 +8,8 @@ import {
 } from "../../utils/visitDateAndReeceDateValidationHelpers";
 
 export const addDaySchema = yup.object().shape({
+  season: id.required(commonErrors.any.required),
+
   reeceDate: futureDate
     .required(commonErrors.any.required)
     .test("isBeforeVisitDate", errors.reeceDate.afterVisitDate, function () {
@@ -20,16 +22,14 @@ export const addDaySchema = yup.object().shape({
       return areAddedDatesValid(this.parent);
     }),
 
-  priest: id.required(commonErrors.any.required),
+  // priest: id.required(commonErrors.any.required),
 
-  acolytes: yup
-    .array()
-    .of(id)
-    .test("required", commonErrors.any.required, (acolytes) =>
-      Array.isArray(acolytes)
-    ),
-
-  season: id.required(commonErrors.any.required),
+  // acolytes: yup
+  //   .array()
+  //   .of(id)
+  //   .test("required", commonErrors.any.required, (acolytes) =>
+  //     Array.isArray(acolytes)
+  //   ),
 });
 
 export const updateDaySchema = yup.object().shape({
