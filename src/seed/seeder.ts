@@ -5,7 +5,7 @@ import loadEnv from "../utils/loadEnv";
 import { createStreetsAndHouses } from "./_housesAndStreets";
 import { createUsers } from "./_users";
 import { createPastoralVisits } from "./_pastoralVisits";
-import { createEntrances } from "./_entrances";
+import { createEntrances, getKeys } from "./_entrances";
 import * as mongoose from "mongoose";
 
 loadEnv();
@@ -19,7 +19,11 @@ loadEnv();
     createStreetsAndHouses(),
   ]);
 
-  const pastoralVisits = await createPastoralVisits(season, users);
+  const { pastoralVisits, days } = await createPastoralVisits(
+    season,
+    users,
+    getKeys(streets) as string[]
+  );
 
   const entrances = await createEntrances(streets, pastoralVisits);
 
