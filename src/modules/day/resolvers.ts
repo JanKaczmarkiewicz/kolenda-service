@@ -11,16 +11,17 @@ export const resolvers: Resolvers = {
     season: async (day) =>
       day.season ? Season.findOne({ _id: day.season }) : null,
     unusedHouses: async (day) => {
-      const { assignedStreets, season } = day;
+      const { assignedStreets, _id } = day;
 
       const [foundHouses, pastoralVisits] = await Promise.all([
         House.find({ street: { $in: assignedStreets } }),
-        PastoralVisit.find({ season: season }),
+        PastoralVisit.find({ day: _id.toHexString() }),
       ]);
 
       const pastoralVisitsIds = pastoralVisits.map(({ _id }) => _id);
       const foundHousesIds = foundHouses.map(({ _id }) => _id);
 
+      console.log(pastoralVisitsIds, foundHousesIds);
       const foundEntrances = await Entrance.find({
         pastoralVisit: { $in: pastoralVisitsIds },
         house: { $in: foundHousesIds },
@@ -29,6 +30,8 @@ export const resolvers: Resolvers = {
       const inUseHousesIds = foundEntrances.map((entrance) =>
         entrance.house!.toHexString()
       );
+
+      console.log(inUseHousesIds.length);
       return foundHouses.filter(
         (house) => !inUseHousesIds.includes(house._id.toHexString())
       );
