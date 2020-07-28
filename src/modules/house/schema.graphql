@@ -10,10 +10,16 @@ type Mutation {
 
 type Query {
   house(input: FindOneInput!): House @authenticated
+  findUnused(input: FindUnusedInput!): [House!]! @authenticated
 }
 
-# Mutation inputs
+#inputs
 input AddHouseInput {
   number: String! #validate
   street: String!
+}
+
+input FindUnusedInput {
+  streets: [String!]!
+  season: String!
 }

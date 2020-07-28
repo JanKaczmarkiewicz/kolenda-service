@@ -24,12 +24,6 @@ export const mockDbBeforeAddingEntrance = async () => {
     number: "32",
   }).save();
 
-  const priest = await new User({
-    role: Role.Priest,
-    confirmed: true,
-    ...dummyUserData,
-  }).save();
-
   return {
     street,
     house,

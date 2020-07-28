@@ -34,6 +34,7 @@ export const resolvers: Resolvers = {
       }).save();
 
       const confirmingToken = signConfirmingToken({ id: savedUser.id });
+
       await sendConfirmingEmail(confirmingToken, savedUser);
 
       const authToken: string = signAuthToken({ id: savedUser.id });
