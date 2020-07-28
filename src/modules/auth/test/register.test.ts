@@ -31,7 +31,7 @@ describe("Register", () => {
     expect(foundUser.username).toBe(dummyUserData.username);
     expect(foundUser.password).not.toBe(dummyUserData.password);
     expect(foundUser.email).toBe(dummyUserData.email);
-    expect(foundUser.role).toBe(Role.User);
+    expect(foundUser.role).toBe(Role.Acolyte);
   });
 
   it("Validation works", async () => {

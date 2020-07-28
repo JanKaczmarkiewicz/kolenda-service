@@ -44,6 +44,7 @@ export const resolvers: Resolvers = {
     addDay: async (_, { input }) => new Day(input).save(),
     updateDay: async (_, { input: { id, ...rest } }) => {
       if (rest.assignedStreets) {
+        //TODO: TEST IT!
         // compare all houses that has been deleted in this update
         const { assignedStreets } = rest;
 
