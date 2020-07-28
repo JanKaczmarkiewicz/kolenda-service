@@ -85,6 +85,8 @@ export type Mutation = {
   addPastoralVisit: PastoralVisit;
   addSeason: Season;
   addStreet?: Maybe<Street>;
+  deleteDay: Day;
+  deleteEntrance?: Maybe<Entrance>;
   login: Scalars['String'];
   register: Scalars['String'];
   updateDay?: Maybe<Day>;
@@ -122,6 +124,16 @@ export type MutationAddSeasonArgs = {
 
 export type MutationAddStreetArgs = {
   input: AddStreetInput;
+};
+
+
+export type MutationDeleteDayArgs = {
+  input: DeleteOneInput;
+};
+
+
+export type MutationDeleteEntranceArgs = {
+  input: DeleteOneInput;
 };
 
 
@@ -342,6 +354,10 @@ export type FindOneInput = {
   id: Scalars['String'];
 };
 
+export type DeleteOneInput = {
+  id: Scalars['String'];
+};
+
 export type Street = {
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -368,8 +384,7 @@ export type User = {
 export enum Role {
   Admin = 'ADMIN',
   Acolyte = 'ACOLYTE',
-  Priest = 'PRIEST',
-  User = 'USER'
+  Priest = 'PRIEST'
 }
 
 export type UsersInput = {
@@ -473,6 +488,7 @@ export type ResolversTypes = ResolversObject<{
   AddSeasonInput: AddSeasonInput,
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
   FindOneInput: FindOneInput,
+  DeleteOneInput: DeleteOneInput,
   Street: ResolverTypeWrapper<StreetDbObject>,
   AddStreetInput: AddStreetInput,
   UpdateStreetInput: UpdateStreetInput,
@@ -510,6 +526,7 @@ export type ResolversParentTypes = ResolversObject<{
   AddSeasonInput: AddSeasonInput,
   DateTime: Scalars['DateTime'],
   FindOneInput: FindOneInput,
+  DeleteOneInput: DeleteOneInput,
   Street: StreetDbObject,
   AddStreetInput: AddStreetInput,
   UpdateStreetInput: UpdateStreetInput,
@@ -569,6 +586,8 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   addPastoralVisit?: Resolver<ResolversTypes['PastoralVisit'], ParentType, ContextType, RequireFields<MutationAddPastoralVisitArgs, 'input'>>,
   addSeason?: Resolver<ResolversTypes['Season'], ParentType, ContextType, RequireFields<MutationAddSeasonArgs, 'input'>>,
   addStreet?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<MutationAddStreetArgs, 'input'>>,
+  deleteDay?: Resolver<ResolversTypes['Day'], ParentType, ContextType, RequireFields<MutationDeleteDayArgs, 'input'>>,
+  deleteEntrance?: Resolver<Maybe<ResolversTypes['Entrance']>, ParentType, ContextType, RequireFields<MutationDeleteEntranceArgs, 'input'>>,
   login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>,
   register?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'input'>>,
   updateDay?: Resolver<Maybe<ResolversTypes['Day']>, ParentType, ContextType, RequireFields<MutationUpdateDayArgs, 'input'>>,

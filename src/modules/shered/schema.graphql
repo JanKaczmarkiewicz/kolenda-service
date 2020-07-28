@@ -1,8 +1,12 @@
-directive @authenticated(roles: [Role] = [USER]) on FIELD_DEFINITION
+directive @authenticated(roles: [Role] = [ACOLYTE]) on FIELD_DEFINITION
 directive @validate(schemaName: String) on FIELD_DEFINITION
 
 scalar DateTime
 
 input FindOneInput {
+  id: String!
+}
+
+input DeleteOneInput {
   id: String!
 }

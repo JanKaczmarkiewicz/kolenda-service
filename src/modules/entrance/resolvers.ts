@@ -17,6 +17,8 @@ export const resolvers: Resolvers = {
     addEntrance: async (_, { input }) => new Entrance(input).save(),
     updateEntrance: async (_, { input: { id, ...rest } }) =>
       Entrance.findOneAndUpdate({ _id: id }, { $set: rest }, { new: true }),
+    deleteEntrance: async (_, { input }) =>
+      Entrance.findByIdAndDelete(input.id),
   },
   Query: {
     entrance: async (_, { input }) => Entrance.findOne({ _id: input.id }),

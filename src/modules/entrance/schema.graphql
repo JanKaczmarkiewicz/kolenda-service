@@ -30,6 +30,9 @@ type Mutation {
   addEntrance(input: AddEntranceInput!): Entrance!
     @authenticated
     @validate(schemaName: "addEntranceValidation")
+
+  deleteEntrance(input: DeleteOneInput!): Entrance @authenticated
+
   updateEntrance(input: UpdateEntranceInput!): Entrance
     @authenticated
     @validate(schemaName: "updateEntranceValidation")
