@@ -7,23 +7,21 @@ const PastoralVisitSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  hour: {
+    type: Number,
+    required: true,
+    min: 8,
+    max: 20,
+  },
   acolytes: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
   ],
-  visitTime: {
-    type: Date,
-    required: true,
-  },
-  reeceTime: {
-    type: Date,
-    required: true,
-  },
-  season: {
+  day: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Season",
+    ref: "Day",
     required: true,
   },
 });

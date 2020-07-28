@@ -6,4 +6,8 @@ export default {
       ", "
     )}!`,
   },
+  house: {
+    allowedStreet:
+      "House should belong to street that is in streets assigned to day",
+  },
 };

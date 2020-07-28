@@ -12,7 +12,11 @@ enum Role {
   PRIEST
 }
 
+input UsersInput {
+  role: Role
+}
+
 type Query {
   user(input: FindOneInput!): User @authenticated
-  users: [User] @authenticated
+  users(input: UsersInput!): [User!]! @authenticated
 }

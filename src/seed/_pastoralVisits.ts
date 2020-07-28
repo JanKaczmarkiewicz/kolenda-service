@@ -1,5 +1,6 @@
 import { UserDbObject, SeasonDbObject } from "../types/types";
 import PastoralVisit from "../models/PastoralVisit";
+import Day from "../models/Day";
 
 const random = (to: number) => Math.floor(Math.random() * to);
 
@@ -10,19 +11,29 @@ type Users = {
 
 export const createPastoralVisits = async (
   season: SeasonDbObject,
-  { priests: _priests, acolytes: _acolytes }: Users
+  { priests: _priests, acolytes: _acolytes }: Users,
+  streets: string[]
 ) => {
   const initialDate = new Date(season.year, 0, 1);
   const currentDate = new Date(initialDate);
 
-  const res = [];
+  const pastoralVisits = [];
+  const days = [];
+
   while (currentDate.getMonth() < 2) {
-    currentDate.setHours(18);
-    const reeceTime = currentDate.toISOString();
+    const reeceDate = currentDate.toISOString();
 
     currentDate.setDate(currentDate.getDate() + 1);
-    currentDate.setHours(16);
-    const visitTime = currentDate.toISOString();
+    const visitDate = currentDate.toISOString();
+
+    const day = await new Day({
+      visitDate,
+      reeceDate,
+      season: season._id.toHexString(),
+      assignedStreets: [],
+    }).save();
+
+    days.push(day);
 
     const priests = [..._priests];
     const acolytes = [..._acolytes];
@@ -42,16 +53,15 @@ export const createPastoralVisits = async (
         .splice(randomAcolyteIndex, 2)
         .map(({ _id }) => _id.toHexString());
 
-      res.push(
+      pastoralVisits.push(
         new PastoralVisit({
-          season: season._id.toHexString(),
-          visitTime,
-          reeceTime,
+          day: day._id.toHexString(),
+          hour: 16,
           priest: participantPriestId,
           acolytes: participantAcolytesId,
         }).save()
       );
     }
   }
-  return Promise.all(res);
+  return { pastoralVisits: await Promise.all(pastoralVisits), days };
 };

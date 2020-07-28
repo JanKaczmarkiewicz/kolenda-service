@@ -14,6 +14,7 @@ generates:
       scalars:
         DateTime: Date
       mappers:
+        Day: DayDbObject
         User: UserDbObject
         House: HouseDbObject
         Street: StreetDbObject

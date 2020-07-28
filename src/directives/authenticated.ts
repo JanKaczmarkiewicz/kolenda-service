@@ -16,7 +16,9 @@ export class AuthenticatedDirective extends SchemaDirectiveVisitor {
       if (!user || !user.confirmed)
         throw new AuthenticationError(responceError.authenticationFailed);
 
-      if (roles.length > 0 && !roles.find((role) => role === user.role))
+      const isUserInAllowedRoles = roles.find((role) => role === user.role);
+
+      if (user.role !== Role.Admin && roles.length > 0 && !isUserInAllowedRoles)
         throw new AuthenticationError(responceError.noRequiredRole);
 
       const result = await resolve.apply(this, resolverArgs);

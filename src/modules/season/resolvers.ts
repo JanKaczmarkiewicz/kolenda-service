@@ -1,12 +1,11 @@
 import { Resolvers } from "../../types/types";
 import Season from "../../models/Season";
-import PastoralVisit from "../../models/PastoralVisit";
+import Day from "../../models/Day";
 
 export const resolvers: Resolvers = {
   Season: {
     id: (season) => season._id.toHexString(),
-    pastoralVisits: async (season) =>
-      PastoralVisit.find({ season: season._id }),
+    days: async (season) => Day.find({ season: season._id }),
   },
   Mutation: {
     addSeason: async (_, { input }) => new Season(input).save(),

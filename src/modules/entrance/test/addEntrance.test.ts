@@ -14,6 +14,8 @@ import {
 import Entrance from "../../../models/Entrance";
 import { mockDbBeforeAddingEntrance } from "../../../testUtils/mock/mockEntrance";
 import * as mongoose from "mongoose";
+import PastoralVisit from "../../../models/PastoralVisit";
+import Day from "../../../models/Day";
 
 let token: string;
 
@@ -47,6 +49,22 @@ describe("Entrance", () => {
       pastoralVisit: pastoralVisit._id.toHexString(),
       comment: "test comment",
     };
+    const streetId = house.street?.toHexString();
+
+    const { day } = (await PastoralVisit.findOne({
+      _id: input.pastoralVisit,
+    }))!;
+
+    await Day.findByIdAndUpdate(
+      day,
+      {
+        $set: {
+          assignedStreets: [streetId],
+        },
+      },
+      { new: true }
+    );
+
     const res = await query(
       {
         query: ADD_ENTRANCE,

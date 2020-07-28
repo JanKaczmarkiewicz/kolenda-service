@@ -1,21 +1,17 @@
-import {
-  dummyUserData,
-  dummySeasonData,
-  dummyAcolytesData,
-} from "../dummyData";
+import { dummyAcolytesData } from "../dummyData";
 import User from "../../models/User";
 import { Role } from "../../types/types";
-import Season from "../../models/Season";
 import PastoralVisit from "../../models/PastoralVisit";
+import { addDay } from "./mockDay";
 
 export const addPastralVisit = async () => {
   const mock = await mockDbBeforeAddingPastralVisit();
+
   const pastoralVisit = await new PastoralVisit({
     priest: mock.priest._id.toHexString(),
     acolytes: mock.acolytes.map((acolyte) => acolyte._id.toHexString()),
-    visitTime: new Date(),
-    reeceTime: new Date(),
-    season: mock.season._id.toHexString(),
+    day: mock.day._id.toHexString(),
+    hour: 16,
   }).save();
   return { ...mock, pastoralVisit };
 };
@@ -28,8 +24,6 @@ export const mockDbBeforeAddingPastralVisit = async () => {
     password: "somepassowrd",
     email: "testPriest@gmail.com",
   }).save();
-
-  const season = await new Season(dummySeasonData).save();
 
   const acolytes = await Promise.all(
     dummyAcolytesData.map((userData) =>
@@ -45,7 +39,7 @@ export const mockDbBeforeAddingPastralVisit = async () => {
 
   return {
     acolytes,
-    season,
     priest,
+    ...(await addDay()),
   };
 };

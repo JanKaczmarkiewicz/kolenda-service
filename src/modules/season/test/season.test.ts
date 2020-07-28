@@ -43,6 +43,7 @@ describe("Season (single)", () => {
     expect(res.data?.season).toEqual({
       id: season._id.toHexString(),
       year: season.year,
+      days: [],
     });
   });
 
