@@ -15,7 +15,7 @@ loadEnv();
 
   const [users, season, streets] = await Promise.all([
     createUsers(),
-    new Season({ year: 2020 }).save(),
+    new Season({ year: 2021 }).save(),
     createStreetsAndHouses(),
   ]);
 
