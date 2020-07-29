@@ -8,4 +8,4 @@ config
 .vscode
 
 #generated
-./src/types/types.ts
+/src/types/types.ts
