@@ -15,11 +15,10 @@ import Street from "../../../models/Street";
 import House from "../../../models/House";
 import { addDay } from "../../../testUtils/mock/mockDay";
 import { UpdateDayInput, DayDbObject } from "../../../types/types";
-import Day from "../../../models/Day";
 import User from "../../../models/User";
 
 let token: string;
-
+//TODO: WRITE BETTER TEST CASES :(
 const UPDATE_DAY = gql`
   mutation updateDay($input: UpdateDayInput!) {
     updateDay(input: $input) {
@@ -114,6 +113,9 @@ describe("updateDay", () => {
       season: {
         id: day.season?.toHexString(),
       },
+      assignedStreets: expect.arrayContaining(
+        [street, secondStreet].map(({ _id }) => ({ id: _id.toHexString() }))
+      ),
       pastoralVisits: expect.arrayContaining([
         {
           id: pastoralVisit._id.toHexString(),

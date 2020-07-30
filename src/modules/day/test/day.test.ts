@@ -42,6 +42,7 @@ describe("day", () => {
       season: { id: day.season?.toHexString() },
       visitDate: day.visitDate.toISOString(),
       reeceDate: day.reeceDate.toISOString(),
+      assignedStreets: [],
       unusedHouses: [],
       pastoralVisits: [],
     });

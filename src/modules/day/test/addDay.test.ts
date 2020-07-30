@@ -104,6 +104,7 @@ describe("Day addition", () => {
       reeceDate: input.reeceDate,
       visitDate: input.visitDate,
       unusedHouses: [],
+      assignedStreets: [],
       pastoralVisits: [],
     });
   });

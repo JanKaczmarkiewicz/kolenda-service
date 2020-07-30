@@ -21,6 +21,9 @@ export const DayFragment = gql`
     unusedHouses {
       id
     }
+    assignedStreets {
+      id
+    }
     pastoralVisits {
       id
     }

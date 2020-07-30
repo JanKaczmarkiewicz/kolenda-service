@@ -1,9 +1,10 @@
 # prettier-ignore
-type Day @entity(additionalFields: [{ path: "assignedStreets", type: "string[]" }]) {
+type Day @entity {
   id: ID! @id
   season: Season @link
   visitDate: DateTime! @column
   reeceDate: DateTime! @column
+  assignedStreets: [Street!]! @link
   unusedHouses: [House!]!
   pastoralVisits: [PastoralVisit!]!
 }

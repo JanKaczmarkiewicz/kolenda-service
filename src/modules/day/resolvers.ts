@@ -4,12 +4,15 @@ import House from "../../models/House";
 import PastoralVisit from "../../models/PastoralVisit";
 import { Resolvers } from "../../types/types";
 import Season from "../../models/Season";
+import Street from "../../models/Street";
 
 export const resolvers: Resolvers = {
   Day: {
     id: (day) => day._id.toHexString(),
     season: async (day) =>
       day.season ? Season.findOne({ _id: day.season }) : null,
+    assignedStreets: async (day) =>
+      Street.find({ _id: { $in: day.assignedStreets } }),
     unusedHouses: async (day) => {
       const { assignedStreets, _id } = day;
 
@@ -21,7 +24,6 @@ export const resolvers: Resolvers = {
       const pastoralVisitsIds = pastoralVisits.map(({ _id }) => _id);
       const foundHousesIds = foundHouses.map(({ _id }) => _id);
 
-      console.log(pastoralVisitsIds, foundHousesIds);
       const foundEntrances = await Entrance.find({
         pastoralVisit: { $in: pastoralVisitsIds },
         house: { $in: foundHousesIds },
@@ -31,7 +33,6 @@ export const resolvers: Resolvers = {
         entrance.house!.toHexString()
       );
 
-      console.log(inUseHousesIds.length);
       return foundHouses.filter(
         (house) => !inUseHousesIds.includes(house._id.toHexString())
       );
