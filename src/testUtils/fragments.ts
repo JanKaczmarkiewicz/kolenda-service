@@ -34,6 +34,7 @@ export const UserFragment = gql`
   fragment UserFragment on User {
     username
     email
+    role
     confirmed
     id
   }

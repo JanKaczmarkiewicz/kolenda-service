@@ -215,6 +215,11 @@ export type QueryUserArgs = {
   input: FindOneInput;
 };
 
+
+export type QueryUsersArgs = {
+  input: UsersInput;
+};
+
 export type RegisterInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -367,6 +372,10 @@ export enum Role {
   User = 'USER'
 }
 
+export type UsersInput = {
+  role?: Maybe<Role>;
+};
+
 export type AdditionalEntityFields = {
   path?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
@@ -469,6 +478,7 @@ export type ResolversTypes = ResolversObject<{
   UpdateStreetInput: UpdateStreetInput,
   User: ResolverTypeWrapper<UserDbObject>,
   Role: Role,
+  UsersInput: UsersInput,
   AdditionalEntityFields: AdditionalEntityFields,
 }>;
 
@@ -505,6 +515,7 @@ export type ResolversParentTypes = ResolversObject<{
   UpdateStreetInput: UpdateStreetInput,
   User: UserDbObject,
   Role: Role,
+  UsersInput: UsersInput,
   AdditionalEntityFields: AdditionalEntityFields,
 }>;
 
@@ -580,7 +591,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   street?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<QueryStreetArgs, 'input'>>,
   streets?: Resolver<Array<ResolversTypes['Street']>, ParentType, ContextType>,
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'input'>>,
-  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>,
+  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType, RequireFields<QueryUsersArgs, 'input'>>,
 }>;
 
 export type DayResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Day'] = ResolversParentTypes['Day']> = ResolversObject<{

@@ -38,8 +38,8 @@ export const USER = gql`
 `;
 
 export const USERS = gql`
-  query {
-    users {
+  query Users($input: UsersInput!) {
+    users(input: $input) {
       ...UserFragment
     }
   }
