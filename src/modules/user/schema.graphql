@@ -19,5 +19,5 @@ input UsersInput {
 
 type Query {
   user(input: FindOneInput!): User @authenticated
-  users(input: UsersInput!): [User] @authenticated
+  users(input: UsersInput!): [User!]! @authenticated
 }

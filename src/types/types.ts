@@ -172,7 +172,7 @@ export type Query = {
   street?: Maybe<Street>;
   streets: Array<Street>;
   user?: Maybe<User>;
-  users?: Maybe<Array<Maybe<User>>>;
+  users: Array<User>;
 };
 
 
@@ -591,7 +591,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   street?: Resolver<Maybe<ResolversTypes['Street']>, ParentType, ContextType, RequireFields<QueryStreetArgs, 'input'>>,
   streets?: Resolver<Array<ResolversTypes['Street']>, ParentType, ContextType>,
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'input'>>,
-  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType, RequireFields<QueryUsersArgs, 'input'>>,
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUsersArgs, 'input'>>,
 }>;
 
 export type DayResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Day'] = ResolversParentTypes['Day']> = ResolversObject<{
