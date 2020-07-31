@@ -50,6 +50,7 @@ describe("updateEntrance", () => {
       },
       token
     );
+    console.log(res.errors?.[0].extensions);
 
     expect(res.data?.updateEntrance).toEqual({
       id: entrance._id.toHexString(),

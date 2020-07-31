@@ -31,7 +31,6 @@ beforeAll(async () => {
 describe("Users", () => {
   it("Authenticated user should have access to find multiple users", async () => {
     const res = await query({ query: USERS, input: {} }, token);
-    console.log(res);
     expect(res.data?.users).toHaveLength(3);
   });
   it("Authenticated user should have access to find multiple users with one role", async () => {

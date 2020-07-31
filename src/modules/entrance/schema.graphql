@@ -27,8 +27,12 @@ type Query {
 }
 
 type Mutation {
-  addEntrance(input: AddEntranceInput!): Entrance! @authenticated
-  updateEntrance(input: UpdateEntranceInput!): Entrance @authenticated
+  addEntrance(input: AddEntranceInput!): Entrance!
+    @authenticated
+    @validate(schemaName: "addEntranceValidation")
+  updateEntrance(input: UpdateEntranceInput!): Entrance
+    @authenticated
+    @validate(schemaName: "updateEntranceValidation")
 }
 
 enum RecordState {

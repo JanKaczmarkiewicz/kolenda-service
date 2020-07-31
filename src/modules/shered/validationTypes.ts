@@ -5,7 +5,9 @@ import { isTimeAfterNow } from "../../utils/visitDateAndReeceDateValidationHelpe
 
 export const id = yup
   .string()
-  .test("isObjectId", errors.id.invalid, Types.ObjectId.isValid);
+  .test("isObjectId", errors.id.invalid, (id) =>
+    id ? Types.ObjectId.isValid(id) : true
+  );
 
 export const futureDate = yup
   .date()
