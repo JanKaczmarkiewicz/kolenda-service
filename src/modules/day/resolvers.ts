@@ -2,9 +2,10 @@ import Entrance from "../../models/Entrance";
 import Day from "../../models/Day";
 import House from "../../models/House";
 import PastoralVisit from "../../models/PastoralVisit";
-import { Resolvers } from "../../types/types";
+import { Resolvers, PastoralVisitDbObject } from "../../types/types";
 import Season from "../../models/Season";
 import Street from "../../models/Street";
+import { Types } from "mongoose";
 
 export const resolvers: Resolvers = {
   Day: {
@@ -41,8 +42,37 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     addDay: async (_, { input }) => new Day(input).save(),
-    updateDay: async (_, { input: { id, ...rest } }) =>
-      Day.findOneAndUpdate({ _id: id }, { $set: rest }, { new: true }),
+    updateDay: async (_, { input: { id, ...rest } }) => {
+      if (rest.assignedStreets) {
+        // compare all houses that has been deleted in this update
+        const { assignedStreets } = rest;
+
+        const dayToUpdate = await Day.findOne({ _id: id });
+
+        if (!dayToUpdate) return null;
+
+        const { assignedStreets: oldAssignedStreets } = dayToUpdate;
+
+        const removedStreets = oldAssignedStreets
+          .map((id) => id.toHexString())
+          .filter((id) => !assignedStreets.includes(id));
+
+        const [housesIds, pastoralVisitsIds] = await Promise.all([
+          House.find({
+            street: { $in: removedStreets },
+          }).distinct("_id"),
+          PastoralVisit.find({ day: id }).distinct("_id"),
+        ]);
+
+        //TODO: remove all linked houses with deleted streets
+        await Entrance.deleteMany({
+          house: { $in: housesIds },
+          pastoralVisit: { $in: pastoralVisitsIds },
+        });
+      }
+
+      return Day.findOneAndUpdate({ _id: id }, { $set: rest }, { new: true });
+    },
   },
   Query: {
     day: async (_, { input }) => Day.findOne({ _id: input.id }),
