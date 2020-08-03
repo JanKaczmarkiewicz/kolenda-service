@@ -46,7 +46,7 @@ type Mutation {
 
   deleteEntrance(input: DeleteOneInput!): Boolean! @authenticated
 
-  deleteEntrances(input: DeletManyInput!): Boolean! @authenticated
+  deleteEntrances(input: DeleteManyInput!): Boolean! @authenticated
 
   updateEntrances(input: UpdateEntrancesInput!): [Entrance!]! @authenticated
   # @validate(schemaName: "updateEntrancesValidation")

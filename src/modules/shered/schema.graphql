@@ -11,6 +11,6 @@ input DeleteOneInput {
   id: String!
 }
 
-input DeletManyInput {
+input DeleteManyInput {
   ids: [String!]!
 }
