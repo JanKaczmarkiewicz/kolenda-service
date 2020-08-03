@@ -2,10 +2,9 @@ import Entrance from "../../models/Entrance";
 import Day from "../../models/Day";
 import House from "../../models/House";
 import PastoralVisit from "../../models/PastoralVisit";
-import { Resolvers, PastoralVisitDbObject } from "../../types/types";
+import { Resolvers } from "../../types/types";
 import Season from "../../models/Season";
 import Street from "../../models/Street";
-import { Types } from "mongoose";
 
 export const resolvers: Resolvers = {
   Day: {
@@ -14,38 +13,14 @@ export const resolvers: Resolvers = {
       day.season ? Season.findOne({ _id: day.season }) : null,
     assignedStreets: async (day) =>
       Street.find({ _id: { $in: day.assignedStreets } }),
-    unusedHouses: async (day) => {
-      const { assignedStreets, _id } = day;
-
-      const [foundHouses, pastoralVisits] = await Promise.all([
-        House.find({ street: { $in: assignedStreets } }),
-        PastoralVisit.find({ day: _id.toHexString() }),
-      ]);
-
-      const pastoralVisitsIds = pastoralVisits.map(({ _id }) => _id);
-      const foundHousesIds = foundHouses.map(({ _id }) => _id);
-
-      const foundEntrances = await Entrance.find({
-        pastoralVisit: { $in: pastoralVisitsIds },
-        house: { $in: foundHousesIds },
-      });
-
-      const inUseHousesIds = foundEntrances.map((entrance) =>
-        entrance.house!.toHexString()
-      );
-
-      return foundHouses.filter(
-        (house) => !inUseHousesIds.includes(house._id.toHexString())
-      );
-    },
     pastoralVisits: async (day) => PastoralVisit.find({ day: day._id }),
   },
   Mutation: {
     addDay: async (_, { input }) => new Day(input).save(),
-    updateDay: async (_, { input: { id, ...rest } }) => {
+    updateDay: async (_, { input: { id, ...rest } }, __, ___) => {
       if (rest.assignedStreets) {
         //TODO: TEST IT!
-        // compare all houses that has been deleted in this update
+        // compare all  that has been deleted in this update
         const { assignedStreets } = rest;
 
         const dayToUpdate = await Day.findOne({ _id: id });

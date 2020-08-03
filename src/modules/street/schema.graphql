@@ -2,6 +2,7 @@ type Street @entity {
   id: ID! @id
   name: String! @column
   houses: [House!]!
+  unusedHouses(season: String!): [House!]!
 }
 
 type Mutation {

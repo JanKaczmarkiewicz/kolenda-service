@@ -5,7 +5,6 @@ type Day @entity {
   visitDate: DateTime! @column
   reeceDate: DateTime! @column
   assignedStreets: [Street!]! @link
-  unusedHouses: [House!]!
   pastoralVisits: [PastoralVisit!]!
 }
 

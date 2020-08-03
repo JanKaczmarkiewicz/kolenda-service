@@ -2,8 +2,6 @@ import { Resolvers } from "../../types/types";
 import House from "../../models/House";
 import Street from "../../models/Street";
 import Entrance from "../../models/Entrance";
-import Season from "../../models/Season";
-import * as mongoose from "mongoose";
 import PastoralVisit from "../../models/PastoralVisit";
 
 export const resolvers: Resolvers = {
