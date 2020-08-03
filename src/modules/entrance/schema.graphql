@@ -21,6 +21,16 @@ input UpdateEntranceInput {
   pastoralVisit: String
 }
 
+input UpdateEntrancesInput {
+  ids: [String!]!
+  pastoralVisit: String!
+}
+
+input AddEntrancesInput {
+  houses: [String!]!
+  pastoralVisit: String!
+}
+
 type Query {
   entrance(input: FindOneInput!): Entrance @authenticated
   entrances: [Entrance!]! @authenticated
@@ -31,7 +41,15 @@ type Mutation {
     @authenticated
     @validate(schemaName: "addEntranceValidation")
 
-  deleteEntrance(input: DeleteOneInput!): Entrance @authenticated
+  addEntrances(input: AddEntrancesInput!): [Entrance!]! @authenticated
+  # @validate(schemaName: "addEntranceValidation")
+
+  deleteEntrance(input: DeleteOneInput!): Boolean! @authenticated
+
+  deleteEntrances(input: DeletManyInput!): Boolean! @authenticated
+
+  updateEntrances(input: UpdateEntrancesInput!): [Entrance!]! @authenticated
+  # @validate(schemaName: "updateEntrancesValidation")
 
   updateEntrance(input: UpdateEntranceInput!): Entrance
     @authenticated

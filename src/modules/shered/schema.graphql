@@ -10,3 +10,7 @@ input FindOneInput {
 input DeleteOneInput {
   id: String!
 }
+
+input DeletManyInput {
+  ids: [String!]!
+}
