@@ -2,8 +2,6 @@ import { Resolvers } from "../../types/types";
 import Entrance from "../../models/Entrance";
 import House from "../../models/House";
 import PastoralVisit from "../../models/PastoralVisit";
-import { validateArgs } from "../../utils/validateArgs";
-import { addEntranceValidation } from "./validators";
 
 export const resolvers: Resolvers = {
   Entrance: {
@@ -26,14 +24,17 @@ export const resolvers: Resolvers = {
     updateEntrance: async (_, { input: { id, ...rest } }) =>
       Entrance.findOneAndUpdate({ _id: id }, { $set: rest }, { new: true }),
 
-    updateEntrances: async (_, { input: { ids, ...rest } }) =>
-      Entrance.updateMany({ _id: { $in: ids } }, { $set: rest }),
+    updateEntrances: async (_, { input: { ids, ...rest } }) => {
+      const queryOptions = { _id: { $in: ids } };
+      await Entrance.updateMany(queryOptions, { $set: rest });
+      return Entrance.find(queryOptions);
+    },
 
     deleteEntrance: async (_, { input }) =>
       (await Entrance.findByIdAndDelete(input.id)) ? true : false,
 
     deleteEntrances: async (_, { input }) => {
-      const { ok } = await Entrance.deleteMany({ id: { $in: input.ids } });
+      const { ok } = await Entrance.deleteMany({ _id: { $in: input.ids } });
       return ok && ok === 1 ? true : false;
     },
   },
