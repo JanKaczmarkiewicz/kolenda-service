@@ -16,13 +16,23 @@ import House from "../../../models/House";
 import { addDay } from "../../../testUtils/mock/mockDay";
 import { UpdateDayInput, DayDbObject } from "../../../types/types";
 import User from "../../../models/User";
+import { createTestClient } from "apollo-server-testing";
+import { ServerOptions } from "../../../types/util";
+import createServer from "../../../server/createServer";
+import { array } from "yup";
 
 let token: string;
 //TODO: WRITE BETTER TEST CASES :(
 const UPDATE_DAY = gql`
-  mutation updateDay($input: UpdateDayInput!) {
+  mutation updateDay($input: UpdateDayInput!, $season: String!) {
     updateDay(input: $input) {
       ...DayFragment
+      assignedStreets {
+        id
+        unusedHouses(season: $season) {
+          id
+        }
+      }
     }
   }
   ${DayFragment}
@@ -45,13 +55,13 @@ describe("updateDay", () => {
       visitDate: new Date(Date.now() + 4000).toISOString(),
     };
 
-    const res = await query(
-      {
-        query: UPDATE_DAY,
-        input,
-      },
-      token
+    const { query } = createTestClient(
+      createServer({ token: `Bearer ${token}` })
     );
+    const res = await query({
+      query: UPDATE_DAY,
+      variables: { input, season: day.season?.toHexString() },
+    });
 
     expect(res.data?.updateDay).toBeFalsy();
     expect(res.errors?.length).toBeGreaterThan(0);
@@ -85,7 +95,7 @@ describe("updateDay", () => {
       street: street._id.toHexString(),
     }).save();
 
-    //here I use `house` in entrance therefore it shouldn't a be returned in updateDay.unusedHouses response
+    //here I use `house` in entrance therefore it shouldn't a be returned in response
     await new Entrance({
       house: house._id.toHexString(),
       pastoralVisit: pastoralVisit._id.toHexString(),
@@ -98,13 +108,13 @@ describe("updateDay", () => {
       ),
     };
 
-    const res = await query(
-      {
-        query: UPDATE_DAY,
-        input,
-      },
-      token
+    const { query } = createTestClient(
+      createServer({ token: `Bearer ${token}` })
     );
+    const res = await query({
+      query: UPDATE_DAY,
+      variables: { input, season: day.season?.toHexString() },
+    });
 
     expect(res.data?.updateDay).toEqual({
       id: day._id.toHexString(),
@@ -113,17 +123,28 @@ describe("updateDay", () => {
       season: {
         id: day.season?.toHexString(),
       },
-      assignedStreets: expect.arrayContaining(
-        [street, secondStreet].map(({ _id }) => ({ id: _id.toHexString() }))
-      ),
+      assignedStreets: expect.arrayContaining([
+        {
+          id: street._id.toHexString(),
+          unusedHouses: expect.arrayContaining([
+            {
+              id: thirdHouse._id?.toHexString(),
+            },
+          ]),
+        },
+        {
+          id: secondStreet._id.toHexString(),
+          unusedHouses: expect.arrayContaining([
+            {
+              id: secondHouse._id?.toHexString(),
+            },
+          ]),
+        },
+      ]),
       pastoralVisits: expect.arrayContaining([
         {
           id: pastoralVisit._id.toHexString(),
         },
-      ]),
-      unusedHouses: expect.arrayContaining([
-        { id: secondHouse._id.toHexString() },
-        { id: thirdHouse._id.toHexString() },
       ]),
     });
   });
@@ -133,13 +154,13 @@ describe("updateDay", () => {
       id: day._id.toHexString(),
     };
 
-    const res = await query(
-      {
-        query: UPDATE_DAY,
-        input,
-      },
-      badToken
+    const { query } = createTestClient(
+      createServer({ token: `Bearer ${badToken}` })
     );
+    const res = await query({
+      query: UPDATE_DAY,
+      variables: { input, season: day.season?.toHexString() },
+    });
 
     expect(res.data?.updateDay).toBeFalsy();
     expect(res.errors?.[0].message).toBe(responceError.authenticationFailed);

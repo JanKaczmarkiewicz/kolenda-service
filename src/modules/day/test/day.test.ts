@@ -15,6 +15,9 @@ const DAY = gql`
   query day($input: FindOneInput!) {
     day(input: $input) {
       ...DayFragment
+      assignedStreets {
+        id
+      }
     }
   }
   ${DayFragment}
@@ -43,7 +46,6 @@ describe("day", () => {
       visitDate: day.visitDate.toISOString(),
       reeceDate: day.reeceDate.toISOString(),
       assignedStreets: [],
-      unusedHouses: [],
       pastoralVisits: [],
     });
   });

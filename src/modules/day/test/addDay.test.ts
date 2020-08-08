@@ -17,6 +17,9 @@ const ADD_DAY = gql`
   mutation AddDay($input: AddDayInput!) {
     addDay(input: $input) {
       ...DayFragment
+      assignedStreets {
+        id
+      }
     }
   }
   ${DayFragment}
@@ -103,7 +106,6 @@ describe("Day addition", () => {
       season: { id: input.season },
       reeceDate: input.reeceDate,
       visitDate: input.visitDate,
-      unusedHouses: [],
       assignedStreets: [],
       pastoralVisits: [],
     });

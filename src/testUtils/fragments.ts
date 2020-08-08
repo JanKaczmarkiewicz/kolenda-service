@@ -18,12 +18,6 @@ export const DayFragment = gql`
     }
     visitDate
     reeceDate
-    unusedHouses {
-      id
-    }
-    assignedStreets {
-      id
-    }
     pastoralVisits {
       id
     }
