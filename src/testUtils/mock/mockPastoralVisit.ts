@@ -11,7 +11,7 @@ export const addPastralVisit = async () => {
     priest: mock.priest._id.toHexString(),
     acolytes: mock.acolytes.map((acolyte) => acolyte._id.toHexString()),
     day: mock.day._id.toHexString(),
-    hour: 16,
+    hour: "16:00",
   }).save();
   return { ...mock, pastoralVisit };
 };

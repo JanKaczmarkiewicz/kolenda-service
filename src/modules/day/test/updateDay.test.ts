@@ -61,7 +61,7 @@ describe("updateDay", () => {
     const priest = await new User(dummyUserData).save();
 
     const pastoralVisit = await new PastoralVisit({
-      hour: 16,
+      hour: "16:00",
       priest: priest._id.toHexString(),
       acolytes: [],
       day: day._id.toHexString(),

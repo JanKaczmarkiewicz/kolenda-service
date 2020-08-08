@@ -4,20 +4,20 @@ type PastoralVisit @entity {
   priest: User @link
   acolytes: [User!]! @link
   entrances: [Entrance!]!
-  hour: Int! @column
+  hour: String! @column
 }
 
 input AddPastoralVisitInput {
   priest: String!
   acolytes: [String!]!
-  hour: Int!
+  hour: String!
   day: String!
 }
 
 input UpdatePastoralVisitInput {
   id: String!
   priest: String
-  hour: Int
+  hour: String
   acolytes: [String!]
 }
 

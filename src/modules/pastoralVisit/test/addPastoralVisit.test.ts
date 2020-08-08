@@ -49,7 +49,7 @@ describe("addPastoralVisit", () => {
       acolytes: acolytes.map(({ _id }) => _id.toHexString()),
       priest: priest._id.toHexString(),
       day: day._id.toHexString(),
-      hour: 16,
+      hour: "16:00",
     };
 
     const res = await query(
@@ -68,7 +68,7 @@ describe("addPastoralVisit", () => {
       acolytes: acolytes.map(({ _id }) => _id.toHexString()),
       priest: priest._id.toHexString(),
       day: day._id.toHexString(),
-      hour: 16,
+      hour: "16:00",
     };
 
     const res = await query(

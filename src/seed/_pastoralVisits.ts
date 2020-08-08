@@ -56,7 +56,7 @@ export const createPastoralVisits = async (
       pastoralVisits.push(
         new PastoralVisit({
           day: day._id.toHexString(),
-          hour: 16,
+          hour: "16:00",
           priest: participantPriestId,
           acolytes: participantAcolytesId,
         }).save()

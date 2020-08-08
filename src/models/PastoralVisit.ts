@@ -8,10 +8,9 @@ const PastoralVisitSchema = new mongoose.Schema({
     required: true,
   },
   hour: {
-    type: Number,
+    type: String,
     required: true,
-    min: 8,
-    max: 20,
+    match: /^(1[2-9]|2[0-1]):[0-5][0-9]$/,
   },
   acolytes: [
     {
