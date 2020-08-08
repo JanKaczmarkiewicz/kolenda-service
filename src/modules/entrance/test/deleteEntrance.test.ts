@@ -12,9 +12,7 @@ let entrance: EntranceDbObject;
 
 const DELETE_ENTRANCE = gql`
   mutation deleteEntrance($input: DeleteOneInput!) {
-    deleteEntrance(input: $input) {
-      id
-    }
+    deleteEntrance(input: $input)
   }
 `;
 
@@ -48,6 +46,6 @@ describe("deleteEntrance", () => {
       token
     );
 
-    expect(res.data?.deleteEntrance.id).toEqual(entrance._id.toHexString());
+    expect(res.data?.deleteEntrance).toEqual(true);
   });
 });
