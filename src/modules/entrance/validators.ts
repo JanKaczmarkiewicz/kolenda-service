@@ -21,6 +21,6 @@ export const addEntranceValidation = yup.object().shape({
 
 export const updateEntranceValidation = yup.object().shape({
   id: id.required(),
-  house: house,
+  house,
   pastoralVisit: id,
 });

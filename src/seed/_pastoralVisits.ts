@@ -39,7 +39,7 @@ export const createPastoralVisits = async (
     const acolytes = [..._acolytes];
 
     const numberOfDayActivities =
-      Math.random() > 0.5 ? priests.length : priests.length - 1;
+      Math.random() > 0.5 ? priests.length - 1 : priests.length - 3;
 
     for (let i = 0; i < numberOfDayActivities; i++) {
       const randomPriestIndex = random(priests.length);

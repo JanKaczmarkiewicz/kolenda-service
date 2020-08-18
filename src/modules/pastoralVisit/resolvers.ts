@@ -22,11 +22,16 @@ export const resolvers: Resolvers = {
   Mutation: {
     addPastoralVisit: async (_, { input }) => new PastoralVisit(input).save(),
 
-    // updatePastoralVisit: async (_, { input }) =>
-    //   PastoralVisit.findByIdAndUpdate({ _id: input.id }, {}, { new: true }),
+    updatePastoralVisit: async (_, { input: { id, ...set } }) =>
+      PastoralVisit.findByIdAndUpdate(
+        { _id: id },
+        { $set: set },
+        { new: true }
+      ),
   },
   Query: {
     pastoralVisit: async (_, { input }) =>
       PastoralVisit.findOne({ _id: input.id }),
+    pastoralVisits: async () => PastoralVisit.find({}),
   },
 };

@@ -22,7 +22,7 @@ import createServer from "../../../server/createServer";
 import { array } from "yup";
 
 let token: string;
-//TODO: WRITE BETTER TEST CASES :(
+// TODO: WRITE BETTER TEST CASES :(
 const UPDATE_DAY = gql`
   mutation updateDay($input: UpdateDayInput!, $season: String!) {
     updateDay(input: $input) {
@@ -95,7 +95,7 @@ describe("updateDay", () => {
       street: street._id.toHexString(),
     }).save();
 
-    //here I use `house` in entrance therefore it shouldn't a be returned in response
+    // here I use `house` in entrance therefore it shouldn't a be returned in response
     await new Entrance({
       house: house._id.toHexString(),
       pastoralVisit: pastoralVisit._id.toHexString(),

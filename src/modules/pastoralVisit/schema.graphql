@@ -8,8 +8,8 @@ type PastoralVisit @entity {
 }
 
 input AddPastoralVisitInput {
-  priest: String!
-  acolytes: [String!]!
+  priest: String
+  acolytes: [String!]
   hour: String!
   day: String!
 }
@@ -23,6 +23,7 @@ input UpdatePastoralVisitInput {
 
 type Query {
   pastoralVisit(input: FindOneInput!): PastoralVisit @authenticated
+  pastoralVisits: [PastoralVisit!]! @authenticated
 }
 
 type Mutation {

@@ -10,7 +10,7 @@ export const readFromCSV = (fileName: string): string =>
   });
 
 export const createUsers = async () => {
-  //Admin
+  // Admin
   new User({
     username: "admin",
     role: Role.Admin,
@@ -19,7 +19,7 @@ export const createUsers = async () => {
     password: await bcrypt.hash("adminadmin", 10),
   }).save();
 
-  //Priests
+  // Priests
   const priests = Promise.all(
     readFromCSV("priests")
       .split("\n")
@@ -34,7 +34,7 @@ export const createUsers = async () => {
       )
   );
 
-  //Acolytes
+  // Acolytes
   const acolytes = Promise.all(
     readFromCSV("acolytes")
       .split("\n")

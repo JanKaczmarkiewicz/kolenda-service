@@ -19,7 +19,7 @@ export const resolvers: Resolvers = {
     addDay: async (_, { input }) => new Day(input).save(),
     updateDay: async (_, { input: { id, ...rest } }, __, ___) => {
       if (rest.assignedStreets) {
-        //TODO: TEST IT!
+        // TODO: TEST IT!
         // compare all  that has been deleted in this update
         const { assignedStreets } = rest;
 
@@ -40,7 +40,7 @@ export const resolvers: Resolvers = {
           PastoralVisit.find({ day: id }).distinct("_id"),
         ]);
 
-        //TODO: remove all linked houses with deleted streets
+        // TODO: remove all linked houses with deleted streets
         await Entrance.deleteMany({
           house: { $in: housesIds },
           pastoralVisit: { $in: pastoralVisitsIds },
