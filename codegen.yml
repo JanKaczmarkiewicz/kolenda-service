@@ -1,28 +1,26 @@
 schema: "src/**/*.graphql"
 require:
   - ts-node/register
+config:
+  skipTypename: true
+  enumsAsString: false
+  noSchemaStitching: true
 generates:
   src/types/types.ts:
-    plugins:
-      - add: "// THIS IS A GENERATED FILE, DO NOT MODIFY"
-      - add: "// tslint:disable"
-      - add: "import { Context } from './util';"
-      - typescript-mongodb
-      - typescript
-      - typescript-resolvers
-    config:
-      scalars:
-        DateTime: Date
-      mappers:
-        Day: DayDbObject
-        User: UserDbObject
-        House: HouseDbObject
-        Street: StreetDbObject
-        Season: SeasonDbObject
-        PastoralVisit: PastoralVisitDbObject
-        Entrance: EntranceDbObject
-      contextType: Context
-      skipTypename: true
-      enumsAsString: false
-      useIndexSignature: true
-      noSchemaStitching: true
+    - typescript-resolvers:
+        avoidOptionals: false
+        contextType: ../types/util#Context
+        scalars:
+          DateTime: Date
+        mappers:
+          Day: DayDbObject
+          User: UserDbObject
+          House: HouseDbObject
+          Street: StreetDbObject
+          Season: SeasonDbObject
+          PastoralVisit: PastoralVisitDbObject
+          Entrance: EntranceDbObject
+
+    - typescript-mongodb
+    - typescript:
+        maybeValue: "T extends PromiseLike<infer U> ? Promise<U | null> : T | undefined"
