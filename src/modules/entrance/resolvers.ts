@@ -2,6 +2,7 @@ import { Resolvers } from "../../types/types";
 import Entrance from "../../models/Entrance";
 import House from "../../models/House";
 import PastoralVisit from "../../models/PastoralVisit";
+import { castToObjectId } from "../../utils/castToObjectId";
 
 export const resolvers: Resolvers = {
   Entrance: {
@@ -21,12 +22,26 @@ export const resolvers: Resolvers = {
       return Entrance.insertMany(docs);
     },
 
-    updateEntrance: async (_, { input: { id, ...rest } }) =>
-      Entrance.findOneAndUpdate({ _id: id }, { $set: rest }, { new: true }),
+    updateEntrance: async (_, { input: { id, pastoralVisit, ...rest } }) => {
+      const update = {
+        ...rest,
+        ...(pastoralVisit && { pastoralVisit: castToObjectId(pastoralVisit) }),
+      };
+      return Entrance.findOneAndUpdate(
+        { _id: id },
+        { $set: update },
+        { new: true }
+      );
+    },
 
     updateEntrances: async (_, { input: { ids, ...rest } }) => {
       const queryOptions = { _id: { $in: ids } };
-      await Entrance.updateMany(queryOptions, { $set: rest });
+
+      const update = {
+        pastoralVisit: castToObjectId(rest.pastoralVisit),
+      };
+
+      await Entrance.updateMany(queryOptions, { $set: update });
       return Entrance.find(queryOptions);
     },
 

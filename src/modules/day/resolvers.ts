@@ -5,6 +5,7 @@ import PastoralVisit from "../../models/PastoralVisit";
 import { Resolvers } from "../../types/types";
 import Season from "../../models/Season";
 import Street from "../../models/Street";
+import { castToObjectId } from "../../utils/castToObjectId";
 
 export const resolvers: Resolvers = {
   Day: {
@@ -17,7 +18,7 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     addDay: async (_, { input }) => new Day(input).save(),
-    updateDay: async (_, { input: { id, ...rest } }, __, ___) => {
+    updateDay: async (_, { input: { id, ...rest } }) => {
       if (rest.assignedStreets) {
         // TODO: TEST IT!
         // compare all  that has been deleted in this update
@@ -27,9 +28,9 @@ export const resolvers: Resolvers = {
 
         if (!dayToUpdate) return null;
 
-        const { assignedStreets: oldAssignedStreets } = dayToUpdate;
+        const { assignedStreets: oldAssignedStreetsIds } = dayToUpdate;
 
-        const removedStreets = oldAssignedStreets
+        const removedStreets = oldAssignedStreetsIds
           .map((id) => id.toHexString())
           .filter((id) => !assignedStreets.includes(id));
 
@@ -47,7 +48,14 @@ export const resolvers: Resolvers = {
         });
       }
 
-      return Day.findOneAndUpdate({ _id: id }, { $set: rest }, { new: true });
+      const update = {
+        ...rest,
+        assignedStreets: rest.assignedStreets
+          ? rest.assignedStreets.map(castToObjectId)
+          : undefined,
+      };
+
+      return Day.findOneAndUpdate({ _id: id }, { $set: update }, { new: true });
     },
   },
   Query: {

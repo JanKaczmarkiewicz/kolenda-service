@@ -89,7 +89,7 @@ describe("addPastoralVisit", () => {
       day: {
         id: foundPastoralVisit.day?.toHexString(),
       },
-      acolytes: expect.arrayContaining(input.acolytes.map((id) => ({ id }))),
+      acolytes: expect.arrayContaining(input.acolytes!.map((id) => ({ id }))),
     });
   });
 });

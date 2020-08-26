@@ -49,8 +49,8 @@ describe("Entrance", () => {
       pastoralVisit: pastoralVisit._id.toHexString(),
       comment: "test comment",
     };
-    const streetId = house.street?.toHexString();
-
+    const streetId = house.street!;
+    
     const { day } = (await PastoralVisit.findOne({
       _id: input.pastoralVisit,
     }))!;

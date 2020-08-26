@@ -6,7 +6,7 @@ type Street @entity {
 }
 
 type Mutation {
-  addStreet(input: AddStreetInput!): Street @authenticated
+  addStreet(input: AddStreetInput!): Street! @authenticated
   updateStreet(input: UpdateStreetInput!): Street @authenticated
 }
 
@@ -22,5 +22,5 @@ input AddStreetInput {
 
 input UpdateStreetInput {
   id: String!
-  name: String #validate
+  name: String
 }

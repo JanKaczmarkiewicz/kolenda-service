@@ -38,5 +38,5 @@ input UpdateDayInput {
   id: String!
   visitDate: String
   reeceDate: String
-  assignedStreets: [String]
+  assignedStreets: [String!]
 }
