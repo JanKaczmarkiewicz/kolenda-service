@@ -33,14 +33,14 @@ export const createEntrances = async (
 ) => {
   const houses = houseGenerator(streets);
 
-  const daysAssignedStreets: { [key: string]: Set<string> } = {};
+  const daysAssignedStreets: { [key: string]: Set<mongoose.Types.ObjectId> } = {};
 
   const entrancesData = pastoralVisits.flatMap((pastoralVisit) => {
     const randomNumberOfHouses = random(25, 36);
     const currentDayId = pastoralVisit.day!.toHexString();
 
     if (daysAssignedStreets[currentDayId] === undefined) {
-      daysAssignedStreets[currentDayId] = new Set<string>();
+      daysAssignedStreets[currentDayId] = new Set<mongoose.Types.ObjectId>();
     }
 
     const entrances = [];
@@ -52,7 +52,7 @@ export const createEntrances = async (
 
       const comment = Math.random() > 0.9 ? randomComment() : null;
 
-      daysAssignedStreets[currentDayId].add(house.street!.toHexString());
+      daysAssignedStreets[currentDayId].add(house.street!);
 
       const entrance = {
         house: house._id,
